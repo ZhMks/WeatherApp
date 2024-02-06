@@ -99,6 +99,14 @@ final class OnboardingView: UIView {
         return femaleFace
     }()
 
+    private lazy var backHair: UIImageView = {
+        let backHair = UIImageView(image: UIImage(named: "BackHair"))
+        backHair.translatesAutoresizingMaskIntoConstraints = false
+        backHair.backgroundColor = .clear
+        backHair.clipsToBounds = true
+        return backHair
+    }()
+
 
 
     // MARK: - LifeCycle
@@ -114,16 +122,8 @@ final class OnboardingView: UIView {
 
 
     private func layout() {
-        addSubview(accessGeoLabel)
-        addSubview(infoTextLabel)
-        addSubview(accessGeoButton)
-        addSubview(ignoreGeoButton)
-        addSubview(scarfImage)
-        addSubview(femaleBodyImage)
-        addSubview(umbrellaImageShadow)
-        addSubview(femaleFace)
-        addSubview(umbrellaImage)
 
+        createViews()
 
         let safeArea = safeAreaLayoutGuide
 
@@ -141,27 +141,34 @@ final class OnboardingView: UIView {
         }
 
         femaleBodyImage.snp.makeConstraints { make in
-            make.leading.equalTo(safeArea).offset(72)
+            make.leading.equalTo(safeArea).offset(68)
             make.trailing.equalTo(safeArea).offset(-148)
             make.top.equalTo(safeArea).offset(152)
+            make.bottom.equalTo(accessGeoLabel.snp.top).offset(-80)
         }
 
         scarfImage.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(165)
+            make.top.equalTo(safeArea).offset(163)
             make.leading.equalTo(safeArea).offset(150)
-            make.trailing.equalTo(safeArea).offset(-120)
+            make.trailing.equalTo(safeArea).offset(-140)
         }
 
         femaleFace.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(120)
+            make.top.equalTo(safeArea).offset(110)
             make.leading.equalTo(safeArea).offset(140)
             make.trailing.equalTo(safeArea).offset(-200)
         }
 
+        backHair.snp.makeConstraints { make in
+            make.top.equalTo(safeArea).offset(130)
+            make.leading.equalTo(safeArea).offset(165)
+            make.trailing.equalTo(safeArea).offset(-170)
+        }
+
 
         accessGeoLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(safeArea.snp.centerX)
-            make.centerY.equalTo(safeArea.snp.centerY)
+            make.top.equalTo(femaleBodyImage.snp.bottom).offset(25)
+            make.bottom.equalTo(infoTextLabel.snp.top).offset(-35)
             make.leading.equalTo(safeArea.snp.leading).offset(25)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-25)
         }
@@ -186,5 +193,18 @@ final class OnboardingView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-25)
         }
 
+    }
+
+    private func createViews() {
+        addSubview(infoTextLabel)
+        addSubview(accessGeoButton)
+        addSubview(ignoreGeoButton)
+        addSubview(umbrellaImageShadow)
+        addSubview(scarfImage)
+        addSubview(backHair)
+        addSubview(femaleBodyImage)
+        addSubview(femaleFace)
+        addSubview(umbrellaImage)
+        addSubview(accessGeoLabel)
     }
 }
