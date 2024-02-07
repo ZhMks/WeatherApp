@@ -24,6 +24,7 @@
 		B2AF38A92B723C1300D1ECD5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38A82B723C1300D1ECD5 /* SettingsViewController.swift */; };
 		B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38AB2B723D5C00D1ECD5 /* MainScreenViewController.swift */; };
 		B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38AD2B723D6400D1ECD5 /* MainScreenView.swift */; };
+		B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38AF2B7377AF00D1ECD5 /* WeatherView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		B2AF38A82B723C1300D1ECD5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B2AF38AB2B723D5C00D1ECD5 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		B2AF38AD2B723D6400D1ECD5 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		B2AF38AF2B7377AF00D1ECD5 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 			children = (
 				B2AF38AB2B723D5C00D1ECD5 /* MainScreenViewController.swift */,
 				B2AF38AD2B723D6400D1ECD5 /* MainScreenView.swift */,
+				B2AF38AF2B7377AF00D1ECD5 /* WeatherView.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 				B2AF38A92B723C1300D1ECD5 /* SettingsViewController.swift in Sources */,
 				B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */,
 				B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */,
+				B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */,
 				B2AF38A72B72380900D1ECD5 /* SettingsView.swift in Sources */,
 				B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */,
 				B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */,

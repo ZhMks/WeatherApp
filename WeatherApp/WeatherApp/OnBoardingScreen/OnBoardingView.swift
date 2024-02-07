@@ -12,6 +12,26 @@ final class OnboardingView: UIView {
 
     // MARK: - Properties
 
+    private lazy var umbrellaView: UIView = {
+        let umbrellaView = UIView()
+        umbrellaView.translatesAutoresizingMaskIntoConstraints = false
+        return umbrellaView
+    }()
+
+    private lazy var cloudImageView: UIImageView = {
+        let cloudImageView = UIImageView(image: UIImage(named: "Cloud"))
+        cloudImageView.translatesAutoresizingMaskIntoConstraints = false
+        cloudImageView.backgroundColor = .clear
+        return cloudImageView
+    }()
+
+    private lazy var halfCloudImageView: UIImageView = {
+        let halfCloudImageView = UIImageView(image: UIImage(named: "HalfCloud"))
+        halfCloudImageView.translatesAutoresizingMaskIntoConstraints = false
+        halfCloudImageView.backgroundColor = .clear
+        return halfCloudImageView
+    }()
+
     private lazy var accessGeoLabel: UILabel = {
         let accessLabel = UILabel()
         accessLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -107,6 +127,12 @@ final class OnboardingView: UIView {
         return backHair
     }()
 
+    private lazy var femaleView: UIView = {
+        let femaleView = UIView()
+        femaleView.translatesAutoresizingMaskIntoConstraints = false
+        return femaleView
+    }()
+
 
 
     // MARK: - LifeCycle
@@ -114,8 +140,9 @@ final class OnboardingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
+        animateView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -127,47 +154,63 @@ final class OnboardingView: UIView {
 
         let safeArea = safeAreaLayoutGuide
 
-        umbrellaImage.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(80)
-            make.leading.trailing.equalTo(safeArea).inset(100)
-            make.bottom.equalTo(accessGeoLabel.snp.top).offset(-120)
-        }
-
-        umbrellaImageShadow.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(85)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-101)
-            make.leading.equalTo(safeArea.snp.leading).offset(107)
-            make.bottom.equalTo(accessGeoLabel.snp.top).offset(-160)
-        }
-
-        femaleBodyImage.snp.makeConstraints { make in
-            make.leading.equalTo(safeArea).offset(68)
-            make.trailing.equalTo(safeArea).offset(-148)
-            make.top.equalTo(safeArea).offset(152)
+        umbrellaView.snp.makeConstraints { make in
+            make.leading.equalTo(safeArea.snp.leading).offset(60)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-50)
+            make.top.equalTo(safeArea.snp.top).offset(110)
             make.bottom.equalTo(accessGeoLabel.snp.top).offset(-80)
         }
 
+        umbrellaImage.snp.makeConstraints { make in
+            make.top.equalTo(umbrellaView.snp.top)
+            make.leading.trailing.equalTo(umbrellaView).inset(50)
+            make.bottom.equalTo(umbrellaView.snp.bottom).offset(-50)
+        }
+
+        umbrellaImageShadow.snp.makeConstraints { make in
+            make.top.equalTo(umbrellaView.snp.top)
+            make.trailing.equalTo(umbrellaView.snp.trailing).offset(-50)
+            make.leading.equalTo(umbrellaView.snp.leading).offset(55)
+            make.bottom.equalTo(umbrellaView.snp.bottom).offset(-90)
+        }
+
+        femaleView.snp.makeConstraints { make in
+            make.top.equalTo(safeArea.snp.top).offset(110)
+            make.leading.equalTo(safeArea.snp.leading).offset(60)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-50)
+            make.bottom.equalTo(accessGeoLabel.snp.top).offset(-60)
+        }
+
         scarfImage.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(163)
-            make.leading.equalTo(safeArea).offset(150)
-            make.trailing.equalTo(safeArea).offset(-140)
+            make.top.equalTo(femaleView.snp.top).offset(70)
+            make.leading.equalTo(femaleView.snp.leading).offset(120)
+            make.trailing.equalTo(femaleView.snp.trailing).offset(-80)
+            make.bottom.equalTo(femaleView.snp.bottom).offset(-90)
+        }
+
+        femaleBodyImage.snp.makeConstraints { make in
+            make.top.equalTo(femaleView.snp.top).offset(55)
+            make.leading.equalTo(femaleView.snp.leading).offset(47)
+            make.trailing.equalTo(femaleView.snp.trailing).offset(-128)
+            make.bottom.equalTo(femaleView.snp.bottom).offset(-35)
         }
 
         femaleFace.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(110)
-            make.leading.equalTo(safeArea).offset(140)
-            make.trailing.equalTo(safeArea).offset(-200)
+            make.top.equalTo(umbrellaView.snp.top).offset(40)
+            make.leading.equalTo(umbrellaView.snp.leading).offset(75)
+            make.trailing.equalTo(umbrellaView.snp.trailing).offset(-150)
+            make.bottom.equalTo(umbrellaView.snp.bottom).offset(-110)
         }
 
         backHair.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(130)
-            make.leading.equalTo(safeArea).offset(165)
-            make.trailing.equalTo(safeArea).offset(-170)
+            make.top.equalTo(femaleView.snp.top).offset(45)
+            make.leading.equalTo(femaleView.snp.leading).offset(100)
+            make.trailing.equalTo(femaleView.snp.trailing).offset(-110)
+            make.bottom.equalTo(femaleView.snp.bottom).offset(-110)
         }
 
-
         accessGeoLabel.snp.makeConstraints { make in
-            make.top.equalTo(femaleBodyImage.snp.bottom).offset(25)
+            make.top.equalTo(safeArea.snp.top).offset(400)
             make.bottom.equalTo(infoTextLabel.snp.top).offset(-35)
             make.leading.equalTo(safeArea.snp.leading).offset(25)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-25)
@@ -175,7 +218,6 @@ final class OnboardingView: UIView {
 
         infoTextLabel.snp.makeConstraints { make in
             make.centerX.equalTo(accessGeoLabel.snp.centerX)
-            make.top.equalTo(accessGeoLabel.snp.bottom).offset(40)
             make.leading.equalTo(safeArea.snp.leading).offset(25)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-25)
         }
@@ -188,23 +230,66 @@ final class OnboardingView: UIView {
         }
 
         ignoreGeoButton.snp.makeConstraints { make in
-            make.top.equalTo(accessGeoButton.snp.top).offset(40)
+            make.top.equalTo(accessGeoButton.snp.bottom).offset(20)
             make.leading.equalTo(safeArea.snp.leading).offset(150)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-25)
+        }
+
+        cloudImageView.snp.makeConstraints { make in
+            make.top.equalTo(safeArea.snp.top).offset(60)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-30)
+        }
+
+        halfCloudImageView.snp.makeConstraints { make in
+            make.top.equalTo(safeArea.snp.top).offset(20)
+            make.leading.equalTo(safeArea.snp.leading)
         }
 
     }
 
     private func createViews() {
+        addSubview(accessGeoLabel)
         addSubview(infoTextLabel)
         addSubview(accessGeoButton)
         addSubview(ignoreGeoButton)
-        addSubview(umbrellaImageShadow)
-        addSubview(scarfImage)
-        addSubview(backHair)
-        addSubview(femaleBodyImage)
-        addSubview(femaleFace)
-        addSubview(umbrellaImage)
-        addSubview(accessGeoLabel)
+        addSubview(femaleView)
+        addSubview(cloudImageView)
+        addSubview(halfCloudImageView)
+        femaleView.addSubview(scarfImage)
+        addSubview(umbrellaView)
+        umbrellaView.addSubview(umbrellaImageShadow)
+        femaleView.addSubview(backHair)
+        umbrellaView.addSubview(femaleFace)
+        umbrellaView.addSubview(umbrellaImage)
+        femaleView.addSubview(femaleBodyImage)
+    }
+
+    private func animateView() {
+        UIView.animate(withDuration: 1.0, delay: 0.0,options: [.repeat, .autoreverse]) { [weak self] in
+            guard let self else { return }
+            femaleFace.transform = CGAffineTransform(translationX: 2, y: 0)
+            femaleFace.transform = CGAffineTransform(translationX: 0, y: 3)
+
+            UIView.animate(withDuration: 0.05, delay: 0.1, options: [.repeat, .autoreverse, .curveLinear]) { [weak self] in
+                guard let self else { return }
+                umbrellaView.transform = CGAffineTransform(translationX: 3, y: 0)
+                umbrellaView.transform = CGAffineTransform(translationX: 0, y: 10)
+                scarfImage.transform = CGAffineTransform(translationX: 10, y: 0)
+                scarfImage.transform = CGAffineTransform(translationX: 0, y: 8)
+            }
+
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.repeat, .autoreverse, .curveEaseIn], animations: { [weak self] in
+                guard let self else { return }
+                femaleBodyImage.transform = CGAffineTransform(translationX: 3, y: 0)
+                femaleBodyImage.transform = CGAffineTransform(translationX: 0, y: 10)
+                backHair.transform = CGAffineTransform(translationX: 8, y: 0)
+                backHair.transform = CGAffineTransform(translationX: 0, y: 5)
+            })
+
+            UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat]) { [weak self] in
+                guard let self else { return }
+                cloudImageView.transform = CGAffineTransform(translationX: -bounds.size.width, y: 0)
+            }
+        }
     }
 }
