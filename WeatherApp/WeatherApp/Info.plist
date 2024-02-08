@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Rubik-Medium.ttf</string>
+		<string>Rubik-Regular.ttf</string>
 		<string>Rubik-Black.ttf</string>
 		<string>Rubik-Bold.ttf</string>
 		<string>Rubik-ExtraBold.ttf</string>

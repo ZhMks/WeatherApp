@@ -25,6 +25,9 @@
 		B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38AB2B723D5C00D1ECD5 /* MainScreenViewController.swift */; };
 		B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38AD2B723D6400D1ECD5 /* MainScreenView.swift */; };
 		B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38AF2B7377AF00D1ECD5 /* WeatherView.swift */; };
+		B2AF38B32B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38B22B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift */; };
+		B2AF38B52B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38B42B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift */; };
+		B2AF38B72B74EE3200D1ECD5 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2AF38B62B74EE3200D1ECD5 /* Rubik-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +49,9 @@
 		B2AF38AB2B723D5C00D1ECD5 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		B2AF38AD2B723D6400D1ECD5 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		B2AF38AF2B7377AF00D1ECD5 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		B2AF38B22B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
+		B2AF38B42B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverydayForecastTableViewCell.swift; sourceTree = "<group>"; };
+		B2AF38B62B74EE3200D1ECD5 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,7 @@
 		B2AF38A22B7236C400D1ECD5 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				B2AF38B62B74EE3200D1ECD5 /* Rubik-Regular.ttf */,
 				B2AF389C2B7236BF00D1ECD5 /* Rubik-Black.ttf */,
 				B2AF389D2B7236BF00D1ECD5 /* Rubik-Bold.ttf */,
 				B2AF389E2B7236BF00D1ECD5 /* Rubik-ExtraBold.ttf */,
@@ -126,11 +133,21 @@
 		B2AF38AA2B723D5000D1ECD5 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				B2AF38B12B74CABD00D1ECD5 /* Cells */,
 				B2AF38AB2B723D5C00D1ECD5 /* MainScreenViewController.swift */,
 				B2AF38AD2B723D6400D1ECD5 /* MainScreenView.swift */,
 				B2AF38AF2B7377AF00D1ECD5 /* WeatherView.swift */,
 			);
 			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		B2AF38B12B74CABD00D1ECD5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B2AF38B22B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift */,
+				B2AF38B42B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2AF389F2B7236BF00D1ECD5 /* Rubik-Black.ttf in Resources */,
+				B2AF38B72B74EE3200D1ECD5 /* Rubik-Regular.ttf in Resources */,
 				B2AF38A12B7236BF00D1ECD5 /* Rubik-ExtraBold.ttf in Resources */,
 				B2AF38A02B7236BF00D1ECD5 /* Rubik-Bold.ttf in Resources */,
 				B2AF38A42B72372A00D1ECD5 /* Rubik-Medium.ttf in Resources */,
@@ -215,12 +233,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2AF38882B72266600D1ECD5 /* WeatherApp.xcdatamodeld in Sources */,
+				B2AF38B52B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift in Sources */,
 				B2AF389B2B722EF500D1ECD5 /* OnBoardingView.swift in Sources */,
 				B2AF38A92B723C1300D1ECD5 /* SettingsViewController.swift in Sources */,
 				B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */,
 				B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */,
 				B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */,
 				B2AF38A72B72380900D1ECD5 /* SettingsView.swift in Sources */,
+				B2AF38B32B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift in Sources */,
 				B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */,
 				B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */,
 				B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */,

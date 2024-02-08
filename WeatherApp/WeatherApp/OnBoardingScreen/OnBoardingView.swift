@@ -46,7 +46,7 @@ final class OnboardingView: UIView {
     private lazy var infoTextLabel: UILabel = {
         let infoTextLabel = UILabel()
         infoTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoTextLabel.font = UIFont(name: "Rubik-Medium", size: 14.0)
+        infoTextLabel.font = UIFont(name: "Rubik-Regular", size: 14.0)
         infoTextLabel.numberOfLines = 0
         infoTextLabel.textAlignment = .center
         infoTextLabel.text = """
@@ -63,7 +63,7 @@ final class OnboardingView: UIView {
         let accessGeoButton = UIButton(type: .system)
         accessGeoButton.translatesAutoresizingMaskIntoConstraints = false
         accessGeoButton.backgroundColor = UIColor(red: 242/255, green: 110/255, blue: 17/255, alpha: 1)
-        accessGeoButton.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 12.0)
+        accessGeoButton.titleLabel?.font = UIFont(name: "Rubik-Regular", size: 12.0)
         accessGeoButton.setTitle("ИСПОЛЬЗОВАТЬ МЕСТОПОЛОЖЕНИЕ  УСТРОЙСТВА", for: .normal)
         accessGeoButton.setTitleColor(.white, for: .normal)
         accessGeoButton.layer.cornerRadius = 8.0
@@ -73,7 +73,7 @@ final class OnboardingView: UIView {
     private lazy var ignoreGeoButton: UIButton = {
         let accessGeoButton = UIButton(type: .system)
         accessGeoButton.translatesAutoresizingMaskIntoConstraints = false
-        accessGeoButton.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 12.0)
+        accessGeoButton.titleLabel?.font = UIFont(name: "Rubik-Regular", size: 12.0)
         accessGeoButton.setTitle("НЕТ, Я БУДУ ДОБАВЛЯТЬ ЛОКАЦИИ", for: .normal)
         accessGeoButton.setTitleColor(.white, for: .normal)
         return accessGeoButton
@@ -277,14 +277,12 @@ final class OnboardingView: UIView {
             umbrellaView.transform = CGAffineTransform(translationX: 0, y: 10)
             scarfImage.transform = CGAffineTransform(translationX: 10, y: 0)
             scarfImage.transform = CGAffineTransform(translationX: 0, y: 8)
-
-
-            UIView.animate(withDuration: 15.0, delay: 0.0, options: [.curveEaseIn, .repeat]) { [weak self] in
-                guard let self else { return }
-                cloudImageView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * -1.3, y: 0)
-                cloudImageView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 1.3, y: 0)
-            }
-
         }
+        UIView.animate(withDuration: 8.0, delay: 0.0, options: [.curveLinear, .repeat]) { [weak self] in
+            guard let self else { return }
+            cloudImageView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * -1.3, y: 0)
+            cloudImageView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 1.3, y: 0)
+        }
+
     }
 }

@@ -6,28 +6,25 @@
 //
 
 import UIKit
+import SnapKit
 
 class SettingsViewController: UIViewController {
 
-    private let settingsView: UIView
-
-    init(settingsView: UIView) {
-        self.settingsView = settingsView
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private let settingsView: UIView = SettingsView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
     }
 
 
     private func layout() {
         view.addSubview(settingsView)
-        settingsView.frame = view.frame
+        settingsView.translatesAutoresizingMaskIntoConstraints = false
+
+        settingsView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }

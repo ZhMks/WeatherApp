@@ -15,7 +15,7 @@ final class WeatherView: UIView {
 
     private lazy var devidedTemperature: UILabel = {
         let devidedTemperature = UILabel()
-        devidedTemperature.font = UIFont(name: "Rubik-Medium", size: .sixteen)
+        devidedTemperature.font = UIFont(name: "Rubik-Regular", size: .sixteen)
         devidedTemperature.textColor = .white
         devidedTemperature.text = "7/13"
         devidedTemperature.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +25,7 @@ final class WeatherView: UIView {
     private lazy var mainTemperatureLabel: UILabel = {
         let mainTemperature = UILabel()
         mainTemperature.translatesAutoresizingMaskIntoConstraints = false
-        mainTemperature.font = UIFont(name: "Rubik-Medium", size: 36)
+        mainTemperature.font = UIFont(name: "Rubik-Regular", size: 36)
         mainTemperature.textColor = .white
         mainTemperature.text = "13"
         return mainTemperature
@@ -34,7 +34,7 @@ final class WeatherView: UIView {
     private lazy var mainWeatherLabel: UILabel = {
         let mainWeatherLabel = UILabel()
         mainWeatherLabel.translatesAutoresizingMaskIntoConstraints = false
-        mainWeatherLabel.font = UIFont(name: "Rubik-Medium", size: .sixteen)
+        mainWeatherLabel.font = UIFont(name: "Rubik-Regular", size: .sixteen)
         mainWeatherLabel.text = "Возможен небольшой дождь"
         mainWeatherLabel.textColor = .white
         return mainWeatherLabel
@@ -43,7 +43,7 @@ final class WeatherView: UIView {
     private lazy var cloudyLabel: UILabel = {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
-        percitipationLabel.font = UIFont(name: "Rubik-Medium", size: .fourteen)
+        percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         percitipationLabel.text = "0"
         percitipationLabel.textColor = .white
         return percitipationLabel
@@ -52,7 +52,7 @@ final class WeatherView: UIView {
     private lazy var windSpeedLabel: UILabel = {
         let windSpeed = UILabel()
         windSpeed.translatesAutoresizingMaskIntoConstraints = false
-        windSpeed.font = UIFont(name: "Rubik-Medium", size: .fourteen)
+        windSpeed.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         windSpeed.textColor = .white
         windSpeed.text = "5 m/s"
         return windSpeed
@@ -61,7 +61,7 @@ final class WeatherView: UIView {
     private lazy var percitipationLabel: UILabel = {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
-        percitipationLabel.font = UIFont(name: "Rubik-Medium", size: .fourteen)
+        percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         percitipationLabel.text = "75%"
         percitipationLabel.textColor = .white
         return percitipationLabel
@@ -70,7 +70,7 @@ final class WeatherView: UIView {
     private lazy var dateTimeLabel: UILabel = {
         let dateTimeLabel = UILabel()
         dateTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateTimeLabel.font = UIFont(name: "Rubik-Medium", size: .sixteen)
+        dateTimeLabel.font = UIFont(name: "Rubik-Regular", size: .sixteen)
         dateTimeLabel.text = "17:48, ПТ 16 Апреля"
         dateTimeLabel.textColor = yellowColor
         return dateTimeLabel
@@ -79,7 +79,7 @@ final class WeatherView: UIView {
 
     private lazy var dawnTimeLabel: UILabel = {
         let dawnTimeLabel = UILabel()
-        dawnTimeLabel.font = UIFont(name: "Rubik-Medium", size: .fourteen)
+        dawnTimeLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         dawnTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         dawnTimeLabel.text = "5.45"
         dawnTimeLabel.textColor = .white
@@ -88,7 +88,7 @@ final class WeatherView: UIView {
 
     private lazy var sunsetTimeLabel: UILabel = {
         let sunsetTimeLabel = UILabel()
-        sunsetTimeLabel.font = UIFont(name: "Rubik-Medium", size: .fourteen)
+        sunsetTimeLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         sunsetTimeLabel.text = "21.20"
         sunsetTimeLabel.textColor = .white
         return sunsetTimeLabel
