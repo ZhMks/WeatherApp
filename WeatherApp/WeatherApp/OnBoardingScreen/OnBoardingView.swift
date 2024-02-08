@@ -236,13 +236,13 @@ final class OnboardingView: UIView {
         }
 
         cloudImageView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(60)
+            make.top.equalTo(safeArea.snp.top).offset(80)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-30)
         }
 
         halfCloudImageView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(20)
-            make.leading.equalTo(safeArea.snp.leading)
+            make.top.equalTo(safeArea.snp.top)
+            make.leading.equalTo(safeArea.snp.leading).offset(-10)
         }
 
     }
@@ -265,31 +265,26 @@ final class OnboardingView: UIView {
     }
 
     private func animateView() {
-        UIView.animate(withDuration: 1.0, delay: 0.0,options: [.repeat, .autoreverse]) { [weak self] in
+        UIView.animate(withDuration: 1.0, delay: 0.0,options: [.repeat, .autoreverse, .curveLinear]) { [weak self] in
             guard let self else { return }
             femaleFace.transform = CGAffineTransform(translationX: 2, y: 0)
             femaleFace.transform = CGAffineTransform(translationX: 0, y: 3)
+            backHair.transform = CGAffineTransform(translationX: 8, y: 0)
+            backHair.transform = CGAffineTransform(translationX: 0, y: 5)
+            femaleBodyImage.transform = CGAffineTransform(translationX: 3, y: 0)
+            femaleBodyImage.transform = CGAffineTransform(translationX: 0, y: 10)
+            umbrellaView.transform = CGAffineTransform(translationX: 3, y: 0)
+            umbrellaView.transform = CGAffineTransform(translationX: 0, y: 10)
+            scarfImage.transform = CGAffineTransform(translationX: 10, y: 0)
+            scarfImage.transform = CGAffineTransform(translationX: 0, y: 8)
 
-            UIView.animate(withDuration: 0.05, delay: 0.1, options: [.repeat, .autoreverse, .curveLinear]) { [weak self] in
+
+            UIView.animate(withDuration: 15.0, delay: 0.0, options: [.curveEaseIn, .repeat]) { [weak self] in
                 guard let self else { return }
-                umbrellaView.transform = CGAffineTransform(translationX: 3, y: 0)
-                umbrellaView.transform = CGAffineTransform(translationX: 0, y: 10)
-                scarfImage.transform = CGAffineTransform(translationX: 10, y: 0)
-                scarfImage.transform = CGAffineTransform(translationX: 0, y: 8)
+                cloudImageView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * -1.3, y: 0)
+                cloudImageView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 1.3, y: 0)
             }
 
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.repeat, .autoreverse, .curveEaseIn], animations: { [weak self] in
-                guard let self else { return }
-                femaleBodyImage.transform = CGAffineTransform(translationX: 3, y: 0)
-                femaleBodyImage.transform = CGAffineTransform(translationX: 0, y: 10)
-                backHair.transform = CGAffineTransform(translationX: 8, y: 0)
-                backHair.transform = CGAffineTransform(translationX: 0, y: 5)
-            })
-
-            UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat]) { [weak self] in
-                guard let self else { return }
-                cloudImageView.transform = CGAffineTransform(translationX: -bounds.size.width, y: 0)
-            }
         }
     }
 }

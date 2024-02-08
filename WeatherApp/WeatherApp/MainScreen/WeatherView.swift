@@ -10,7 +10,7 @@ import SnapKit
 
 final class WeatherView: UIView {
 
-    private let yellowColor = UIColor(red: 246/255, green: 221/255, blue: 1/255, alpha: 1)
+   private let yellowColor = UIColor(red: 246/255, green: 221/255, blue: 1/255, alpha: 1)
 
 
     private lazy var devidedTemperature: UILabel = {
@@ -138,7 +138,6 @@ final class WeatherView: UIView {
         backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layoutViews()
         layer.cornerRadius = 8.0
-
     }
 
     required init?(coder: NSCoder) {
@@ -164,7 +163,7 @@ final class WeatherView: UIView {
 
     private func layoutViews() {
         createView()
-//        createOvall()
+        createOvall()
         let safeArea = safeAreaLayoutGuide
 
         devidedTemperature.snp.makeConstraints { make in
@@ -220,20 +219,20 @@ final class WeatherView: UIView {
         }
         dawnTimeLabel.snp.makeConstraints { make in
             make.leading.equalTo(safeArea.snp.leading).offset(15)
-            make.top.equalTo(safeArea.snp.top).offset(200)
+            make.top.equalTo(safeArea.snp.top).offset(205)
         }
 
         dawnTimeImageView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(170)
+            make.top.equalTo(safeArea.snp.top).offset(175)
             make.bottom.equalTo(dawnTimeLabel.snp.top).offset(-5)
             make.centerX.equalTo(dawnTimeLabel.snp.centerX)
         }
         sunsetTimeLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-15)
-            make.top.equalTo(safeArea.snp.top).offset(200)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            make.top.equalTo(safeArea.snp.top).offset(205)
         }
         sunsetTimeImageView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(170)
+            make.top.equalTo(safeArea.snp.top).offset(175)
             make.centerX.equalTo(sunsetTimeLabel.snp.centerX)
             make.bottom.equalTo(sunsetTimeLabel.snp.top).offset(-5)
         }
@@ -241,10 +240,8 @@ final class WeatherView: UIView {
     }
 
     private func createOvall() {
-        let arcCenter = CGPoint(x: frame.size.width / 2, y: frame.size.height)
-        print(arcCenter)
-        let radius = frame.size.width / 2
-        print(radius)
+        let arcCenter = CGPoint(x: UIScreen.main.bounds.width / 2.1, y: UIScreen.main.bounds.height / 4.95)
+        let radius = UIScreen.main.bounds.width / 2.5
         let ellipsePath = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: .pi, endAngle: .pi * 2, clockwise: true)
 
         let shapeLayer = CAShapeLayer()
