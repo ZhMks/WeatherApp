@@ -10,6 +10,8 @@ import SnapKit
 
 final class SettingsView: UIView {
 
+    weak var settingsVC: ISettingsViewController?
+
     private let greyColor: UIColor = UIColor(red: 137/255, green: 131/255, blue: 131/255, alpha: 1)
     private let segmentedBackground: UIColor = UIColor(red: 254/255, green: 237/255, blue: 233/255, alpha: 1)
     private let selectedBackground: UIColor = UIColor(red: 31/255, green: 77/255, blue: 191/255, alpha: 1)
@@ -76,6 +78,7 @@ final class SettingsView: UIView {
         setupButton.layer.cornerRadius = 8.0
         setupButton.titleLabel?.textAlignment = .center
         setupButton.setTitleColor(.white, for: .normal)
+        setupButton.addTarget(self, action: #selector(tapOnSetButton(_:)), for: .touchUpInside)
         return setupButton
     }()
 
@@ -207,6 +210,10 @@ final class SettingsView: UIView {
 
         }
 
+    }
+
+    @objc func tapOnSetButton(_: UIButton) {
+        settigsVC?.dismiss()
     }
 
 }

@@ -58,7 +58,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let window = self.window else {
             return
         }
-        window.rootViewController = vc
+        let navVC = UINavigationController(rootViewController: vc)
+        window.rootViewController = navVC
     }
 }
 

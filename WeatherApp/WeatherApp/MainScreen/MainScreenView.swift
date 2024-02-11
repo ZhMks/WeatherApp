@@ -10,17 +10,21 @@ import SnapKit
 
 class MainScreenView: UIView {
 
+    weak var mainScreenVC: IMainScreenController?
+
     private let mainWeatherView = WeatherView()
 
-    private lazy var detailsTwentyFourHours: UILabel = {
-        let details = UILabel()
+    private lazy var detailsTwentyFourHours: UIButton = {
+        let details = UIButton(type: .system)
         details.translatesAutoresizingMaskIntoConstraints = false
-        details.font = UIFont(name: "Rubik-Medium", size: 16)
+        details.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 16)
         let attributedString = NSMutableAttributedString(string: "Подробнее на 24 часа")
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle,
                                       value: NSUnderlineStyle.single.rawValue,
                                       range: NSRange(location: 0, length: attributedString.length))
-        details.attributedText = attributedString
+        details.setTitleColor(.black, for: .normal)
+        details.setAttributedTitle(attributedString, for: .normal)
+        details.addTarget(self, action: #selector(tapOnTwentyFourButton(_:)), for: .touchUpInside)
         return details
     }()
 
@@ -93,6 +97,11 @@ class MainScreenView: UIView {
         }
 
     }
+
+
+    @objc private func tapOnTwentyFourButton(_ sender: UIButton) {
+        mainScreenVC?.pushTwentyFourVc()
+    }
 }
 
 extension MainScreenView: UICollectionViewDelegateFlowLayout {
@@ -162,6 +171,7 @@ extension MainScreenView: UITableViewDataSource {
 
 extension MainScreenView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mainScreenVC?.pushDayNightVc()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

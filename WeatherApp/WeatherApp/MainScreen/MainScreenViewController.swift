@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import SnapKit
 
-class MainScreenViewController: UIViewController {
+protocol IMainScreenController: AnyObject {
+    func pushTwentyFourVc()
+    func pushDayNightVc()
+}
+
+class MainScreenViewController: UIViewController, IMainScreenController {
 
     private let mainScreenView = MainScreenView()
 
@@ -19,6 +25,7 @@ class MainScreenViewController: UIViewController {
 
     private func layout() {
         view.addSubview(mainScreenView)
+        mainScreenView.mainScreenVC = self
         navigationItem.title = "Ulyanovsk, Russia"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
         navigationItem.leftBarButtonItem?.tintColor = .black
@@ -32,11 +39,19 @@ class MainScreenViewController: UIViewController {
         }
     }
 
+    func pushTwentyFourVc() {
+        let twentyFourVC = DetailTwentyFourViewController()
+        navigationController?.pushViewController(twentyFourVC, animated: true)
+    }
+
     @objc private func burgerButtonTapped(_ sender: UIBarButtonItem) {
         let settingsVC = SettingsViewController()
+        navigationController?.present(settingsVC, animated: true)
+    }
 
-        navigationController?.pushViewController(settingsVC, animated: true)
-
+    func pushDayNightVc() {
+        let detailDayVC = DetailDayViewController()
+        navigationController?.pushViewController(detailDayVC, animated: true)
     }
 
     @objc private func rightButtonTapped(_ sender: UIBarButtonItem) {}

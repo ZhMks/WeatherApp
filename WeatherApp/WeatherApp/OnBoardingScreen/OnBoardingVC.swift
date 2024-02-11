@@ -7,7 +7,12 @@
 
 import UIKit
 
-class OnboardingViewController: UIViewController {
+protocol IOnBoardingVC: AnyObject {
+   func pushViewController()
+}
+
+class OnboardingViewController: UIViewController, IOnBoardingVC  {
+
 
     private let mainView: OnboardingView
 
@@ -29,15 +34,14 @@ class OnboardingViewController: UIViewController {
 
     private func layout() {
         view.addSubview(mainView)
-        mainView.accessGeoButton.addTarget(self, action: #selector(accessGeoButtonTapped(_:)), for: .touchUpInside)
+        mainView.loginVC = self
         mainView.frame = view.frame
     }
 
-    @objc func accessGeoButtonTapped(_ sender: UIButton) {
+    func pushViewController() {
         let mainViewController = MainScreenViewController()
-        let navigationController = UINavigationController(rootViewController: mainViewController)
         UIView.animate(withDuration: 0.5) {
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(navigationController)
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainViewController)
         }
     }
 

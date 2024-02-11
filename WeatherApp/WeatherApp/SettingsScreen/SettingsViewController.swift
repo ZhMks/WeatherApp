@@ -8,7 +8,11 @@
 import UIKit
 import SnapKit
 
-class SettingsViewController: UIViewController {
+protocol ISettingsViewController: AnyObject {
+    func dismiss()
+}
+
+class SettingsViewController: UIViewController, ISettingsViewController {
 
     private let settingsView: UIView = SettingsView()
 
@@ -16,6 +20,8 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
+
+        settingsView.settingsVC = self
     }
 
 
@@ -26,5 +32,9 @@ class SettingsViewController: UIViewController {
         settingsView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+
+    func dismiss() {
+        navigationController?.dismiss(animated: true)
     }
 }

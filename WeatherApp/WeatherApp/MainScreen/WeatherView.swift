@@ -195,6 +195,8 @@ final class WeatherView: UIView {
         windSpeedImageView.snp.makeConstraints { make in
             make.top.equalTo(mainWeatherLabel.snp.bottom).offset(30)
             make.leading.equalTo(cloudyLabel.snp.trailing).offset(15)
+            make.height.equalTo(18)
+            make.width.equalTo(21)
         }
 
         windSpeedLabel.snp.makeConstraints { make in
@@ -205,6 +207,8 @@ final class WeatherView: UIView {
         percitipationImageView.snp.makeConstraints { make in
             make.top.equalTo(mainWeatherLabel.snp.bottom).offset(30)
             make.leading.equalTo(windSpeedLabel.snp.trailing).offset(15)
+            make.height.equalTo(18)
+            make.width.equalTo(21)
         }
 
         percitipationLabel.snp.makeConstraints { make in

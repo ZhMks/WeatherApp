@@ -12,6 +12,8 @@ final class OnboardingView: UIView {
 
     // MARK: - Properties
 
+    weak var loginVC: IOnBoardingVC?
+
     private lazy var umbrellaView: UIView = {
         let umbrellaView = UIView()
         umbrellaView.translatesAutoresizingMaskIntoConstraints = false
@@ -262,6 +264,8 @@ final class OnboardingView: UIView {
         umbrellaView.addSubview(femaleFace)
         umbrellaView.addSubview(umbrellaImage)
         femaleView.addSubview(femaleBodyImage)
+
+        accessGeoButton.addTarget(self, action: #selector(accessGeoButtonTapped(_:)), for: .touchUpInside)
     }
 
     private func animateView() {
@@ -284,5 +288,9 @@ final class OnboardingView: UIView {
             cloudImageView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 1.3, y: 0)
         }
 
+    }
+
+    @objc private func accessGeoButtonTapped(_ sender: UIButton) {
+        loginVC?.pushViewController()
     }
 }
