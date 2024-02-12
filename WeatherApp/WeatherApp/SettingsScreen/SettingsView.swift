@@ -213,7 +213,7 @@ final class SettingsView: UIView {
     }
 
     @objc func tapOnSetButton(_: UIButton) {
-        settigsVC?.dismiss()
+        settingsVC?.dismiss()
     }
 
 }

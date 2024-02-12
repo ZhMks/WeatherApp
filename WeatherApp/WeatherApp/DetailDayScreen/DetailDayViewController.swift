@@ -20,7 +20,13 @@ class DetailDayViewController: UIViewController {
     
 
     private func layout() {
-        
+
+        let backButton = UIBarButtonItem()
+        backButton.title = "Прогноз на день"
+        backButton.tintColor = .gray
+
+        navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+
         view.addSubview(detailDayView)
 
         detailDayView.translatesAutoresizingMaskIntoConstraints = false

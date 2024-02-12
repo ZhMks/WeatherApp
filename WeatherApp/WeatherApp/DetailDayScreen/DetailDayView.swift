@@ -14,7 +14,14 @@ final class DetailDayView: UIView {
         let mainScrollView = UIScrollView()
         mainScrollView.translatesAutoresizingMaskIntoConstraints = false
         mainScrollView.showsVerticalScrollIndicator = true
+        mainScrollView.isScrollEnabled = true
         return mainScrollView
+    }()
+
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
     }()
 
     private lazy var cityLabel: UILabel = {
@@ -29,6 +36,9 @@ final class DetailDayView: UIView {
         let flowLayout = UICollectionViewFlowLayout()
         let dateCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         flowLayout.scrollDirection = .horizontal
+        dateCollectionView.delegate = self
+        dateCollectionView.dataSource = self
+        dateCollectionView.register(DetailDayCollectionViewCell.self, forCellWithReuseIdentifier: DetailDayTableViewCell.id)
         return dateCollectionView
     }()
     
@@ -39,7 +49,6 @@ final class DetailDayView: UIView {
         dayNightTableView.dataSource = self
         dayNightTableView.register(DetailDayTableViewCell.self, forCellReuseIdentifier: DetailDayTableViewCell.id)
         dayNightTableView.backgroundColor = .systemBackground
-        dayNightTableView.isScrollEnabled = false
         return dayNightTableView
     }()
     
@@ -54,18 +63,40 @@ final class DetailDayView: UIView {
     
     private func layout() {
         addSubview(mainScrollView)
-        mainScrollView.addSubview(dayNightTableView)
+        addSubview(dateCollectionView)
+        addSubview(cityLabel)
+        mainScrollView.addSubview(contentView)
+        contentView.addSubview(dayNightTableView)
 
-        mainScrollView.snp.makeConstraints { make in
+        cityLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(16)
+        }
+
+        dateCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(cityLabel.snp.bottom).offset(40)
+            make.leading.equalTo(cityLabel.snp.leading).offset(100)
+            make.bottom.equalTo(mainScrollView.snp.top).offset(10)
+        }
+
+        mainScrollView.snp.makeConstraints { make in
+            make.top.equalTo(dateCollectionView.snp.bottom).offset(10)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(15)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-15)
+            make.bottom.equalTo(contentView.snp.bottom)
+
+        }
+
+        contentView.snp.makeConstraints { make in
+            make.top.leading.trailing.width.equalTo(mainScrollView)
+            make.bottom.equalTo(dayNightTableView.snp.bottom)
         }
 
         dayNightTableView.snp.makeConstraints { make in
-            make.top.equalTo(mainScrollView.snp.top)
-            make.leading.equalTo(mainScrollView.snp.leading)
-            make.trailing.equalTo(mainScrollView.snp.trailing)
+            make.top.leading.trailing.equalTo(contentView)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-15)
+            make.height.equalTo(692)
+            make.width.equalTo(344)
         }
     }
     
@@ -94,5 +125,31 @@ extension DetailDayView: UITableViewDataSource {
         return cell
     }
     
+}
+
+
+extension DetailDayView: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        6
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        1
+    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailDayCollectionViewCell.id, for: indexPath) as? DetailDayCollectionViewCell else { return UICollectionViewCell() }
+        cell.backgroundColor = .systemBlue
+        return cell
+    }
+    
+
+
+}
+extension DetailDayView: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
 }

@@ -20,13 +20,12 @@ class SettingsViewController: UIViewController, ISettingsViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
-
-        settingsView.settingsVC = self
     }
 
 
     private func layout() {
         view.addSubview(settingsView)
+//        settingsView.settingsVC = self
         settingsView.translatesAutoresizingMaskIntoConstraints = false
 
         settingsView.snp.makeConstraints { make in

@@ -34,6 +34,9 @@
 		B2AF38B32B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38B22B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift */; };
 		B2AF38B52B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38B42B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift */; };
 		B2AF38B72B74EE3200D1ECD5 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2AF38B62B74EE3200D1ECD5 /* Rubik-Regular.ttf */; };
+		B2B945862B7A18C500713164 /* DetailDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B945852B7A18C500713164 /* DetailDayCollectionViewCell.swift */; };
+		B2B945892B7A219D00713164 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B945882B7A219D00713164 /* NetworkService.swift */; };
+		B2B9458B2B7A21E800713164 /* NetworkServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9458A2B7A21E800713164 /* NetworkServiceModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,9 @@
 		B2AF38B22B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		B2AF38B42B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverydayForecastTableViewCell.swift; sourceTree = "<group>"; };
 		B2AF38B62B74EE3200D1ECD5 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
+		B2B945852B7A18C500713164 /* DetailDayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayCollectionViewCell.swift; sourceTree = "<group>"; };
+		B2B945882B7A219D00713164 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		B2B9458A2B7A21E800713164 /* NetworkServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,9 +98,10 @@
 		B26A56FB2B76458A00FC7255 /* DetailDayScreen */ = {
 			isa = PBXGroup;
 			children = (
+				B26A57022B76543B00FC7255 /* DetailDayViewController.swift */,
 				B26A56FC2B7645A700FC7255 /* DetailDayView.swift */,
 				B26A57002B764BB200FC7255 /* DetailDayTableViewCell.swift */,
-				B26A57022B76543B00FC7255 /* DetailDayViewController.swift */,
+				B2B945852B7A18C500713164 /* DetailDayCollectionViewCell.swift */,
 			);
 			path = DetailDayScreen;
 			sourceTree = "<group>";
@@ -118,6 +125,7 @@
 		B2AF387C2B72266600D1ECD5 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				B2B945872B7A218100713164 /* Network Service */,
 				B26A56FB2B76458A00FC7255 /* DetailDayScreen */,
 				B26A56F42B75FC9700FC7255 /* DetailTwentyFourView */,
 				B2AF38AA2B723D5000D1ECD5 /* MainScreen */,
@@ -158,8 +166,8 @@
 		B2AF38A52B7237FE00D1ECD5 /* SettingsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B2AF38A62B72380900D1ECD5 /* SettingsView.swift */,
 				B2AF38A82B723C1300D1ECD5 /* SettingsViewController.swift */,
+				B2AF38A62B72380900D1ECD5 /* SettingsView.swift */,
 			);
 			path = SettingsScreen;
 			sourceTree = "<group>";
@@ -182,6 +190,15 @@
 				B2AF38B42B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		B2B945872B7A218100713164 /* Network Service */ = {
+			isa = PBXGroup;
+			children = (
+				B2B945882B7A219D00713164 /* NetworkService.swift */,
+				B2B9458A2B7A21E800713164 /* NetworkServiceModel.swift */,
+			);
+			path = "Network Service";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,11 +293,14 @@
 				B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */,
 				B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */,
 				B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */,
+				B2B945892B7A219D00713164 /* NetworkService.swift in Sources */,
 				B2AF38A72B72380900D1ECD5 /* SettingsView.swift in Sources */,
+				B2B9458B2B7A21E800713164 /* NetworkServiceModel.swift in Sources */,
 				B26A57012B764BB200FC7255 /* DetailDayTableViewCell.swift in Sources */,
 				B26A56FD2B7645A700FC7255 /* DetailDayView.swift in Sources */,
 				B2AF38B32B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift in Sources */,
 				B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */,
+				B2B945862B7A18C500713164 /* DetailDayCollectionViewCell.swift in Sources */,
 				B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */,
 				B26A56FA2B76144A00FC7255 /* TwentyFourHourTableViewCell.swift in Sources */,
 				B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */,

@@ -53,14 +53,13 @@ final class DetailDayTableViewCell: UITableViewCell {
         let feelingsTempLabel = UILabel()
         feelingsTempLabel.translatesAutoresizingMaskIntoConstraints = false
         feelingsTempLabel.font = UIFont(name: "Rubik-Regular", size: 14)
-        feelingsTempLabel.text = "Преимущественно По ощущениям"
+        feelingsTempLabel.text = "По ощущениям"
         return feelingsTempLabel
     }()
 
     private lazy var feelingTempNumber: UILabel = {
         let feelingTempNumber = UILabel()
         feelingTempNumber.font = UIFont(name: "Rubik-Regular", size: 14)
-        feelingTempNumber.textColor = .gray
         feelingTempNumber.text = "10"
         feelingTempNumber.translatesAutoresizingMaskIntoConstraints = false
         return feelingTempNumber
@@ -84,7 +83,6 @@ final class DetailDayTableViewCell: UITableViewCell {
     private lazy var windSpeedNumber: UILabel = {
         let temperatureNumber = UILabel()
         temperatureNumber.font = UIFont(name: "Rubik-Regular", size: 14)
-        temperatureNumber.textColor = .gray
         temperatureNumber.text = "2 m/s ССЗ"
         temperatureNumber.translatesAutoresizingMaskIntoConstraints = false
         return temperatureNumber
@@ -131,7 +129,6 @@ final class DetailDayTableViewCell: UITableViewCell {
     private lazy var percitipationNumber: UILabel = {
         let temperatureNumber = UILabel()
         temperatureNumber.font = UIFont(name: "Rubik-Regular", size: 14)
-        temperatureNumber.textColor = .gray
         temperatureNumber.text = "0%"
         temperatureNumber.translatesAutoresizingMaskIntoConstraints = false
         return temperatureNumber
@@ -157,7 +154,6 @@ final class DetailDayTableViewCell: UITableViewCell {
     private lazy var cloudyNumber: UILabel = {
         let cloudyNumber = UILabel()
         cloudyNumber.font = UIFont(name: "Rubik-Regular", size: 14)
-        cloudyNumber.textColor = .gray
         cloudyNumber.text = "29%"
         cloudyNumber.translatesAutoresizingMaskIntoConstraints = false
         return cloudyNumber
@@ -207,103 +203,114 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         weatherImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(20)
-            make.leading.equalTo(dayNightLabel.snp.trailing).offset(76)
+            make.leading.equalTo(contentView.snp.leading).offset(134)
         }
 
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(15)
             make.leading.equalTo(weatherImageView.snp.trailing).offset(10)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-290)
         }
 
         mainWeatherLabel.snp.makeConstraints { make in
             make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
             make.leading.equalTo(contentView.snp.leading).offset(145)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-145)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-245)
         }
 
 
         feelingsTempImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(109)
             make.leading.equalTo(contentView.snp.leading).offset(15)
+            make.height.equalTo(24)
+            make.width.equalTo(26)
         }
 
         feelingsTempLabel.snp.makeConstraints { make in
             make.centerY.equalTo(feelingsTempImageView.snp.centerY)
             make.leading.equalTo(feelingsTempImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-186)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-130)
         }
 
         feelingTempNumber.snp.makeConstraints { make in
             make.centerY.equalTo(feelingsTempLabel.snp.centerY)
-            make.leading.equalTo(feelingsTempLabel.snp.trailing).offset(150)
+            make.leading.equalTo(feelingsTempLabel.snp.trailing).offset(90)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
 
         windSpeedImageView.snp.makeConstraints { make in
             make.top.equalTo(feelingsTempImageView.snp.bottom).offset(26)
             make.leading.equalTo(contentView.snp.leading).offset(15)
+            make.height.equalTo(24)
+            make.width.equalTo(26)
         }
 
         windSpeedLabel.snp.makeConstraints { make in
             make.centerY.equalTo(windSpeedImageView.snp.centerY)
             make.leading.equalTo(windSpeedImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-186)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-130)
         }
 
         windSpeedNumber.snp.makeConstraints { make in
             make.centerY.equalTo(windSpeedLabel.snp.centerY)
-            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(150)
+            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(35)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
 
         ufLightImageView.snp.makeConstraints { make in
             make.top.equalTo(windSpeedImageView.snp.bottom).offset(26)
             make.leading.equalTo(contentView.snp.leading).offset(15)
+            make.height.equalTo(24)
+            make.width.equalTo(26)
         }
 
         ufLightLabel.snp.makeConstraints { make in
             make.centerY.equalTo(ufLightImageView.snp.centerY)
             make.leading.equalTo(ufLightImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-186)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-130)
         }
 
         ufLightNumber.snp.makeConstraints { make in
             make.centerY.equalTo(ufLightLabel.snp.centerY)
-            make.leading.equalTo(ufLightLabel.snp.trailing).offset(150)
+            make.leading.equalTo(ufLightLabel.snp.trailing).offset(35)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
 
         percitipationImageView.snp.makeConstraints { make in
             make.top.equalTo(ufLightImageView.snp.bottom).offset(26)
             make.leading.equalTo(contentView.snp.leading).offset(15)
+            make.height.equalTo(24)
+            make.width.equalTo(26)
         }
 
         percitipationLabel.snp.makeConstraints { make in
             make.centerY.equalTo(percitipationImageView.snp.centerY)
             make.leading.equalTo(percitipationImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-186)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-130)
         }
 
         percitipationNumber.snp.makeConstraints { make in
             make.centerY.equalTo(percitipationLabel.snp.centerY)
-            make.leading.equalTo(percitipationLabel.snp.trailing).offset(150)
+            make.leading.equalTo(percitipationLabel.snp.trailing).offset(85)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
 
         cloudyImageView.snp.makeConstraints { make in
             make.top.equalTo(percitipationImageView.snp.bottom).offset(26)
             make.leading.equalTo(contentView.snp.leading).offset(15)
+            make.height.equalTo(24)
+            make.width.equalTo(26)
         }
 
         cloudyLabel.snp.makeConstraints { make in
             make.centerY.equalTo(cloudyImageView.snp.centerY)
             make.leading.equalTo(cloudyImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-186)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-130)
         }
 
         cloudyNumber.snp.makeConstraints { make in
             make.centerY.equalTo(cloudyLabel.snp.centerY)
-            make.leading.equalTo(cloudyLabel.snp.trailing).offset(150)
+            make.leading.equalTo(cloudyLabel.snp.trailing).offset(85)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
     }

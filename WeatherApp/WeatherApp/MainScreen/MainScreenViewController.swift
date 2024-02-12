@@ -15,12 +15,22 @@ protocol IMainScreenController: AnyObject {
 
 class MainScreenViewController: UIViewController, IMainScreenController {
 
+    private let networkService: INetworkService = NetworkService()
+
     private let mainScreenView = MainScreenView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
+        networkService.fetchData(lat: 55.75396, lon: 37.620393) { result in
+            switch result {
+            case .success(let success):
+                print(success)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
     }
 
     private func layout() {

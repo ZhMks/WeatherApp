@@ -5,11 +5,9 @@
 //  Created by Максим Жуин on 06.02.2024.
 //
 
-import UIKit
 import SnapKit
-
+import UIKit
 class MainScreenView: UIView {
-
     weak var mainScreenVC: IMainScreenController?
 
     private let mainWeatherView = WeatherView()
@@ -50,17 +48,15 @@ class MainScreenView: UIView {
         return everydayTableView
     }()
 
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-
 
     private func layout() {
         addSubview(mainWeatherView)
@@ -95,9 +91,7 @@ class MainScreenView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
             make.bottom.equalTo(safeArea.snp.bottom)
         }
-
     }
-
 
     @objc private func tapOnTwentyFourButton(_ sender: UIButton) {
         mainScreenVC?.pushTwentyFourVc()
@@ -105,7 +99,6 @@ class MainScreenView: UIView {
 }
 
 extension MainScreenView: UICollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: 48, height: 84)
     }
@@ -128,45 +121,29 @@ extension MainScreenView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
 extension MainScreenView: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-       1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       11
-    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { 11 }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: indexPath) as? WeatherCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: indexPath) as? WeatherCollectionViewCell else { return UICollectionViewCell() }
         return cell
     }
-    
-
 }
 
 extension MainScreenView: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int { 4 }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        4
-    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 5 }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        5
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       1
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EverydayForecastTableViewCell.id, for: indexPath) as? EverydayForecastTableViewCell else { return UITableViewCell() }
         cell.accessoryType = .disclosureIndicator
         return cell
     }
-
 }
 
 extension MainScreenView: UITableViewDelegate {
