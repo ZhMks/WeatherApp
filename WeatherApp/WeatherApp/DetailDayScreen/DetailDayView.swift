@@ -74,13 +74,12 @@ final class DetailDayView: UIView {
         }
 
         dateCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(cityLabel.snp.bottom).offset(40)
-            make.leading.equalTo(cityLabel.snp.leading).offset(100)
-            make.bottom.equalTo(mainScrollView.snp.top).offset(10)
+            make.top.equalTo(cityLabel.snp.bottom).offset(20)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(16)
+            make.bottom.equalTo(mainScrollView.snp.top).offset(-40)
         }
 
         mainScrollView.snp.makeConstraints { make in
-            make.top.equalTo(dateCollectionView.snp.bottom).offset(10)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(15)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-15)
             make.bottom.equalTo(contentView.snp.bottom)
@@ -94,9 +93,6 @@ final class DetailDayView: UIView {
 
         dayNightTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(contentView)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-15)
-            make.height.equalTo(692)
-            make.width.equalTo(344)
         }
     }
     
@@ -107,10 +103,6 @@ final class DetailDayView: UIView {
 extension DetailDayView: UITableViewDelegate {}
 
 extension DetailDayView: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        341
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         2
@@ -148,6 +140,14 @@ extension DetailDayView: UICollectionViewDataSource {
 
 }
 extension DetailDayView: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 48, height: 84)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        16.0
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)

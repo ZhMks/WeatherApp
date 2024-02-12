@@ -32,12 +32,24 @@ final class NetworkService: INetworkService {
                 switch response.statusCode {
                 case 200:
                     if let data = data {
+                        print(String(data: data, encoding: .utf8)!)
                         let decoder = JSONDecoder()
                         do {
                             let networkData = try decoder.decode(NetworkServiceModel.self, from: data)
                             completion(.success(networkData))
+                        } catch let DecodingError.dataCorrupted(context) {
+                            print(context)
+                        } catch let DecodingError.keyNotFound(key, context) {
+                            print("Key '\(key)' not found:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch let DecodingError.valueNotFound(value, context) {
+                            print("Value '\(value)' not found:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch let DecodingError.typeMismatch(type, context)  {
+                            print("Type '\(type)' mismatch:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
                         } catch {
-                            print(error.localizedDescription)
+                            print("error: ", error)
                         }
                     }
                 case 404:

@@ -17,6 +17,7 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.font = UIFont(name: "Rubik-Regular", size: 18)
         dateLabel.text = "15/04/ ПТ"
+        dateLabel.textColor = .black
         return dateLabel
     }()
 
@@ -34,9 +35,9 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
 
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
+            make.leading.equalTo(contentView.snp.leading)
             make.bottom.equalTo(contentView.snp.bottom)
-            make.width.equalTo(44)
-            make.height.equalTo(88)
+            make.trailing.equalTo(contentView.snp.trailing)
         }
     }
 
