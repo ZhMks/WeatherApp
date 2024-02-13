@@ -8,10 +8,10 @@
 import Foundation
 
 final class NetworkServiceModel: Codable {
-    private let serverTime: String
-    private let info: InfoNetworkModel
-    private let fact: FactNetworkModel
-    private let forecast: [ForecastNetworkModel]
+     let serverTime: String
+     let info: InfoNetworkModel
+     let fact: FactNetworkModel
+     let forecast: [ForecastNetworkModel]
 
     private enum CodingKeys: String, CodingKey {
         case serverTime = "now_dt"
@@ -30,24 +30,45 @@ final class NetworkServiceModel: Codable {
 
 
 final class InfoNetworkModel: Codable {
-    private let lat: Double
-    private let lon: Double
+    let lat: Double
+    let lon: Double
+    let tzInfo: TzInfo
 
-    init(lat: Double, lon:  Double) {
+    private enum CodingKeys: String, CodingKey {
+        case lat = "lat"
+        case lon = "lon"
+        case tzInfo = "tzinfo"
+    }
+
+    init(lat: Double, lon:  Double, tzInfo: TzInfo) {
         self.lat = lat
         self.lon = lon
+        self.tzInfo = tzInfo
+    }
+}
+
+final class TzInfo: Codable {
+    let name: String
+
+    private enum CodingKeys: String, CodingKey {
+        case name = "name"
+    }
+    init(name: String) {
+        self.name = name
     }
 }
 
 final class FactNetworkModel: Codable {
 
-    private let temp: Int
-    private let feelsLike: Int
-    private let condition: String
-    private let windSpeed: Double
-    private let windDir: String
-    private let humidity: Int
-    private let daytime: String
+    let temp: Int
+    let feelsLike: Int
+    let condition: String
+    let windSpeed: Double
+    let windDir: String
+    let humidity: Int
+    let daytime: String
+    let precType: Int
+    let cloudness: Double
 
     private enum CodingKeys: String, CodingKey {
         case feelsLike = "feels_like"
@@ -56,10 +77,12 @@ final class FactNetworkModel: Codable {
         case temp = "temp"
         case humidity = "humidity"
         case daytime = "daytime"
+        case precType = "prec_type"
         case condition = "condition"
+        case cloudness = "cloudness"
     }
 
-    init(temp: Int, feelsLike: Int, condition: String, windSpeed: Double, windDir: String, humidity: Int, daytime: String) {
+    init(temp: Int, feelsLike: Int, condition: String, windSpeed: Double, windDir: String, humidity: Int, daytime: String, precType: Int, cloudness: Double) {
         self.temp = temp
         self.feelsLike = feelsLike
         self.condition = condition
@@ -67,17 +90,20 @@ final class FactNetworkModel: Codable {
         self.windDir = windDir
         self.humidity = humidity
         self.daytime = daytime
+        self.precType = precType
+        self.cloudness = cloudness
     }
 }
 
 final class ForecastNetworkModel: Codable {
-    private let date: String
-    private let week: Int
-    private let sunrise: String
-    private let sunset: String
-    private let moonCode: Int
-    private let moonText: String
-    private let partObj: [PartNetworkModel]
+    let date: String
+    let week: Int
+    let sunrise: String
+    let sunset: String
+    let moonCode: Int
+    let moonText: String
+    let partObj: Parts
+    let hours: [HoursNetworkModel]
 
     private enum CodingKeys: String, CodingKey {
         case moonCode = "moon_code"
@@ -87,9 +113,10 @@ final class ForecastNetworkModel: Codable {
         case week = "week"
         case sunrise = "sunrise"
         case sunset = "sunset"
+        case hours = "hours"
     }
 
-    init(date: String, week: Int, sunrise: String, sunset: String, moonCode: Int, moonText: String, partObj: [PartNetworkModel]) {
+    init(date: String, week: Int, sunrise: String, sunset: String, moonCode: Int, moonText: String,partObj: Parts, hours: [HoursNetworkModel]) {
         self.date = date
         self.week = week
         self.sunrise = sunrise
@@ -97,24 +124,23 @@ final class ForecastNetworkModel: Codable {
         self.moonCode = moonCode
         self.moonText = moonText
         self.partObj = partObj
+        self.hours = hours
     }
 }
 
-final class PartNetworkModel: Codable {
+final class PartInfoNetworkModel: Codable {
 
-    private let name: String
-    private let tempMin: Int
-    private let tempMax: Int
-    private let feelsLike: String
-    private let condition: String
-    private let daytime: String
-    private let windSpeed: Double
-    private let windDir: String
-    private let humidity: Int
-    private let precProb: Int
+    let tempMin: Int
+    let tempMax: Int
+    let feelsLike: Int
+    let condition: String
+    let daytime: String
+    let windSpeed: Double
+    let windDir: String
+    let humidity: Int
+    let precProb: Int
 
     private enum CodingKeys: String, CodingKey {
-        case name = "part_name"
         case tempMin = "temp_min"
         case tempMax = "temp_max"
         case feelsLike = "feels_like"
@@ -126,8 +152,7 @@ final class PartNetworkModel: Codable {
         case humidity = "humidity"
     }
 
-    init(name: String, tempMin: Int, tempMax: Int, feelsLike: String, condition: String, daytime: String, windSpeed: Double, windDir: String, humidity: Int, precProb: Int) {
-        self.name = name
+    init(tempMin: Int, tempMax: Int, feelsLike: Int, condition: String, daytime: String, windSpeed: Double, windDir: String, humidity: Int, precProb: Int) {
         self.tempMin = tempMin
         self.tempMax = tempMax
         self.feelsLike = feelsLike
@@ -138,5 +163,55 @@ final class PartNetworkModel: Codable {
         self.humidity = humidity
         self.precProb = precProb
     }
+}
 
+final class HoursNetworkModel: Codable {
+
+    let hour: String
+    let temp: Int
+    let feelsLike: Int
+    let condition: String
+    let windSpeed: Double
+    let windDir: String
+    let humidity: Int
+    let precStr: Double
+    let cloudness: Double
+    let uvIndex: Int
+
+    private enum CodingKeys: String, CodingKey {
+        case hour = "hour"
+        case temp = "temp"
+        case condition = "condition"
+        case feelsLike = "feels_like"
+        case windSpeed = "wind_speed"
+        case windDir = "wind_dir"
+        case humidity = "humidity"
+        case precStr = "prec_strength"
+        case cloudness = "cloudness"
+        case uvIndex = "uv_index"
+    }
+
+    init(hour: String, temp: Int, feelsLike: Int, condition: String, windSpeed: Double, windDir: String, humidity: Int, precStr: Double, cloudness: Double, uvIndex: Int) {
+        self.hour = hour
+        self.temp = temp
+        self.feelsLike = feelsLike
+        self.condition = condition
+        self.windSpeed = windSpeed
+        self.windDir = windDir
+        self.humidity = humidity
+        self.precStr = precStr
+        self.cloudness = cloudness
+        self.uvIndex = uvIndex
+    }
+
+}
+
+final class Parts: Codable {
+    let day: PartInfoNetworkModel
+    let night: PartInfoNetworkModel
+
+    init(day: PartInfoNetworkModel, night: PartInfoNetworkModel) {
+        self.day = day
+        self.night = night
+    }
 }

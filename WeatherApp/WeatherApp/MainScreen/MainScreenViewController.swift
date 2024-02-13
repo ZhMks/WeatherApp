@@ -25,10 +25,10 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         layout()
         networkService.fetchData(lat: 55.75396, lon: 37.620393) { result in
             switch result {
-            case .success(let success):
-                print(success)
+            case .success(let fetchedData):
+                ()
             case .failure(let failure):
-                print(failure)
+                print(failure.description)
             }
         }
     }

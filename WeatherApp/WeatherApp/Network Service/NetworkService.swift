@@ -7,32 +7,48 @@
 
 import Foundation
 
+enum NetworkErrors: Error {
+    case wrongURL
+    case serverError
+    case errorWithDataTask
+
+    var description: String {
+        switch self {
+        case .wrongURL:
+            return "Неверный URL"
+        case .serverError:
+            return "Ошибка сервера"
+        case .errorWithDataTask:
+            return "Ошибка создания таска"
+        }
+    }
+}
+
 
 protocol INetworkService {
-    func fetchData(lat: CGFloat, lon: CGFloat, completion: @escaping (Result<NetworkServiceModel, Error>) -> Void)
+    func fetchData(lat: CGFloat, lon: CGFloat, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void)
 }
 
 final class NetworkService: INetworkService {
 
-    func fetchData(lat: CGFloat, lon: CGFloat, completion: @escaping (Result<NetworkServiceModel, Error>) -> Void) {
+    func fetchData(lat: CGFloat, lon: CGFloat, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void) {
         let headers = [ "X-Yandex-API-Key": "4bd7f22d-9199-40cc-ae2a-0bfe13a20973" ]
-        let baseURL = "https://api.weather.yandex.ru/v2/forecast?lat=\(lat)&lon=\(lon)&lang=ru_RU"
+        let baseURL = "https://api.weather.yandex.ru/v2/forecast?lat=\(lat)&lon=\(lon)&lang=&limit=3&hours=true&extra=false"
         guard let fetchURL = URL.init(string: baseURL) else { return }
         var request = URLRequest(url: fetchURL)
-        request.allHTTPHeaderFields = headers
+       request.allHTTPHeaderFields = headers
         request.httpMethod = "GET"
 
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(NetworkErrors.errorWithDataTask))
             }
 
             if let response = response as? HTTPURLResponse {
                 switch response.statusCode {
                 case 200:
                     if let data = data {
-                        print(String(data: data, encoding: .utf8)!)
                         let decoder = JSONDecoder()
                         do {
                             let networkData = try decoder.decode(NetworkServiceModel.self, from: data)
@@ -53,9 +69,9 @@ final class NetworkService: INetworkService {
                         }
                     }
                 case 404:
-                    print("Error.404")
+                    completion(.failure(NetworkErrors.wrongURL))
                 case 502:
-                    print("Error.502")
+                    completion(.failure(NetworkErrors.serverError))
                 default: print("Error")
                 }
             }

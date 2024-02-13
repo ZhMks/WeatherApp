@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="FactModel" representedClassName="FactModel" syncable="YES" codeGenerationType="class">
+        <attribute name="cloudness" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="daytime" optional="YES" attributeType="String"/>
+        <attribute name="feelsLike" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="humidity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="precType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="temp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windDir" optional="YES" attributeType="String"/>
+        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="factForMainForecast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainForeCastModel" inverseName="getFactWeather" inverseEntity="MainForeCastModel"/>
+    </entity>
+    <entity name="InfoDataModel" representedClassName="InfoDataModel" syncable="YES" codeGenerationType="class">
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="getCityName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InfoDataModel" inverseName="getCityName" inverseEntity="InfoDataModel"/>
+        <relationship name="infoformainmodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainForeCastModel" inverseName="informationmodel" inverseEntity="MainForeCastModel"/>
+    </entity>
+    <entity name="MainForeCastModel" representedClassName="MainForeCastModel" syncable="YES" codeGenerationType="class">
+        <attribute name="serverTime" optional="YES" attributeType="String"/>
+        <relationship name="getFactWeather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FactModel" inverseName="factForMainForecast" inverseEntity="FactModel"/>
+        <relationship name="informationmodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InfoDataModel" inverseName="infoformainmodel" inverseEntity="InfoDataModel"/>
+    </entity>
+    <entity name="TzInfoDataModel" representedClassName="TzInfoDataModel" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="citynameforinfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InfoDataModel"/>
+    </entity>
+</model>

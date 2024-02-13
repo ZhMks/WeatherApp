@@ -8,6 +8,7 @@
 import SnapKit
 import UIKit
 class MainScreenView: UIView {
+
     weak var mainScreenVC: IMainScreenController?
 
     private let mainWeatherView = WeatherView()
@@ -37,7 +38,7 @@ class MainScreenView: UIView {
         return weatherCollectionView
     }()
 
-    private lazy var everydayForecastTableView: UITableView = {
+     private lazy var everydayForecastTableView: UITableView = {
         let everydayTableView = UITableView(frame: .zero, style: .insetGrouped)
         everydayTableView.translatesAutoresizingMaskIntoConstraints = false
         everydayTableView.dataSource = self
@@ -133,9 +134,7 @@ extension MainScreenView: UICollectionViewDataSource {
 }
 
 extension MainScreenView: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int { 4 }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 5 }
+    func numberOfSections(in tableView: UITableView) -> Int { 1 }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
 
@@ -151,4 +150,13 @@ extension MainScreenView: UITableViewDelegate {
         mainScreenVC?.pushDayNightVc()
         tableView.deselectRow(at: indexPath, animated: true)
     }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+            return CGFloat.leastNormalMagnitude
+        }
+
+        func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+            return UIView()
+        }
+
 }

@@ -25,7 +25,7 @@ class SettingsViewController: UIViewController, ISettingsViewController {
 
     private func layout() {
         view.addSubview(settingsView)
-//        settingsView.settingsVC = self
+      //  settingsView.settingsVC = self
         settingsView.translatesAutoresizingMaskIntoConstraints = false
 
         settingsView.snp.makeConstraints { make in

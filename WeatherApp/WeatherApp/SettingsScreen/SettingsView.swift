@@ -10,7 +10,7 @@ import SnapKit
 
 final class SettingsView: UIView {
 
-    weak var settingsVC: ISettingsViewController?
+    var settingsVC: ISettingsViewController?
 
     private let greyColor: UIColor = UIColor(red: 137/255, green: 131/255, blue: 131/255, alpha: 1)
     private let segmentedBackground: UIColor = UIColor(red: 254/255, green: 237/255, blue: 233/255, alpha: 1)

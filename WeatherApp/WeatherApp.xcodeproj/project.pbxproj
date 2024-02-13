@@ -13,10 +13,12 @@
 		B26A56FD2B7645A700FC7255 /* DetailDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A56FC2B7645A700FC7255 /* DetailDayView.swift */; };
 		B26A57012B764BB200FC7255 /* DetailDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A57002B764BB200FC7255 /* DetailDayTableViewCell.swift */; };
 		B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A57022B76543B00FC7255 /* DetailDayViewController.swift */; };
+		B27B55EE2B7B6D3F009CF6B4 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */; };
+		B27B55F02B7B78A8009CF6B4 /* CoreDataModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */; };
+		B27B55F32B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B27B55F12B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodeld */; };
 		B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */; };
 		B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */; };
 		B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38812B72266600D1ECD5 /* OnBoardingVC.swift */; };
-		B2AF38882B72266600D1ECD5 /* WeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38862B72266600D1ECD5 /* WeatherApp.xcdatamodeld */; };
 		B2AF388A2B72266A00D1ECD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2AF38892B72266A00D1ECD5 /* Assets.xcassets */; };
 		B2AF388D2B72266A00D1ECD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2AF388B2B72266A00D1ECD5 /* LaunchScreen.storyboard */; };
 		B2AF38962B722EDA00D1ECD5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2AF38952B722EDA00D1ECD5 /* SnapKit */; };
@@ -46,11 +48,13 @@
 		B26A56FC2B7645A700FC7255 /* DetailDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayView.swift; sourceTree = "<group>"; };
 		B26A57002B764BB200FC7255 /* DetailDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayTableViewCell.swift; sourceTree = "<group>"; };
 		B26A57022B76543B00FC7255 /* DetailDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayViewController.swift; sourceTree = "<group>"; };
+		B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModelService.swift; sourceTree = "<group>"; };
+		B27B55F22B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ForecasCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		B2AF387A2B72266600D1ECD5 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B2AF38812B72266600D1ECD5 /* OnBoardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingVC.swift; sourceTree = "<group>"; };
-		B2AF38872B72266600D1ECD5 /* WeatherApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WeatherApp.xcdatamodel; sourceTree = "<group>"; };
 		B2AF38892B72266A00D1ECD5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2AF388C2B72266A00D1ECD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2AF388E2B72266A00D1ECD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +89,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B22173A22B7A705E002C1C78 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B26A57002B764BB200FC7255 /* DetailDayTableViewCell.swift */,
+				B2B945852B7A18C500713164 /* DetailDayCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		B26A56F42B75FC9700FC7255 /* DetailTwentyFourView */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,17 +111,33 @@
 		B26A56FB2B76458A00FC7255 /* DetailDayScreen */ = {
 			isa = PBXGroup;
 			children = (
+				B22173A22B7A705E002C1C78 /* Cells */,
 				B26A57022B76543B00FC7255 /* DetailDayViewController.swift */,
 				B26A56FC2B7645A700FC7255 /* DetailDayView.swift */,
-				B26A57002B764BB200FC7255 /* DetailDayTableViewCell.swift */,
-				B2B945852B7A18C500713164 /* DetailDayCollectionViewCell.swift */,
 			);
 			path = DetailDayScreen;
+			sourceTree = "<group>";
+		};
+		B27B55EB2B7B6D19009CF6B4 /* CoreDataService */ = {
+			isa = PBXGroup;
+			children = (
+				B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */,
+			);
+			path = CoreDataService;
+			sourceTree = "<group>";
+		};
+		B27B55EC2B7B6D23009CF6B4 /* CoreDataModelService */ = {
+			isa = PBXGroup;
+			children = (
+				B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */,
+			);
+			path = CoreDataModelService;
 			sourceTree = "<group>";
 		};
 		B2AF38712B72266600D1ECD5 = {
 			isa = PBXGroup;
 			children = (
+				B27B55F12B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodeld */,
 				B2AF387C2B72266600D1ECD5 /* WeatherApp */,
 				B2AF387B2B72266600D1ECD5 /* Products */,
 			);
@@ -125,6 +154,8 @@
 		B2AF387C2B72266600D1ECD5 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				B27B55EC2B7B6D23009CF6B4 /* CoreDataModelService */,
+				B27B55EB2B7B6D19009CF6B4 /* CoreDataService */,
 				B2B945872B7A218100713164 /* Network Service */,
 				B26A56FB2B76458A00FC7255 /* DetailDayScreen */,
 				B26A56F42B75FC9700FC7255 /* DetailTwentyFourView */,
@@ -136,7 +167,6 @@
 				B2AF38892B72266A00D1ECD5 /* Assets.xcassets */,
 				B2AF388B2B72266A00D1ECD5 /* LaunchScreen.storyboard */,
 				B2AF388E2B72266A00D1ECD5 /* Info.plist */,
-				B2AF38862B72266600D1ECD5 /* WeatherApp.xcdatamodeld */,
 				B2AF38A22B7236C400D1ECD5 /* Fonts */,
 			);
 			path = WeatherApp;
@@ -284,15 +314,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				B26A56F82B75FEB800FC7255 /* DetailTwentyFourViewController.swift in Sources */,
-				B2AF38882B72266600D1ECD5 /* WeatherApp.xcdatamodeld in Sources */,
 				B2AF38B52B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift in Sources */,
 				B2AF389B2B722EF500D1ECD5 /* OnBoardingView.swift in Sources */,
 				B2AF38A92B723C1300D1ECD5 /* SettingsViewController.swift in Sources */,
 				B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */,
 				B26A56F62B75FCAB00FC7255 /* DetailTwentyFourView.swift in Sources */,
 				B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */,
+				B27B55EE2B7B6D3F009CF6B4 /* CoreDataService.swift in Sources */,
 				B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */,
 				B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */,
+				B27B55F02B7B78A8009CF6B4 /* CoreDataModelService.swift in Sources */,
+				B27B55F32B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodeld in Sources */,
 				B2B945892B7A219D00713164 /* NetworkService.swift in Sources */,
 				B2AF38A72B72380900D1ECD5 /* SettingsView.swift in Sources */,
 				B2B9458B2B7A21E800713164 /* NetworkServiceModel.swift in Sources */,
@@ -552,13 +584,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		B2AF38862B72266600D1ECD5 /* WeatherApp.xcdatamodeld */ = {
+		B27B55F12B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				B2AF38872B72266600D1ECD5 /* WeatherApp.xcdatamodel */,
+				B27B55F22B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodel */,
 			);
-			currentVersion = B2AF38872B72266600D1ECD5 /* WeatherApp.xcdatamodel */;
-			path = WeatherApp.xcdatamodeld;
+			currentVersion = B27B55F22B7B82E0009CF6B4 /* ForecasCoreDataModel.xcdatamodel */;
+			path = ForecasCoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

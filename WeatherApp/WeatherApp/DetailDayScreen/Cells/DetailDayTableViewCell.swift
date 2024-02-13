@@ -195,7 +195,10 @@ final class DetailDayTableViewCell: UITableViewCell {
 
     private func layout() {
         createViews()
+        makeConstraints()
+    }
 
+    private func makeConstraints() {
         dayNightLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(21)
             make.leading.equalTo(contentView.snp.leading).offset(15)

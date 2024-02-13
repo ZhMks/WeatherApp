@@ -34,10 +34,7 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(dateLabel)
 
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top)
-            make.leading.equalTo(contentView.snp.leading)
-            make.bottom.equalTo(contentView.snp.bottom)
-            make.trailing.equalTo(contentView.snp.trailing)
+            make.center.equalTo(contentView.snp.center)
         }
     }
 

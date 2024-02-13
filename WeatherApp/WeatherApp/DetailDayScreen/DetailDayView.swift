@@ -77,13 +77,13 @@ final class DetailDayView: UIView {
             make.top.equalTo(cityLabel.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(16)
             make.bottom.equalTo(mainScrollView.snp.top).offset(-40)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
 
         mainScrollView.snp.makeConstraints { make in
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(15)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-15)
             make.bottom.equalTo(contentView.snp.bottom)
-
         }
 
         contentView.snp.makeConstraints { make in
@@ -95,8 +95,6 @@ final class DetailDayView: UIView {
             make.top.leading.trailing.equalTo(contentView)
         }
     }
-    
-    
 }
 
 
@@ -142,11 +140,11 @@ extension DetailDayView: UICollectionViewDataSource {
 extension DetailDayView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 48, height: 84)
+        CGSize(width: 84, height: 48)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        16.0
+        10.0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
