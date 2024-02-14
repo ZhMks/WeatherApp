@@ -209,9 +209,55 @@ final class HoursNetworkModel: Codable {
 final class Parts: Codable {
     let day: PartInfoNetworkModel
     let night: PartInfoNetworkModel
+    let dayShort: ShortNetworkModel
+    let nightShort: ShortNetworkModel
 
-    init(day: PartInfoNetworkModel, night: PartInfoNetworkModel) {
+    private enum CodingKeys: String, CodingKey {
+        case day = "day"
+        case night = "night"
+        case dayShort = "day_short"
+        case nightShort = "night_short"
+    }
+
+    init(day: PartInfoNetworkModel, night: PartInfoNetworkModel, dayShort: ShortNetworkModel, nightShort: ShortNetworkModel) {
         self.day = day
         self.night = night
+        self.dayShort = dayShort
+        self.nightShort = nightShort
     }
 }
+
+final class ShortNetworkModel: Codable {
+
+    let temp: Int
+    let feelsLike: Int
+    let condition: String
+    let daytime: String
+    let windSpeed: Double
+    let windDir: String
+    let humidity: Int
+    let precProb: Int
+
+    private enum CodingKeys: String, CodingKey {
+        case temp = "temp"
+        case feelsLike = "feels_like"
+        case windSpeed = "wind_speed"
+        case windDir = "wind_dir"
+        case precProb = "prec_prob"
+        case condition = "condition"
+        case daytime = "daytime"
+        case humidity = "humidity"
+    }
+
+    init(temp: Int, feelsLike: Int, condition: String, daytime: String, windSpeed: Double, windDir: String, humidity: Int, precProb: Int) {
+        self.temp = temp
+        self.feelsLike = feelsLike
+        self.condition = condition
+        self.daytime = daytime
+        self.windSpeed = windSpeed
+        self.windDir = windDir
+        self.humidity = humidity
+        self.precProb = precProb
+    }
+}
+

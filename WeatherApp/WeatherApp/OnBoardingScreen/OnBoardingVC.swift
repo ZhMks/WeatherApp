@@ -39,7 +39,8 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     }
 
     func pushViewController() {
-        let mainViewController = MainScreenViewController()
+        let coreDataModelService = CoreDataModelService()
+        let mainViewController = MainScreenViewController(coreDataModelService: coreDataModelService)
         UIView.animate(withDuration: 0.5) {
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainViewController)
         }
