@@ -34,11 +34,6 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
-        for mainModel in coreDataModelService.modelArray! {
-            (mainModel as? MainForecastsModels)?.forecastArray?.forEach({ object in
-                print((object as? DayModel)?.condition)
-            })
-        }
         networkService.fetchData(lat: 55.75396, lon: 37.620393) { result in
             switch result {
             case .success(let fetchedData):
@@ -46,6 +41,13 @@ class MainScreenViewController: UIViewController, IMainScreenController {
             case .failure(let failure):
                 print(failure.description)
             }
+        }
+        let request = HourModel.fetchRequest()
+        do {
+            let elemtn = try CoreDataService.shared.managedContext.fetch(request)
+            print(elemtn)
+        } catch {
+
         }
     }
 
