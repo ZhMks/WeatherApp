@@ -8,7 +8,6 @@
 import SnapKit
 import UIKit
 class MainScreenView: UIView {
-
     weak var mainScreenVC: IMainScreenController?
 
     private let mainWeatherView = WeatherView()
@@ -134,9 +133,10 @@ extension MainScreenView: UICollectionViewDataSource {
 }
 
 extension MainScreenView: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int { 1 }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       0
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EverydayForecastTableViewCell.id, for: indexPath) as? EverydayForecastTableViewCell else { return UITableViewCell() }

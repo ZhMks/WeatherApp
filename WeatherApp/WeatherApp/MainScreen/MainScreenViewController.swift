@@ -34,10 +34,15 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
+        for mainModel in coreDataModelService.modelArray! {
+            (mainModel as? MainForecastsModels)?.forecastArray?.forEach({ object in
+                print((object as? DayModel)?.condition)
+            })
+        }
         networkService.fetchData(lat: 55.75396, lon: 37.620393) { result in
             switch result {
             case .success(let fetchedData):
-                self.coreDataModelService.saveModel(networkModel: fetchedData)
+                self.coreDataModelService.saveModelToCoreData(networkModel: fetchedData)
             case .failure(let failure):
                 print(failure.description)
             }
@@ -47,7 +52,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     private func layout() {
         view.addSubview(mainScreenView)
         mainScreenView.mainScreenVC = self
-        navigationItem.title = "Ulyanovsk, Russia"
+        navigationItem.title = "\(coreDataModelService.modelArray?.first?.name)"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Landmark"), style: .plain, target: self, action: #selector(rightButtonTapped(_:)))

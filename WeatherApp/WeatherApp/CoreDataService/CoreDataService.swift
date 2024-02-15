@@ -10,11 +10,12 @@ import CoreData
 
 
 final class CoreDataService {
+    
     static let shared = CoreDataService()
     private init() {}
 
     private let persistantContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "ForecasCoreDataModel")
+        let container = NSPersistentContainer(name: "ForecastsModels")
         container.loadPersistentStores { storeDescription, error in
             if let error = error {
                 print(error.localizedDescription)

@@ -17,7 +17,7 @@ final class WeatherView: UIView {
         let devidedTemperature = UILabel()
         devidedTemperature.font = UIFont(name: "Rubik-Regular", size: .sixteen)
         devidedTemperature.textColor = .white
-        devidedTemperature.text = "7/13"
+        devidedTemperature.text = "qweqweqwe"
         devidedTemperature.translatesAutoresizingMaskIntoConstraints = false
         return devidedTemperature
     }()
@@ -27,7 +27,7 @@ final class WeatherView: UIView {
         mainTemperature.translatesAutoresizingMaskIntoConstraints = false
         mainTemperature.font = UIFont(name: "Rubik-Regular", size: 36)
         mainTemperature.textColor = .white
-        mainTemperature.text = "13"
+        mainTemperature.text = "fqwqwq"
         return mainTemperature
     }()
 
@@ -35,7 +35,7 @@ final class WeatherView: UIView {
         let mainWeatherLabel = UILabel()
         mainWeatherLabel.translatesAutoresizingMaskIntoConstraints = false
         mainWeatherLabel.font = UIFont(name: "Rubik-Regular", size: .sixteen)
-        mainWeatherLabel.text = "Возможен небольшой дождь"
+        mainWeatherLabel.text = "dsssd"
         mainWeatherLabel.textColor = .white
         return mainWeatherLabel
     }()
@@ -44,7 +44,7 @@ final class WeatherView: UIView {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
         percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
-        percitipationLabel.text = "0"
+        percitipationLabel.text = "fsdfsf"
         percitipationLabel.textColor = .white
         return percitipationLabel
     }()
@@ -54,7 +54,7 @@ final class WeatherView: UIView {
         windSpeed.translatesAutoresizingMaskIntoConstraints = false
         windSpeed.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         windSpeed.textColor = .white
-        windSpeed.text = "5 m/s"
+        windSpeed.text = "fdsfsdf"
         return windSpeed
     }()
 
@@ -62,7 +62,7 @@ final class WeatherView: UIView {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
         percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
-        percitipationLabel.text = "75%"
+        percitipationLabel.text = "14%"
         percitipationLabel.textColor = .white
         return percitipationLabel
     }()
@@ -81,7 +81,7 @@ final class WeatherView: UIView {
         let dawnTimeLabel = UILabel()
         dawnTimeLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         dawnTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        dawnTimeLabel.text = "5.45"
+        dawnTimeLabel.text = "ffff"
         dawnTimeLabel.textColor = .white
         return dawnTimeLabel
     }()
