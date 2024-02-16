@@ -259,5 +259,14 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         contentView.addSubview(cloudyNumber)
     }
 
+    func updateCellWithData(model: HourModel) {
+        timeLabel.text = model.hour
+        temperatureLabel.text = "\(model.temp)"
+        feelingTempNumber.text = "\(model.feelsLike)"
+        windSpeedNumber.text = "\(model.windSpeed)"
+        percitipationNumber.text = "\(model.precStr)"
+        cloudyNumber.text = "\(model.cloudness)"
+    }
+
 
 }

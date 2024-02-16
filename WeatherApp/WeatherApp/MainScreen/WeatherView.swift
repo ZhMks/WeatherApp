@@ -10,6 +10,8 @@ import SnapKit
 
 final class WeatherView: UIView {
 
+  var dataArray: [ForecastModel] = []
+
    private let yellowColor = UIColor(red: 246/255, green: 221/255, blue: 1/255, alpha: 1)
 
 
@@ -17,7 +19,6 @@ final class WeatherView: UIView {
         let devidedTemperature = UILabel()
         devidedTemperature.font = UIFont(name: "Rubik-Regular", size: .sixteen)
         devidedTemperature.textColor = .white
-        devidedTemperature.text = "qweqweqwe"
         devidedTemperature.translatesAutoresizingMaskIntoConstraints = false
         return devidedTemperature
     }()
@@ -27,7 +28,6 @@ final class WeatherView: UIView {
         mainTemperature.translatesAutoresizingMaskIntoConstraints = false
         mainTemperature.font = UIFont(name: "Rubik-Regular", size: 36)
         mainTemperature.textColor = .white
-        mainTemperature.text = "fqwqwq"
         return mainTemperature
     }()
 
@@ -35,7 +35,6 @@ final class WeatherView: UIView {
         let mainWeatherLabel = UILabel()
         mainWeatherLabel.translatesAutoresizingMaskIntoConstraints = false
         mainWeatherLabel.font = UIFont(name: "Rubik-Regular", size: .sixteen)
-        mainWeatherLabel.text = "dsssd"
         mainWeatherLabel.textColor = .white
         return mainWeatherLabel
     }()
@@ -44,7 +43,6 @@ final class WeatherView: UIView {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
         percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
-        percitipationLabel.text = "fsdfsf"
         percitipationLabel.textColor = .white
         return percitipationLabel
     }()
@@ -54,7 +52,6 @@ final class WeatherView: UIView {
         windSpeed.translatesAutoresizingMaskIntoConstraints = false
         windSpeed.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         windSpeed.textColor = .white
-        windSpeed.text = "fdsfsdf"
         return windSpeed
     }()
 
@@ -62,7 +59,6 @@ final class WeatherView: UIView {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
         percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
-        percitipationLabel.text = "14%"
         percitipationLabel.textColor = .white
         return percitipationLabel
     }()
@@ -81,7 +77,7 @@ final class WeatherView: UIView {
         let dawnTimeLabel = UILabel()
         dawnTimeLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
         dawnTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        dawnTimeLabel.text = "ffff"
+        dawnTimeLabel.text = "5.20"
         dawnTimeLabel.textColor = .white
         return dawnTimeLabel
     }()
@@ -137,6 +133,7 @@ final class WeatherView: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layoutViews()
+        let request = ForecastModel.fetchRequest()
         layer.cornerRadius = 8.0
     }
 
@@ -164,6 +161,7 @@ final class WeatherView: UIView {
     private func layoutViews() {
         createView()
         createOvall()
+        updateView()
         let safeArea = safeAreaLayoutGuide
 
         devidedTemperature.snp.makeConstraints { make in
@@ -255,6 +253,22 @@ final class WeatherView: UIView {
         shapeLayer.lineWidth = 5.0
 
         self.layer.addSublayer(shapeLayer)
+    }
+
+    private func updateView() {
+        let request = HourModel.fetchRequest()
+        do {
+            let anotherArray = try CoreDataService.shared.managedContext.fetch(request)
+            guard let firstElement = anotherArray.first else { return }
+            devidedTemperature.text = "\(firstElement.temp)"
+            mainWeatherLabel.text = "\((firstElement.condition)!)"
+            mainTemperatureLabel.text = "\(firstElement.temp)"
+            cloudyLabel.text = "\(firstElement.cloudness)"
+            percitipationLabel.text = "\(firstElement.precStr)"
+            windSpeedLabel.text = "\(firstElement.windSpeed)"
+        } catch {
+            dataArray = []
+        }
     }
 
 }

@@ -10,6 +10,8 @@ import SnapKit
 
 final class DetailTwentyFourView: UIView {
 
+    var dataArray: [ForecastModel]?
+
     private lazy var cityLabel: UILabel = {
         let cityLabel = UILabel()
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +40,12 @@ final class DetailTwentyFourView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        do {
+            let request = ForecastModel.fetchRequest()
+            dataArray = try  CoreDataService.shared.managedContext.fetch(request)
+        } catch {
+            dataArray = []
+        }
         layout()
     }
     
@@ -50,6 +58,12 @@ final class DetailTwentyFourView: UIView {
         addSubview(cityLabel)
         addSubview(chartView)
         addSubview(twentyFourOurTableView)
+
+        for forecast in dataArray! {
+            for hour in forecast.hoursArray! {
+               print( (hour as? HourModel)?.temp )
+            }
+        }
 
         cityLabel.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(15)
@@ -74,16 +88,15 @@ extension DetailTwentyFourView: UITableViewDataSource {
         135
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        12
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        guard let number = dataArray?[section].hoursArray?.count else { return 0 }
+        return number
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TwentyFourHourTableViewCell.id, for: indexPath) as? TwentyFourHourTableViewCell else { return UITableViewCell()}
+        guard let data = dataArray?[indexPath.section].hoursArray![indexPath.row] else { return UITableViewCell() }
+        cell.updateCellWithData(model: data as! HourModel)
         return cell
     }
     

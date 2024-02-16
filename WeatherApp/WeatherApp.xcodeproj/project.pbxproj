@@ -15,8 +15,9 @@
 		B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A57022B76543B00FC7255 /* DetailDayViewController.swift */; };
 		B27B55EE2B7B6D3F009CF6B4 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */; };
 		B27B55F02B7B78A8009CF6B4 /* CoreDataModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */; };
-		B27B55F82B7E04FF009CF6B4 /* ForecastModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55F72B7E04FF009CF6B4 /* ForecastModelService.swift */; };
+		B27B55F82B7E04FF009CF6B4 /* HoursModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55F72B7E04FF009CF6B4 /* HoursModelService.swift */; };
 		B27B55FB2B7E0662009CF6B4 /* ForecastsModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B27B55F92B7E0662009CF6B4 /* ForecastsModels.xcdatamodeld */; };
+		B27B55FD2B7F3E96009CF6B4 /* DaysModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */; };
 		B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */; };
 		B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */; };
 		B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38812B72266600D1ECD5 /* OnBoardingVC.swift */; };
@@ -51,8 +52,9 @@
 		B26A57022B76543B00FC7255 /* DetailDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayViewController.swift; sourceTree = "<group>"; };
 		B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModelService.swift; sourceTree = "<group>"; };
-		B27B55F72B7E04FF009CF6B4 /* ForecastModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModelService.swift; sourceTree = "<group>"; };
+		B27B55F72B7E04FF009CF6B4 /* HoursModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursModelService.swift; sourceTree = "<group>"; };
 		B27B55FA2B7E0662009CF6B4 /* ForecastsModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ForecastsModels.xcdatamodel; sourceTree = "<group>"; };
+		B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysModelService.swift; sourceTree = "<group>"; };
 		B2AF387A2B72266600D1ECD5 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,14 +102,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		B26A56F42B75FC9700FC7255 /* DetailTwentyFourView */ = {
+		B26A56F42B75FC9700FC7255 /* DetailTwentyFourScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B26A56F52B75FCAB00FC7255 /* DetailTwentyFourView.swift */,
 				B26A56F72B75FEB800FC7255 /* DetailTwentyFourViewController.swift */,
+				B26A56F52B75FCAB00FC7255 /* DetailTwentyFourView.swift */,
 				B26A56F92B76144A00FC7255 /* TwentyFourHourTableViewCell.swift */,
 			);
-			path = DetailTwentyFourView;
+			path = DetailTwentyFourScreen;
 			sourceTree = "<group>";
 		};
 		B26A56FB2B76458A00FC7255 /* DetailDayScreen */ = {
@@ -132,7 +134,8 @@
 			isa = PBXGroup;
 			children = (
 				B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */,
-				B27B55F72B7E04FF009CF6B4 /* ForecastModelService.swift */,
+				B27B55F72B7E04FF009CF6B4 /* HoursModelService.swift */,
+				B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */,
 			);
 			path = CoreDataModelService;
 			sourceTree = "<group>";
@@ -157,14 +160,14 @@
 		B2AF387C2B72266600D1ECD5 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				B2AF38992B722EE900D1ECD5 /* OnBoardingScreen */,
+				B2AF38AA2B723D5000D1ECD5 /* MainScreen */,
+				B26A56F42B75FC9700FC7255 /* DetailTwentyFourScreen */,
+				B26A56FB2B76458A00FC7255 /* DetailDayScreen */,
+				B2AF38A52B7237FE00D1ECD5 /* SettingsScreen */,
 				B27B55EC2B7B6D23009CF6B4 /* CoreDataModelService */,
 				B27B55EB2B7B6D19009CF6B4 /* CoreDataService */,
 				B2B945872B7A218100713164 /* Network Service */,
-				B26A56FB2B76458A00FC7255 /* DetailDayScreen */,
-				B26A56F42B75FC9700FC7255 /* DetailTwentyFourView */,
-				B2AF38AA2B723D5000D1ECD5 /* MainScreen */,
-				B2AF38A52B7237FE00D1ECD5 /* SettingsScreen */,
-				B2AF38992B722EE900D1ECD5 /* OnBoardingScreen */,
 				B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */,
 				B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */,
 				B2AF38892B72266A00D1ECD5 /* Assets.xcassets */,
@@ -337,9 +340,10 @@
 				B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */,
 				B2B945862B7A18C500713164 /* DetailDayCollectionViewCell.swift in Sources */,
 				B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */,
+				B27B55FD2B7F3E96009CF6B4 /* DaysModelService.swift in Sources */,
 				B26A56FA2B76144A00FC7255 /* TwentyFourHourTableViewCell.swift in Sources */,
 				B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */,
-				B27B55F82B7E04FF009CF6B4 /* ForecastModelService.swift in Sources */,
+				B27B55F82B7E04FF009CF6B4 /* HoursModelService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

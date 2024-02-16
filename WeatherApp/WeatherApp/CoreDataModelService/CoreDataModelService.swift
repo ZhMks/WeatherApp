@@ -4,37 +4,28 @@ import Foundation
 final class CoreDataModelService {
 
     private(set) var modelArray: [MainForecastsModels]?
-    private let coreDataService = CoreDataService.shared
+     let coreDataService = CoreDataService.shared
+     let hoursModelService: HoursModelService
+     let daysModelService: DaysModelService
 
-    init() {
+    init(hoursMdService: HoursModelService, daysMdService: DaysModelService) {
+        self.hoursModelService = hoursMdService
+        self.daysModelService = daysMdService
         fetchFromCoreData()
     }
 
     func saveModelToCoreData(networkModel: NetworkServiceModel) {
+        guard let modelArray = modelArray else { return }
 
-        saveHours(networkModel: networkModel)
-        saveForecast(networkModel: networkModel)
-//        saveDay(networkModel: networkModel)
-//        saveNight(networkModel: networkModel)
-//        saveDayShort(networkModel: networkModel)
-//        saveNightShort(networkModel: networkModel)
+        if ((modelArray.first?.forecastArray?.contains(where: { ($0 as? ForecastModel)?.date == networkModel.forecast.first?.date })) != nil) {
+            return
+        } else {
+            saveForecast(networkModel: networkModel)
 
-//        guard let modelArray = modelArray else { return }
-//
-//        if ((modelArray.first?.forecastArray?.contains(where: { ($0 as? ForecastModel)?.date == networkModel.forecast.first?.date })) != nil) {
-//            print("contains")
-//            return
-//        } else {
-//            saveForecast(networkModel: networkModel)
-//
-//            let newModelToSave = MainForecastsModels(context: coreDataService.managedContext)
-//
-//            newModelToSave.name = networkModel.info.tzInfo.name
-//
-//            coreDataService.saveContext()
-//
-//            fetchFromCoreData()
-//        }
+            coreDataService.saveContext()
+
+            fetchFromCoreData()
+        }
     }
 
     private func fetchFromCoreData() {
@@ -48,51 +39,29 @@ final class CoreDataModelService {
     }
 
     private func saveForecast(networkModel: NetworkServiceModel) {
-
         let newModelToSave = MainForecastsModels(context: coreDataService.managedContext)
 
-        for forecast in networkModel.forecast {
+        newModelToSave.name = networkModel.info.tzInfo.name
 
+        for forecast in networkModel.forecast {
+         
             let newForecastModel = ForecastModel(context: coreDataService.managedContext)
+
+            hoursModelService.saveHourWith(model: newForecastModel, hoursArray: forecast.hours)
+            daysModelService.saveDays(model: newForecastModel,
+                                      day: forecast.partObj.day,
+                                      night: forecast.partObj.night,
+                                      dayShort: forecast.partObj.dayShort,
+                                      nightShort: forecast.partObj.nightShort)
+
             newForecastModel.date = forecast.date
             newForecastModel.moonCode = Int64(forecast.moonCode)
             newForecastModel.moonText = forecast.moonText
             newForecastModel.sunset = forecast.sunset
             newForecastModel.sunrise = forecast.sunrise
-            for model in forecast.hours {
-                let newHour = HourModel(context: coreDataService.managedContext)
-                newHour.cloudness = model.cloudness
-                newForecastModel.addToHoursArray(newHour)
-            }
             newModelToSave.addToForecastArray(newForecastModel)
         }
         coreDataService.saveContext()
         fetchFromCoreData()
-    }
-
-    private func saveHours(networkModel: NetworkServiceModel) {
-
-        let newModelToSave = MainForecastsModels(context: coreDataService.managedContext).forecastArray
-
-        let initialArray = networkModel.forecast.map({ $0.hours })
-
-        for hoursArray in initialArray {
-            for element in hoursArray {
-                for forecast in newModelToSave! {
-                    let newHourModel = HourModel(context: coreDataService.managedContext)
-                    newHourModel.cloudness = element.cloudness
-                    newHourModel.condition = element.condition
-                    newHourModel.feelsLike = Int64(element.feelsLike)
-                    newHourModel.hour = element.hour
-                    newHourModel.humidity = Int64(element.humidity)
-                    newHourModel.precStr = element.precStr
-                    newHourModel.temp = Int64(element.temp)
-                    newHourModel.uvIndex = Int64(element.uvIndex)
-                    newHourModel.windDir = element.windDir
-                    newHourModel.windSpeed = element.windSpeed
-                    (forecast as? ForecastModel)?.addToHoursArray(newHourModel)
-                }
-            }
-        }
     }
 }

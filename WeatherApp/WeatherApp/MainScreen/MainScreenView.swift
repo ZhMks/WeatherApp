@@ -8,6 +8,10 @@
 import SnapKit
 import UIKit
 class MainScreenView: UIView {
+
+    var dataModelArray: [MainForecastsModels] = []
+    var forecastModelArray: [ForecastModel] = []
+
     weak var mainScreenVC: IMainScreenController?
 
     private let mainWeatherView = WeatherView()
@@ -50,6 +54,7 @@ class MainScreenView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        fetchData()
         layout()
     }
 
@@ -96,9 +101,22 @@ class MainScreenView: UIView {
     @objc private func tapOnTwentyFourButton(_ sender: UIButton) {
         mainScreenVC?.pushTwentyFourVc()
     }
+
+    private func fetchData () {
+        let request = MainForecastsModels.fetchRequest()
+        let secondRequest = ForecastModel.fetchRequest()
+        do {
+            dataModelArray = try CoreDataService.shared.managedContext.fetch(request)
+            forecastModelArray = try CoreDataService.shared.managedContext.fetch(secondRequest)
+        } catch {
+            dataModelArray = []
+            forecastModelArray = []
+        }
+    }
 }
 
 extension MainScreenView: UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: 48, height: 84)
     }
@@ -122,12 +140,17 @@ extension MainScreenView: UICollectionViewDelegateFlowLayout {
 }
 
 extension MainScreenView: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { 11 }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let number = forecastModelArray[section].hoursArray?.count else { return 0 }
+        print(section)
+        return number
+    }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: indexPath) as? WeatherCollectionViewCell else { return UICollectionViewCell() }
+        guard let dataInfo = forecastModelArray[indexPath.section].hoursArray?[indexPath.row] else { return UICollectionViewCell() }
+        cell.updateCell(date: (dataInfo as? HourModel)!)
         return cell
     }
 }
@@ -135,7 +158,8 @@ extension MainScreenView: UICollectionViewDataSource {
 extension MainScreenView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       0
+        guard let number = dataModelArray[section].forecastArray?.count else { return 0 }
+        return number
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

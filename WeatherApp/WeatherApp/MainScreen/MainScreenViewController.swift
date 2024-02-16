@@ -42,23 +42,11 @@ class MainScreenViewController: UIViewController, IMainScreenController {
                 print(failure.description)
             }
         }
-        let request = HourModel.fetchRequest()
-        do {
-            let elemtn = try CoreDataService.shared.managedContext.fetch(request)
-            print(elemtn)
-        } catch {
-
-        }
     }
 
     private func layout() {
         view.addSubview(mainScreenView)
-        mainScreenView.mainScreenVC = self
-        navigationItem.title = "\(coreDataModelService.modelArray?.first?.name)"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
-        navigationItem.leftBarButtonItem?.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Landmark"), style: .plain, target: self, action: #selector(rightButtonTapped(_:)))
-        navigationItem.rightBarButtonItem?.tintColor = .black
+        updateViewControlelr()
         mainScreenView.translatesAutoresizingMaskIntoConstraints = false
         let safeArea = view.safeAreaLayoutGuide
 
@@ -67,9 +55,29 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         }
     }
 
+    private func updateViewControlelr() {
+        mainScreenView.mainScreenVC = self
+
+        guard let modelArray = coreDataModelService.modelArray else { return }
+        mainScreenView.dataModelArray = modelArray
+        guard let name = coreDataModelService.modelArray?.first?.name else { return }
+        navigationItem.title = name
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
+        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Landmark"), style: .plain, target: self, action: #selector(rightButtonTapped(_:)))
+        navigationItem.rightBarButtonItem?.tintColor = .black
+    }
+
     func pushTwentyFourVc() {
-        let twentyFourVC = DetailTwentyFourViewController()
-        navigationController?.pushViewController(twentyFourVC, animated: true)
+        let request = MainForecastsModels.fetchRequest()
+        do {
+            let array = try CoreDataService.shared.managedContext.fetch(request)
+            let twentyFourVC = DetailTwentyFourViewController(dataModel: array)
+            navigationController?.pushViewController(twentyFourVC, animated: true)
+        } catch {
+
+        }
     }
 
     @objc private func burgerButtonTapped(_ sender: UIBarButtonItem) {
