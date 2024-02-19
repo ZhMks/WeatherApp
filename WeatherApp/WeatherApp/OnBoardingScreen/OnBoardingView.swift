@@ -291,6 +291,7 @@ final class OnboardingView: UIView {
     }
 
     @objc private func accessGeoButtonTapped(_ sender: UIButton) {
-        loginVC?.pushViewController()
+        loginVC?.requestAuthorisation()
+    //    loginVC?.pushViewController()
     }
 }

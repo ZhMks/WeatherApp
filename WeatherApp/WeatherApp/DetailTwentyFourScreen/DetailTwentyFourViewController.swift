@@ -10,18 +10,9 @@ import SnapKit
 
 class DetailTwentyFourViewController: UIViewController {
 
-    let dataModel: [MainForecastsModels]
+    var modelForeView: [ForecastModel] = []
 
     private let detailView = DetailTwentyFourView()
-
-    init(dataModel: [MainForecastsModels]) {
-        self.dataModel = dataModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +32,13 @@ class DetailTwentyFourViewController: UIViewController {
         detailView.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalTo(safeArea)
         }
+    }
+
+    func updateView(with forecast: [ForecastModel]) {
+        self.modelForeView = forecast
+        let hourModelService = HoursModelService(coreDataModel: self.modelForeView.first!)
+        let hourArray = hourModelService.hoursArray 
+        detailView.updateView(with: hourArray)
     }
 
 }

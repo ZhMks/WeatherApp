@@ -104,4 +104,11 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         }
     }
 
+    func updateCellWith(model: ForecastModel) {
+        dateLabel.text = "\((model.date)!)"
+        percentage.text = "\((model.dayModel?.precProb)!)"
+        mainLabelText.text = "\((model.dayModel?.condition)!)"
+        temperatureLabel.text = "\((model.dayModel?.tempAvg)!)"
+    }
+
 }

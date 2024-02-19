@@ -49,7 +49,7 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         let feelingsTempLabel = UILabel()
         feelingsTempLabel.translatesAutoresizingMaskIntoConstraints = false
         feelingsTempLabel.font = UIFont(name: "Rubik-Regular", size: 14)
-        feelingsTempLabel.text = "Преимущественно По ощущениям"
+        feelingsTempLabel.text = "По ощущениям"
         return feelingsTempLabel
     }()
 

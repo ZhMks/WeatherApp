@@ -17,11 +17,12 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     private let coreDataModelService: CoreDataModelService
 
-    private let networkService: INetworkService = NetworkService()
+    var mainModel: [MainForecastsModels]
 
-    private let mainScreenView = MainScreenView()
+    private let mainScreenView = MainScreenView(frame: .zero)
 
-    init(coreDataModelService: CoreDataModelService) {
+    init(coreDataModelService: CoreDataModelService, mainModel: [MainForecastsModels]) {
+        self.mainModel = mainModel
         self.coreDataModelService = coreDataModelService
         super.init(nibName: nil, bundle: nil)
     }
@@ -29,24 +30,21 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    override func loadView() {
+        super.loadView()
+        updateDataSource()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        layout()
-        networkService.fetchData(lat: 55.75396, lon: 37.620393) { result in
-            switch result {
-            case .success(let fetchedData):
-                self.coreDataModelService.saveModelToCoreData(networkModel: fetchedData)
-            case .failure(let failure):
-                print(failure.description)
-            }
-        }
+            layout()
     }
 
     private func layout() {
         view.addSubview(mainScreenView)
-        updateViewControlelr()
+        updateViewController()
         mainScreenView.translatesAutoresizingMaskIntoConstraints = false
         let safeArea = view.safeAreaLayoutGuide
 
@@ -55,13 +53,10 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         }
     }
 
-    private func updateViewControlelr() {
+    private func updateViewController() {
         mainScreenView.mainScreenVC = self
 
-        guard let modelArray = coreDataModelService.modelArray else { return }
-        mainScreenView.dataModelArray = modelArray
-        guard let name = coreDataModelService.modelArray?.first?.name else { return }
-        navigationItem.title = name
+        navigationItem.title = "\((mainModel.first?.name)!)"
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
         navigationItem.leftBarButtonItem?.tintColor = .black
@@ -69,15 +64,30 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         navigationItem.rightBarButtonItem?.tintColor = .black
     }
 
-    func pushTwentyFourVc() {
-        let request = MainForecastsModels.fetchRequest()
-        do {
-            let array = try CoreDataService.shared.managedContext.fetch(request)
-            let twentyFourVC = DetailTwentyFourViewController(dataModel: array)
-            navigationController?.pushViewController(twentyFourVC, animated: true)
-        } catch {
+    private func updateDataSource() {
+        let forecastModelService = ForecastModelService(coreDataModel: (mainModel.first)!)
+        let hoursModelService = HoursModelService(coreDataModel: (forecastModelService.forecastModel?.first)!)
+        let mainTableViewDataSource = DataSourceForMainScreen()
+        let mainCollectionDataSource = DataSourceForMainCollectionCell()
 
-        }
+        guard let forecastArray = forecastModelService.forecastModel else { return }
+
+        mainCollectionDataSource.updateData(data: hoursModelService.hoursArray)
+        mainTableViewDataSource.updateData(data: forecastArray)
+
+        mainScreenView.updateViewWith(tbDataSource: mainTableViewDataSource,
+                                      collectionDataSource: mainCollectionDataSource,
+                                      factModel: forecastArray, hourModel: hoursModelService.hoursArray)
+
+    }
+
+    func pushTwentyFourVc() {
+        guard let mainModel = coreDataModelService.modelArray?.first else { return }
+        let forecastModelService = ForecastModelService(coreDataModel: mainModel)
+        guard let forecastArray = forecastModelService.forecastModel else { return }
+        let twentyFourVC = DetailTwentyFourViewController()
+        twentyFourVC.updateView(with: forecastArray)
+        navigationController?.pushViewController(twentyFourVC, animated: true)
     }
 
     @objc private func burgerButtonTapped(_ sender: UIBarButtonItem) {

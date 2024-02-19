@@ -4,13 +4,11 @@ import Foundation
 final class CoreDataModelService {
 
     private(set) var modelArray: [MainForecastsModels]?
-     let coreDataService = CoreDataService.shared
-     let hoursModelService: HoursModelService
-     let daysModelService: DaysModelService
+    let coreDataService = CoreDataService.shared
 
-    init(hoursMdService: HoursModelService, daysMdService: DaysModelService) {
-        self.hoursModelService = hoursMdService
-        self.daysModelService = daysMdService
+
+    init()
+    {
         fetchFromCoreData()
     }
 
@@ -20,7 +18,16 @@ final class CoreDataModelService {
         if ((modelArray.first?.forecastArray?.contains(where: { ($0 as? ForecastModel)?.date == networkModel.forecast.first?.date })) != nil) {
             return
         } else {
-            saveForecast(networkModel: networkModel)
+
+            let newModelToSave = MainForecastsModels(context: coreDataService.managedContext)
+
+            let components = networkModel.info.tzInfo.name.components(separatedBy: "/")
+
+            let formattedString = "\(components[1]), \(components[0])"
+
+            newModelToSave.name = formattedString
+
+            saveForecast(networkModel: networkModel, mainModel: newModelToSave)
 
             coreDataService.saveContext()
 
@@ -38,30 +45,128 @@ final class CoreDataModelService {
         }
     }
 
-    private func saveForecast(networkModel: NetworkServiceModel) {
-        let newModelToSave = MainForecastsModels(context: coreDataService.managedContext)
+    private func saveForecast(networkModel: NetworkServiceModel, mainModel: MainForecastsModels) {
 
-        newModelToSave.name = networkModel.info.tzInfo.name
+        for _ in networkModel.forecast {
+            saveForecastModel(network: networkModel, mainModel: mainModel)
+        }
 
-        for forecast in networkModel.forecast {
-         
-            let newForecastModel = ForecastModel(context: coreDataService.managedContext)
+        coreDataService.saveContext()
+        fetchFromCoreData()
+    }
 
-            hoursModelService.saveHourWith(model: newForecastModel, hoursArray: forecast.hours)
-            daysModelService.saveDays(model: newForecastModel,
-                                      day: forecast.partObj.day,
-                                      night: forecast.partObj.night,
-                                      dayShort: forecast.partObj.dayShort,
-                                      nightShort: forecast.partObj.nightShort)
+    func saveForecastModel(network: NetworkServiceModel, mainModel: MainForecastsModels) {
+
+        guard let context = mainModel.managedObjectContext else { return }
+
+        for forecast in network.forecast {
+
+            let newForecastModel = ForecastModel(context: context)
+
+            saveHours(networkModel: forecast.hours, mainModelToSave: newForecastModel)
+            save(day: forecast.partObj.day,
+                 night: forecast.partObj.night,
+                 dayShort: forecast.partObj.dayShort,
+                 nightShort: forecast.partObj.nightShort,
+                 mainModelToSave: newForecastModel)
 
             newForecastModel.date = forecast.date
             newForecastModel.moonCode = Int64(forecast.moonCode)
             newForecastModel.moonText = forecast.moonText
             newForecastModel.sunset = forecast.sunset
             newForecastModel.sunrise = forecast.sunrise
-            newModelToSave.addToForecastArray(newForecastModel)
+            mainModel.addToForecastArray(newForecastModel)
         }
-        coreDataService.saveContext()
-        fetchFromCoreData()
+
+    }
+
+    func saveHours(networkModel: [HoursNetworkModel], mainModelToSave: ForecastModel) {
+
+        guard let context = mainModelToSave.managedObjectContext else { return }
+
+        for hour in networkModel {
+
+            let hourModel = HourModel(context: context)
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = .short
+            dateFormatter.locale = Locale(identifier: "ru")
+            let date = Date(timeIntervalSince1970: TimeInterval(hour.hour))
+            let localDate = dateFormatter.string(from: date)
+
+            hourModel.hour = localDate
+
+            hourModel.temp = Int64(hour.temp)
+            hourModel.cloudness = hour.cloudness
+            hourModel.feelsLike = Int64(hour.feelsLike)
+            hourModel.precStr = hour.precStr
+            hourModel.windSpeed = hour.windSpeed
+            hourModel.windDir = hour.windDir
+            hourModel.condition = hour.condition
+            hourModel.uvIndex = Int64(hour.uvIndex)
+            hourModel.humidity = Int64(hour.humidity)
+
+            mainModelToSave.addToHoursArray(hourModel)
+        }
+    }
+
+    func save(day: PartInfoNetworkModel, night: PartInfoNetworkModel, dayShort: ShortNetworkModel, nightShort: ShortNetworkModel, mainModelToSave: ForecastModel) {
+
+        guard let context = mainModelToSave.managedObjectContext else { return }
+
+        let newDayModel = DayModel(context: context)
+        let newNightModel = NightModel(context: context)
+        let newDayShortModel = DayShort(context: context)
+        let newNightShortModel = NightShort(context: context)
+
+
+        newDayModel.condition = day.condition
+        newDayModel.dayTime = day.daytime
+        newDayModel.feelsLike = Int64(day.feelsLike)
+        newDayModel.humidity = Int64(day.humidity)
+        newDayModel.precProb = Int64(day.precProb)
+        newDayModel.tempAvg = Int64(day.tempAvg)
+        newDayModel.tempMax = Int64(day.tempMax)
+        newDayModel.tempMin = Int64(day.tempMin)
+        newDayModel.windDir = day.windDir
+        newDayModel.windSpeed = day.windSpeed
+
+
+        mainModelToSave.dayModel = newDayModel
+
+        newNightModel.condition = night.condition
+        newNightModel.dayTime = night.daytime
+        newNightModel.feelsLike = Int64(night.feelsLike)
+        newNightModel.humidity = Int64(night.humidity)
+        newNightModel.precProb = Int64(night.precProb)
+        newNightModel.tempAvg = Int64(night.tempAvg)
+        newNightModel.tempMax = Int64(night.tempMax)
+        newNightModel.tempMin = Int64(night.tempMin)
+        newNightModel.windDir = day.windDir
+        newNightModel.windSpeed = day.windSpeed
+
+        mainModelToSave.nightModel = newNightModel
+
+        newDayShortModel.condition = dayShort.condition
+        newDayShortModel.dayTime = dayShort.daytime
+        newDayShortModel.feelsLike = Int64(dayShort.feelsLike)
+        newDayShortModel.humidity = Int64(dayShort.humidity)
+        newDayShortModel.precProb = Int64(dayShort.precProb)
+        newDayShortModel.temp = Int64(dayShort.temp)
+        newDayShortModel.windDir = dayShort.windDir
+        newDayShortModel.windSpeed = dayShort.windSpeed
+
+        mainModelToSave.dayShort = newDayShortModel
+
+        newNightShortModel.condition = nightShort.condition
+        newNightShortModel.dayTime = nightShort.daytime
+        newNightShortModel.feelsLike = Int64(nightShort.feelsLike)
+        newNightShortModel.humidity = Int64(nightShort.humidity)
+        newNightShortModel.precProb = Int64(nightShort.precProb)
+        newNightShortModel.temp = Int64(nightShort.temp)
+        newNightShortModel.windDir = nightShort.windDir
+        newNightShortModel.windSpeed = nightShort.windSpeed
+
+        mainModelToSave.nightShort = newNightShortModel
+
     }
 }

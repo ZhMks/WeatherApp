@@ -56,6 +56,7 @@ final class TzInfo: Codable {
 }
 
 final class ForecastNetworkModel: Codable {
+
     let date: String
     let sunrise: String
     let sunset: String
@@ -65,6 +66,7 @@ final class ForecastNetworkModel: Codable {
     let hours: [HoursNetworkModel]
 
     private enum CodingKeys: String, CodingKey {
+
         case moonCode = "moon_code"
         case moonText = "moon_text"
         case partObj = "parts"
@@ -127,7 +129,7 @@ final class PartInfoNetworkModel: Codable {
 
 final class HoursNetworkModel: Codable {
 
-    let hour: String
+    let hour: Double
     let temp: Int
     let feelsLike: Int
     let condition: String
@@ -139,7 +141,7 @@ final class HoursNetworkModel: Codable {
     let uvIndex: Int
 
     private enum CodingKeys: String, CodingKey {
-        case hour = "hour"
+        case hour = "hour_ts"
         case temp = "temp"
         case condition = "condition"
         case feelsLike = "feels_like"
@@ -151,7 +153,7 @@ final class HoursNetworkModel: Codable {
         case uvIndex = "uv_index"
     }
 
-    init(hour: String, temp: Int, feelsLike: Int, condition: String, windSpeed: Double, windDir: String, humidity: Int, precStr: Double, cloudness: Double, uvIndex: Int) {
+    init(hour: Double, temp: Int, feelsLike: Int, condition: String, windSpeed: Double, windDir: String, humidity: Int, precStr: Double, cloudness: Double, uvIndex: Int) {
         self.hour = hour
         self.temp = temp
         self.feelsLike = feelsLike

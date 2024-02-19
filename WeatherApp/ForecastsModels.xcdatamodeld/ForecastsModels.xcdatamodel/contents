@@ -32,7 +32,7 @@
         <attribute name="sunset" optional="YES" attributeType="String"/>
         <relationship name="dayModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayModel" inverseName="forecastModel" inverseEntity="DayModel"/>
         <relationship name="dayShort" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayShort" inverseName="forecastModel" inverseEntity="DayShort"/>
-        <relationship name="hoursArray" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="HourModel" inverseName="forecastModel" inverseEntity="HourModel"/>
+        <relationship name="hoursArray" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HourModel" inverseName="forecastModel" inverseEntity="HourModel"/>
         <relationship name="mainForecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainForecastsModels" inverseName="forecastArray" inverseEntity="MainForecastsModels"/>
         <relationship name="nightModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NightModel" inverseName="forecastModel" inverseEntity="NightModel"/>
         <relationship name="nightShort" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NightShort" inverseName="forecastModel" inverseEntity="NightShort"/>
@@ -48,7 +48,7 @@
         <attribute name="uvIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="windDir" optional="YES" attributeType="String"/>
         <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="forecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ForecastModel" inverseName="hoursArray" inverseEntity="ForecastModel" spotlightIndexingEnabled="YES"/>
+        <relationship name="forecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ForecastModel" inverseName="hoursArray" inverseEntity="ForecastModel"/>
     </entity>
     <entity name="MainForecastsModels" representedClassName="MainForecastsModels" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>

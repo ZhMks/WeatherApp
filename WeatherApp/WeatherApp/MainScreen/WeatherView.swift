@@ -10,14 +10,14 @@ import SnapKit
 
 final class WeatherView: UIView {
 
-  var dataArray: [ForecastModel] = []
+   var hourArray: [HourModel]?
 
    private let yellowColor = UIColor(red: 246/255, green: 221/255, blue: 1/255, alpha: 1)
 
 
     private lazy var devidedTemperature: UILabel = {
         let devidedTemperature = UILabel()
-        devidedTemperature.font = UIFont(name: "Rubik-Regular", size: .sixteen)
+        devidedTemperature.font = UIFont(name: "Rubik-Regular", size: 16)
         devidedTemperature.textColor = .white
         devidedTemperature.translatesAutoresizingMaskIntoConstraints = false
         return devidedTemperature
@@ -34,7 +34,7 @@ final class WeatherView: UIView {
     private lazy var mainWeatherLabel: UILabel = {
         let mainWeatherLabel = UILabel()
         mainWeatherLabel.translatesAutoresizingMaskIntoConstraints = false
-        mainWeatherLabel.font = UIFont(name: "Rubik-Regular", size: .sixteen)
+        mainWeatherLabel.font = UIFont(name: "Rubik-Regular", size: 16)
         mainWeatherLabel.textColor = .white
         return mainWeatherLabel
     }()
@@ -42,7 +42,7 @@ final class WeatherView: UIView {
     private lazy var cloudyLabel: UILabel = {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
-        percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
+        percitipationLabel.font = UIFont(name: "Rubik-Regular", size: 14)
         percitipationLabel.textColor = .white
         return percitipationLabel
     }()
@@ -50,7 +50,7 @@ final class WeatherView: UIView {
     private lazy var windSpeedLabel: UILabel = {
         let windSpeed = UILabel()
         windSpeed.translatesAutoresizingMaskIntoConstraints = false
-        windSpeed.font = UIFont(name: "Rubik-Regular", size: .fourteen)
+        windSpeed.font = UIFont(name: "Rubik-Regular", size: 14)
         windSpeed.textColor = .white
         return windSpeed
     }()
@@ -58,7 +58,7 @@ final class WeatherView: UIView {
     private lazy var percitipationLabel: UILabel = {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
-        percitipationLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
+        percitipationLabel.font = UIFont(name: "Rubik-Regular", size: 14)
         percitipationLabel.textColor = .white
         return percitipationLabel
     }()
@@ -66,7 +66,7 @@ final class WeatherView: UIView {
     private lazy var dateTimeLabel: UILabel = {
         let dateTimeLabel = UILabel()
         dateTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateTimeLabel.font = UIFont(name: "Rubik-Regular", size: .sixteen)
+        dateTimeLabel.font = UIFont(name: "Rubik-Regular", size: 16)
         dateTimeLabel.text = "17:48, ПТ 16 Апреля"
         dateTimeLabel.textColor = yellowColor
         return dateTimeLabel
@@ -75,7 +75,7 @@ final class WeatherView: UIView {
 
     private lazy var dawnTimeLabel: UILabel = {
         let dawnTimeLabel = UILabel()
-        dawnTimeLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
+        dawnTimeLabel.font = UIFont(name: "Rubik-Regular", size: 14)
         dawnTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         dawnTimeLabel.text = "5.20"
         dawnTimeLabel.textColor = .white
@@ -84,7 +84,7 @@ final class WeatherView: UIView {
 
     private lazy var sunsetTimeLabel: UILabel = {
         let sunsetTimeLabel = UILabel()
-        sunsetTimeLabel.font = UIFont(name: "Rubik-Regular", size: .fourteen)
+        sunsetTimeLabel.font = UIFont(name: "Rubik-Regular", size: 14)
         sunsetTimeLabel.text = "21.20"
         sunsetTimeLabel.textColor = .white
         return sunsetTimeLabel
@@ -133,7 +133,6 @@ final class WeatherView: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layoutViews()
-        let request = ForecastModel.fetchRequest()
         layer.cornerRadius = 8.0
     }
 
@@ -161,7 +160,6 @@ final class WeatherView: UIView {
     private func layoutViews() {
         createView()
         createOvall()
-        updateView()
         let safeArea = safeAreaLayoutGuide
 
         devidedTemperature.snp.makeConstraints { make in
@@ -204,7 +202,7 @@ final class WeatherView: UIView {
 
         percitipationImageView.snp.makeConstraints { make in
             make.top.equalTo(mainWeatherLabel.snp.bottom).offset(30)
-            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(15)
+            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(20)
             make.height.equalTo(18)
             make.width.equalTo(21)
         }
@@ -216,11 +214,12 @@ final class WeatherView: UIView {
 
         dateTimeLabel.snp.makeConstraints { make in
             make.top.equalTo(windSpeedLabel.snp.bottom).offset(10)
-            make.leading.equalTo(safeArea.snp.leading).offset(115)
+            make.leading.equalTo(safeArea.snp.leading).offset(110)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-90)
         }
+        
         dawnTimeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(safeArea.snp.leading).offset(15)
+            make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.top.equalTo(safeArea.snp.top).offset(205)
         }
 
@@ -255,30 +254,32 @@ final class WeatherView: UIView {
         self.layer.addSublayer(shapeLayer)
     }
 
-    private func updateView() {
-        let request = HourModel.fetchRequest()
-        do {
-            let anotherArray = try CoreDataService.shared.managedContext.fetch(request)
-            guard let firstElement = anotherArray.first else { return }
-            devidedTemperature.text = "\(firstElement.temp)"
-            mainWeatherLabel.text = "\((firstElement.condition)!)"
-            mainTemperatureLabel.text = "\(firstElement.temp)"
-            cloudyLabel.text = "\(firstElement.cloudness)"
-            percitipationLabel.text = "\(firstElement.precStr)"
-            windSpeedLabel.text = "\(firstElement.windSpeed)"
-        } catch {
-            dataArray = []
+    func updateView(fact: [ForecastModel]?, hourModel: [HourModel]) {
+        let currentTime = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.string(from: currentTime)
+        let components = timeString.components(separatedBy: ":")
+
+        guard let currentHour = components.first else { return }
+
+        if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
+            devidedTemperature.text = "\(selectedHour.temp)/ \((fact?.first?.dayModel?.tempMin)!)"
+            mainWeatherLabel.text = "\(selectedHour.condition ?? "")"
+            mainTemperatureLabel.text = "\(selectedHour.temp)"
+            cloudyLabel.text = "\(selectedHour.cloudness)"
+            percitipationLabel.text = "\(selectedHour.precStr)"
+            windSpeedLabel.text = "\(selectedHour.windSpeed) м/с"
         }
+
+        sunsetTimeLabel.text = "\(fact?.first?.sunset ?? "")"
+        dawnTimeLabel.text = "\(fact?.first?.sunrise ?? "")"
+
+        dateFormatter.dateFormat = "E, dd MMMM"
+        dateTimeLabel.text = "\(timeString), \(dateFormatter.string(from: currentTime))"
     }
 
-}
-
-private extension CGFloat {
-
-    static var sixteen: CGFloat {
-        return 16.0
-    }
-    static var fourteen: CGFloat {
-        return 14.0
-    }
 }

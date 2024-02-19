@@ -78,4 +78,8 @@ final class NetworkService: INetworkService {
         }
         dataTask.resume()
     }
+
+    func fetchLocation() {
+        
+    }
 }
