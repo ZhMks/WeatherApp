@@ -268,14 +268,14 @@ final class WeatherView: UIView {
         guard let currentHour = components.first else { return }
 
         if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
-            devidedTemperature.text = "\(selectedHour.temp)/ \((fact?.first?.dayModel?.tempMin)!)"
-            mainWeatherLabel.text = "\(selectedHour.condition ?? "")"
+            devidedTemperature.text = "\(selectedHour.temp)°/ \((fact?.first?.dayModel?.tempMin)!)°"
+            mainWeatherLabel.text = "\(selectedHour.condition!)"
             cloudyLabel.text = "\(selectedHour.cloudness)"
             percitipationLabel.text = "\(selectedHour.precStr)"
             windSpeedLabel.text = "\(selectedHour.windSpeed) м/с"
         }
 
-        mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempAvg)!)"
+        mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempAvg)!)°"
 
         sunsetTimeLabel.text = "\(fact?.first?.sunset ?? "")"
         dawnTimeLabel.text = "\(fact?.first?.sunrise ?? "")"

@@ -43,6 +43,7 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         mainLabelText.translatesAutoresizingMaskIntoConstraints = false
         mainLabelText.font = UIFont(name: "Rubik-Regular", size: 16)
         mainLabelText.textColor = .black
+        mainLabelText.textAlignment = .left
         mainLabelText.text = "Преимущественно облачно"
         return mainLabelText
     }()
@@ -89,13 +90,14 @@ final class EverydayForecastTableViewCell: UITableViewCell {
 
         percentage.snp.makeConstraints { make in
             make.top.equalTo(dateLabel.snp.bottom).offset(5)
-            make.trailing.equalTo(mainLabelText.snp.leading).offset(12)
             make.bottom.equalTo(contentView.snp.bottom).offset(-5)
+            make.width.equalTo(20)
         }
 
         mainLabelText.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(17)
-            make.trailing.equalTo(temperatureLabel.snp.leading).offset(-5)
+            make.leading.equalTo(percentage.snp.trailing).offset(5)
+            make.trailing.equalTo(temperatureLabel.snp.leading).offset(-15)
         }
 
         temperatureLabel.snp.makeConstraints { make in
@@ -105,13 +107,20 @@ final class EverydayForecastTableViewCell: UITableViewCell {
     }
 
     func updateCellWith(model: ForecastModel) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: model.date!)
+
+        let newDateFormatter = DateFormatter()
+        newDateFormatter.dateFormat = "dd/MM"
+        let updatedString = newDateFormatter.string(from: date!)
 
         guard let day = model.dayModel else { return }
-        
-        dateLabel.text = "\((model.date)!)"
+
+        dateLabel.text = "\(updatedString)"
         percentage.text = "\(day.precProb)"
         mainLabelText.text = "\((day.condition)!)"
-        temperatureLabel.text = "\(day.tempAvg)"
+        temperatureLabel.text = "\(day.tempMin)° - \(day.tempMax)°"
     }
 
 }

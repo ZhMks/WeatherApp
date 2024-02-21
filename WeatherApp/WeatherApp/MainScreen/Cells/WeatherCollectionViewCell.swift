@@ -72,7 +72,7 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
     }
 
     func updateCell(date: HourModel) {
-        temperatureLabel.text = "\(date.temp)"
+        temperatureLabel.text = "\(date.temp)°"
         timeLabel.text = "\((date.hour)!)"
     }
 

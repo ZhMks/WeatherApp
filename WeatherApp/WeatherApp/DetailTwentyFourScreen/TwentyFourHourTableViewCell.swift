@@ -186,19 +186,19 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
 
         windSpeedImageView.snp.makeConstraints { make in
             make.top.equalTo(feelingsTempImageView.snp.bottom).offset(12)
-            make.leading.equalTo(temperatureLabel.snp.trailing).offset(27)
+            make.leading.equalTo(temperatureLabel.snp.trailing).offset(11)
             make.height.width.equalTo(12)
         }
 
         windSpeedLabel.snp.makeConstraints { make in
             make.centerY.equalTo(windSpeedImageView.snp.centerY)
             make.leading.equalTo(windSpeedImageView.snp.trailing).offset(8)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-70)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-80)
         }
 
         windSpeedNumber.snp.makeConstraints { make in
             make.centerY.equalTo(windSpeedLabel.snp.centerY)
-            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(-5)
+            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(30)
             make.trailing.equalTo(contentView.snp.trailing).offset(-5)
         }
 
@@ -272,8 +272,8 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         dateFormatter.dateFormat = "E, dd/MM"
 
         timeLabel.text = model.hour
-        temperatureLabel.text = "\(model.temp)"
-        feelingTempNumber.text = "\(model.feelsLike)"
+        temperatureLabel.text = "\(model.temp)°"
+        feelingTempNumber.text = "\(model.feelsLike)°"
         windSpeedNumber.text = "\(model.windSpeed)"
         percitipationNumber.text = "\(model.precStr)"
         cloudyNumber.text = "\(model.cloudness)"

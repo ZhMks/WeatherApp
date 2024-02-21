@@ -95,11 +95,6 @@ class MainScreenView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-15)
         }
 
-        tableViewTitle.snp.makeConstraints { make in
-            make.leading.equalTo(safeArea.snp.leading).offset(16)
-            make.bottom.equalTo(everydayForecastTableView.snp.top).offset(-5)
-        }
-
         weatherByTimeCollectionView.snp.makeConstraints { make in
             make.top.equalTo(detailsTwentyFourHours.snp.bottom).offset(10)
             make.leading.equalTo(safeArea.snp.leading).offset(16)
@@ -107,8 +102,14 @@ class MainScreenView: UIView {
             make.height.equalTo(120)
         }
 
+        tableViewTitle.snp.makeConstraints { make in
+            make.top.equalTo(weatherByTimeCollectionView.snp.bottom).offset(5)
+            make.leading.equalTo(safeArea.snp.leading).offset(16)
+            make.bottom.equalTo(everydayForecastTableView.snp.top).offset(-5)
+        }
+
         everydayForecastTableView.snp.makeConstraints { make in
-            make.top.equalTo(weatherByTimeCollectionView.snp.bottom).offset(10)
+            make.top.equalTo(tableViewTitle.snp.bottom)
             make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
             make.bottom.equalTo(safeArea.snp.bottom)
@@ -185,6 +186,11 @@ extension MainScreenView: UICollectionViewDataSource {
 }
 
 extension MainScreenView: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let uiView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
+        return uiView
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let number = forecastModelArray?.count else { return 0 }
