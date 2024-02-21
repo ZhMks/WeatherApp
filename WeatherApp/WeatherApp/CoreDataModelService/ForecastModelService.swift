@@ -21,7 +21,7 @@ final class ForecastModelService {
         fetchData()
     }
 
-    private func fetchData() {
+    func fetchData() {
         guard let array = coreDataModel.forecastArray?.sortedArray(using: [NSSortDescriptor(key: "date", ascending: true)]) as? [ForecastModel] else {
             self.forecastModel = []
             return
@@ -29,7 +29,7 @@ final class ForecastModelService {
         self.forecastModel = array
     }
 
-    func deleteItem(item: ForecastModel) {
+    func delete(item: ForecastModel) {
         coreDataModel.managedObjectContext?.delete(item)
         coreDataService.saveContext()
         fetchData()

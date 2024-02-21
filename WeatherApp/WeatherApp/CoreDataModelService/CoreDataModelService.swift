@@ -38,17 +38,14 @@ final class CoreDataModelService {
             let forecastService = ForecastModelService(coreDataModel: firstModel)
             guard let forecastArray = forecastService.forecastModel else { return }
 
+
             for networkForecast in networkModel.forecast {
 
                 var isValuePresent = false
 
                 for forecast in forecastArray {
-                    print(forecast.date)
-                    print(networkForecast.date)
                     if forecast.date! == networkForecast.date {
                         isValuePresent = true
-                        print(isValuePresent)
-                        break
                     }
                 }
 
@@ -59,8 +56,6 @@ final class CoreDataModelService {
                     coreDataService.saveContext()
 
                     fetchFromCoreData()
-
-                    print("SAVED isVALUEPRESETN")
 
                 }
             }

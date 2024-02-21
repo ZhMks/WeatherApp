@@ -71,20 +71,6 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
                     guard var forecastsArray = forecastModelService.forecastModel else { return }
 
-                    let currentDate = Date()
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                    var stringDate = dateFormatter.string(from: currentDate)
-
-                    stringDate =  "2024-02-24"
-                    for (index, element) in forecastsArray.enumerated() {
-                        if element.date! != stringDate {
-                            forecastModelService.deleteItem(item: element)
-                        } else {
-                            break
-                        }
-                    }
-
                     let hoursArray = hoursModelService.hoursArray
 
                     let mainViewController = MainScreenViewController(coreDataModelService: coredataModelService,

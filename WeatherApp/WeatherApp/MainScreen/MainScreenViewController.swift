@@ -18,7 +18,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     private let coreDataModelService: CoreDataModelService
 
     private var mainModel: [MainForecastsModels]
-    private let forecastsModels: [ForecastModel]
+    private var forecastsModels: [ForecastModel]
     private let hoursModels: [HourModel]
 
     private let mainScreenView = MainScreenView(frame: .zero)
@@ -26,7 +26,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     init(coreDataModelService: CoreDataModelService,
          mainModel: [MainForecastsModels],
          forecastsModels: [ForecastModel],
-         hoursModels: [HourModel]) 
+         hoursModels: [HourModel])
     {
         self.mainModel = mainModel
         self.forecastsModels = forecastsModels
@@ -35,21 +35,21 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         self.coreDataModelService = coreDataModelService
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
+        //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
     }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-            layout()
+        layout()
     }
 
     private func layout() {
@@ -76,6 +76,27 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     private func updateDataSource() {
+        let forecastModelService = ForecastModelService(coreDataModel: mainModel.first!)
+
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        var stringDate = dateFormatter.string(from: currentDate)
+
+        for (index, element) in forecastsModels.enumerated() {
+            if element.date! != stringDate {
+                forecastModelService.delete(item: element)
+            } else {
+                break
+            }
+        }
+
+        forecastModelService.fetchData()
+
+        guard let convertedModels = forecastModelService.forecastModel else { return }
+
+        self.forecastsModels = convertedModels
+
         let mainTableViewDataSource = DataSourceForMainScreen()
         let mainCollectionDataSource = DataSourceForMainCollectionCell()
 
@@ -90,7 +111,6 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     func pushTwentyFourVc() {
         let twentyFourVC = DetailTwentyFourViewController()
-        print(forecastsModels.count)
         twentyFourVC.updateView(with: forecastsModels)
         navigationController?.pushViewController(twentyFourVC, animated: true)
     }
