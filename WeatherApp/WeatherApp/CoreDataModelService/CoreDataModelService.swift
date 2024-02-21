@@ -26,42 +26,44 @@ final class CoreDataModelService {
             let formattedString = "\(components[1]), \(components[0])"
 
             newModelToSave!.name = formattedString
-        }
-
-        if ((modelArray.first?.forecastArray) != nil) {
-
-            let forecastService = ForecastModelService(coreDataModel: (modelArray.first)!)
-
-            guard let models = forecastService.forecastModel else { return }
-
-            for networkForecast in networkModel.forecast {
-
-                    var isValuePresent = false
-
-                    for forecast in models {
-                        if forecast.date == networkForecast.date {
-                            isValuePresent = true
-                            break
-                        }
-                    }
-
-                    if isValuePresent == false {
-
-                        saveForecastModel(network: networkForecast, mainModel: (modelArray.first)!)
-
-                        coreDataService.saveContext()
-
-                        fetchFromCoreData()
-
-                    }
-                }
-        } else {
 
             saveForecast(networkModel: networkModel, mainModel: newModelToSave!)
 
             coreDataService.saveContext()
 
             fetchFromCoreData()
+
+        } else {
+            guard let firstModel = modelArray.first else { return }
+            let forecastService = ForecastModelService(coreDataModel: firstModel)
+            guard let forecastArray = forecastService.forecastModel else { return }
+
+            for networkForecast in networkModel.forecast {
+
+                var isValuePresent = false
+
+                for forecast in forecastArray {
+                    print(forecast.date)
+                    print(networkForecast.date)
+                    if forecast.date! == networkForecast.date {
+                        isValuePresent = true
+                        print(isValuePresent)
+                        break
+                    }
+                }
+
+                if isValuePresent == false {
+
+                    saveForecastModel(network: networkForecast, mainModel: (modelArray.first)!)
+
+                    coreDataService.saveContext()
+
+                    fetchFromCoreData()
+
+                    print("SAVED isVALUEPRESETN")
+
+                }
+            }
         }
     }
 

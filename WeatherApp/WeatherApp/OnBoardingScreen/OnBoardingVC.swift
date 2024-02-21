@@ -39,7 +39,6 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
-        coredataModelService.fetchFromCoreData()
     }
 
     private func layout() {
@@ -63,8 +62,6 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
                coredataModelService.saveModelToCoreData(networkModel: fetchedData)
 
                 guard let modelsArray = coredataModelService.modelArray else { return }
-
-                print(modelsArray.count)
 
                 DispatchQueue.main.async {[weak self] in
                     guard let self else { return }
