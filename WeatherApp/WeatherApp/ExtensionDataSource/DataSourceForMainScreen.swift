@@ -1,9 +1,4 @@
-//
-//  DataSourceForMainScreen.swift
-//  WeatherApp
-//
-//  Created by Максим Жуин on 16.02.2024.
-//
+
 
 import Foundation
 import UIKit
@@ -19,9 +14,9 @@ final class DataSourceForMainScreen: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EverydayForecastTableViewCell.id, for: indexPath) as? EverydayForecastTableViewCell else { return UITableViewCell() }
-        let dataArray = dataSource[indexPath.section]
-        cell.updateCellWith(model: dataArray)
-        cell.accessoryType = .disclosureIndicator
+//        let dataArray = dataSource[indexPath.section]
+//        cell.updateCellWith(model: dataArray, hour: <#T##HourModel#>)
+//        cell.accessoryType = .disclosureIndicator
         return cell
     }
 
@@ -40,8 +35,8 @@ final class DataSourceForMainCollectionCell: NSObject, UICollectionViewDataSourc
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: indexPath) as? WeatherCollectionViewCell else { return UICollectionViewCell() }
-        let dataFromArray = dataSource[indexPath.section]
-        cell.updateCell(date: dataFromArray)
+//        let dataFromArray = dataSource[indexPath.section]
+//        cell.updateCell(date: dataFromArray)
         return cell
     }
 

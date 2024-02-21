@@ -3,7 +3,7 @@ import UIKit
 import CoreLocation
 
 protocol IOnBoardingVC: AnyObject {
- //   func pushViewController()
+    //   func pushViewController()
     func requestAuthorisation()
 }
 
@@ -39,6 +39,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
+        coredataModelService.fetchFromCoreData()
     }
 
     private func layout() {
@@ -58,16 +59,41 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
             switch result {
             case .success(let fetchedData):
-
-                coredataModelService.saveModelToCoreData(networkModel: fetchedData)
+                
+               coredataModelService.saveModelToCoreData(networkModel: fetchedData)
 
                 guard let modelsArray = coredataModelService.modelArray else { return }
+
+                print(modelsArray.count)
 
                 DispatchQueue.main.async {[weak self] in
                     guard let self else { return }
 
+                    let forecastModelService = ForecastModelService(coreDataModel: (modelsArray.first)!)
+                    let hoursModelService = HoursModelService(coreDataModel: (forecastModelService.forecastModel?.first)!)
+
+                    guard var forecastsArray = forecastModelService.forecastModel else { return }
+
+                    let currentDate = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    var stringDate = dateFormatter.string(from: currentDate)
+
+                    stringDate =  "2024-02-24"
+                    for (index, element) in forecastsArray.enumerated() {
+                        if element.date! != stringDate {
+                            forecastModelService.deleteItem(item: element)
+                        } else {
+                            break
+                        }
+                    }
+
+                    let hoursArray = hoursModelService.hoursArray
+
                     let mainViewController = MainScreenViewController(coreDataModelService: coredataModelService,
-                                                                      mainModel: modelsArray)
+                                                                      mainModel: modelsArray,
+                                                                      forecastsModels: forecastsArray,
+                                                                      hoursModels: hoursArray)
 
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainViewController)
                 }

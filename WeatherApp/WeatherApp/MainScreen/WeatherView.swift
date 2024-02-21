@@ -255,6 +255,7 @@ final class WeatherView: UIView {
     }
 
     func updateView(fact: [ForecastModel]?, hourModel: [HourModel]) {
+        
         let currentTime = Date()
 
         let dateFormatter = DateFormatter()
@@ -269,11 +270,12 @@ final class WeatherView: UIView {
         if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
             devidedTemperature.text = "\(selectedHour.temp)/ \((fact?.first?.dayModel?.tempMin)!)"
             mainWeatherLabel.text = "\(selectedHour.condition ?? "")"
-            mainTemperatureLabel.text = "\(selectedHour.temp)"
             cloudyLabel.text = "\(selectedHour.cloudness)"
             percitipationLabel.text = "\(selectedHour.precStr)"
             windSpeedLabel.text = "\(selectedHour.windSpeed) м/с"
         }
+
+        mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempAvg)!)"
 
         sunsetTimeLabel.text = "\(fact?.first?.sunset ?? "")"
         dawnTimeLabel.text = "\(fact?.first?.sunrise ?? "")"
@@ -281,5 +283,4 @@ final class WeatherView: UIView {
         dateFormatter.dateFormat = "E, dd MMMM"
         dateTimeLabel.text = "\(timeString), \(dateFormatter.string(from: currentTime))"
     }
-
 }

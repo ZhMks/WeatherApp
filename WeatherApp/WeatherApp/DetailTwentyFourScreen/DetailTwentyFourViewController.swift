@@ -36,8 +36,12 @@ class DetailTwentyFourViewController: UIViewController {
 
     func updateView(with forecast: [ForecastModel]) {
         self.modelForeView = forecast
+        print(modelForeView.first?.date)
         let hourModelService = HoursModelService(coreDataModel: self.modelForeView.first!)
-        let hourArray = hourModelService.hoursArray 
+        for hour in hourModelService.hoursArray {
+            print("TEMP in DATE: \(hour.temp)")
+        }
+        let hourArray = hourModelService.hoursArray
         detailView.updateView(with: hourArray)
     }
 

@@ -57,7 +57,6 @@ final class DetailTwentyFourView: UIView {
             make.top.equalTo(safeArea.snp.top).offset(15)
             make.leading.equalTo(safeArea.snp.leading).offset(48)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-130)
-            make.bottom.equalTo(chartView.snp.top).offset(-15)
         }
 
         twentyFourOurTableView.snp.makeConstraints { make in

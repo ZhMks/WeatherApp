@@ -29,4 +29,10 @@ final class ForecastModelService {
         self.forecastModel = array
     }
 
+    func deleteItem(item: ForecastModel) {
+        coreDataModel.managedObjectContext?.delete(item)
+        coreDataService.saveContext()
+        fetchData()
+    }
+
 }

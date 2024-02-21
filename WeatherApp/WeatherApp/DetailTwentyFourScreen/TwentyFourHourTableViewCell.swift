@@ -260,12 +260,24 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
     }
 
     func updateCellWithData(model: HourModel) {
+    
+        let currentTime = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.string(from: currentTime)
+
+        dateFormatter.dateFormat = "E, dd/MM"
+
         timeLabel.text = model.hour
         temperatureLabel.text = "\(model.temp)"
         feelingTempNumber.text = "\(model.feelsLike)"
         windSpeedNumber.text = "\(model.windSpeed)"
         percitipationNumber.text = "\(model.precStr)"
         cloudyNumber.text = "\(model.cloudness)"
+        dateLabel.text = "\(dateFormatter.string(from: currentTime))"
     }
 
 

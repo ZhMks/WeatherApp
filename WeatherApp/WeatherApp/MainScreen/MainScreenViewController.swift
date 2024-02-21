@@ -17,12 +17,21 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     private let coreDataModelService: CoreDataModelService
 
-    var mainModel: [MainForecastsModels]
+    private var mainModel: [MainForecastsModels]
+    private let forecastsModels: [ForecastModel]
+    private let hoursModels: [HourModel]
 
     private let mainScreenView = MainScreenView(frame: .zero)
 
-    init(coreDataModelService: CoreDataModelService, mainModel: [MainForecastsModels]) {
+    init(coreDataModelService: CoreDataModelService,
+         mainModel: [MainForecastsModels],
+         forecastsModels: [ForecastModel],
+         hoursModels: [HourModel]) 
+    {
         self.mainModel = mainModel
+        self.forecastsModels = forecastsModels
+        print(self.forecastsModels.count)
+        self.hoursModels = hoursModels
         self.coreDataModelService = coreDataModelService
         super.init(nibName: nil, bundle: nil)
     }
@@ -31,10 +40,11 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func loadView() {
-        super.loadView()
-        updateDataSource()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
     }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +53,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     private func layout() {
+        updateDataSource()
         view.addSubview(mainScreenView)
         updateViewController()
         mainScreenView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,28 +76,22 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     private func updateDataSource() {
-        let forecastModelService = ForecastModelService(coreDataModel: (mainModel.first)!)
-        let hoursModelService = HoursModelService(coreDataModel: (forecastModelService.forecastModel?.first)!)
         let mainTableViewDataSource = DataSourceForMainScreen()
         let mainCollectionDataSource = DataSourceForMainCollectionCell()
 
-        guard let forecastArray = forecastModelService.forecastModel else { return }
-
-        mainCollectionDataSource.updateData(data: hoursModelService.hoursArray)
-        mainTableViewDataSource.updateData(data: forecastArray)
+        mainCollectionDataSource.updateData(data: hoursModels)
+        mainTableViewDataSource.updateData(data: forecastsModels)
 
         mainScreenView.updateViewWith(tbDataSource: mainTableViewDataSource,
                                       collectionDataSource: mainCollectionDataSource,
-                                      factModel: forecastArray, hourModel: hoursModelService.hoursArray)
+                                      factModel: forecastsModels, hourModel: hoursModels)
 
     }
 
     func pushTwentyFourVc() {
-        guard let mainModel = coreDataModelService.modelArray?.first else { return }
-        let forecastModelService = ForecastModelService(coreDataModel: mainModel)
-        guard let forecastArray = forecastModelService.forecastModel else { return }
         let twentyFourVC = DetailTwentyFourViewController()
-        twentyFourVC.updateView(with: forecastArray)
+        print(forecastsModels.count)
+        twentyFourVC.updateView(with: forecastsModels)
         navigationController?.pushViewController(twentyFourVC, animated: true)
     }
 
@@ -97,8 +102,13 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     func pushDayNightVc() {
         let detailDayVC = DetailDayViewController()
+        detailDayVC.updateDataForView(data: forecastsModels)
         navigationController?.pushViewController(detailDayVC, animated: true)
     }
 
     @objc private func rightButtonTapped(_ sender: UIBarButtonItem) {}
+
+    @objc private func startUpdate(_ notification: NotificationCenter) {
+        updateDataSource()
+    }
 }

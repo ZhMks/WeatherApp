@@ -36,4 +36,9 @@ class DetailDayViewController: UIViewController {
         }
     }
 
+    func updateDataForView(data: [ForecastModel]?) {
+        guard let data = data else { return }
+        detailDayView.updateView(dataSource: data)
+    }
+
 }

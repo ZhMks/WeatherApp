@@ -10,6 +10,8 @@ import SnapKit
 
 final class DetailDayView: UIView {
 
+    private var dataSource: [ForecastModel]?
+
     private lazy var mainScrollView: UIScrollView = {
         let mainScrollView = UIScrollView()
         mainScrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +40,7 @@ final class DetailDayView: UIView {
         flowLayout.scrollDirection = .horizontal
         dateCollectionView.delegate = self
         dateCollectionView.dataSource = self
-        dateCollectionView.register(DetailDayCollectionViewCell.self, forCellWithReuseIdentifier: DetailDayTableViewCell.id)
+        dateCollectionView.register(DetailDayCollectionViewCell.self, forCellWithReuseIdentifier: DetailDayCollectionViewCell.id)
         return dateCollectionView
     }()
     
@@ -77,6 +79,7 @@ final class DetailDayView: UIView {
             make.top.equalTo(cityLabel.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(16)
             make.bottom.equalTo(mainScrollView.snp.top).offset(-40)
+            make.height.equalTo(65)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
 
@@ -95,19 +98,21 @@ final class DetailDayView: UIView {
             make.top.leading.trailing.equalTo(contentView)
         }
     }
+
+    func updateView(dataSource: [ForecastModel]) {
+        self.dataSource = dataSource
+        dayNightTableView.reloadData()
+    }
 }
 
 
 extension DetailDayView: UITableViewDelegate {}
 
 extension DetailDayView: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        2
-    }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        guard let number = dataSource?.count else { return 0 }
+        return number
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,17 +125,15 @@ extension DetailDayView: UITableViewDataSource {
 
 extension DetailDayView: UICollectionViewDataSource {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        6
-    }
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        guard let number = dataSource?.count else { return 0 }
+        return number
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailDayCollectionViewCell.id, for: indexPath) as? DetailDayCollectionViewCell else { return UICollectionViewCell() }
-        cell.backgroundColor = .systemBlue
+        guard let data = dataSource?[indexPath.row] else { return UICollectionViewCell() }
+        cell.configureCel(data)
         return cell
     }
     
@@ -140,7 +143,7 @@ extension DetailDayView: UICollectionViewDataSource {
 extension DetailDayView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 84, height: 48)
+        CGSize(width: 90, height: 40)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

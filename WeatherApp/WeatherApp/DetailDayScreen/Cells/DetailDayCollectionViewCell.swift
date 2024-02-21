@@ -24,6 +24,9 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
+        layer.cornerRadius = 8.0
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.black.cgColor
     }
 
     required init?(coder: NSCoder) {
@@ -36,6 +39,18 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
         dateLabel.snp.makeConstraints { make in
             make.center.equalTo(contentView.snp.center)
         }
+    }
+
+    func configureCel(_ data: ForecastModel) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.date(from: (data.date)!)
+
+        dateFormatter.dateFormat = "E, dd/MM"
+
+        dateLabel.text = "\(String(describing: timeString))"
     }
 
 }
