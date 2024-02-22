@@ -153,6 +153,7 @@ final class CoreDataModelService {
         newDayModel.tempMin = Int64(day.tempMin)
         newDayModel.windDir = day.windDir
         newDayModel.windSpeed = day.windSpeed
+        newDayModel.cloudness = day.cloudness
 
 
         mainModelToSave.dayModel = newDayModel
@@ -165,8 +166,9 @@ final class CoreDataModelService {
         newNightModel.tempAvg = Int64(night.tempAvg)
         newNightModel.tempMax = Int64(night.tempMax)
         newNightModel.tempMin = Int64(night.tempMin)
-        newNightModel.windDir = day.windDir
-        newNightModel.windSpeed = day.windSpeed
+        newNightModel.windDir = night.windDir
+        newNightModel.windSpeed = night.windSpeed
+        newNightModel.cloudness = night.cloudness
 
         mainModelToSave.nightModel = newNightModel
 

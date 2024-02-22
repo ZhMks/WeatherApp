@@ -99,6 +99,7 @@ final class PartInfoNetworkModel: Codable {
     let humidity: Int
     let precProb: Int
     let tempAvg: Int
+    let cloudness: Double
 
     private enum CodingKeys: String, CodingKey {
         case tempMin = "temp_min"
@@ -111,9 +112,10 @@ final class PartInfoNetworkModel: Codable {
         case daytime = "daytime"
         case humidity = "humidity"
         case tempAvg = "temp_avg"
+        case cloudness = "cloudness"
     }
 
-    init(tempMin: Int, tempMax: Int, feelsLike: Int, condition: String, daytime: String, windSpeed: Double, windDir: String, humidity: Int, precProb: Int, tempAvg: Int) {
+    init(tempMin: Int, tempMax: Int, feelsLike: Int, condition: String, daytime: String, windSpeed: Double, windDir: String, humidity: Int, precProb: Int, tempAvg: Int, cloudness: Double) {
         self.tempMin = tempMin
         self.tempMax = tempMax
         self.feelsLike = feelsLike
@@ -124,6 +126,7 @@ final class PartInfoNetworkModel: Codable {
         self.humidity = humidity
         self.precProb = precProb
         self.tempAvg = tempAvg
+        self.cloudness = cloudness
     }
 }
 

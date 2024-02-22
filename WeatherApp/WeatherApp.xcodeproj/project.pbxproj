@@ -21,6 +21,8 @@
 		B27B56022B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56012B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift */; };
 		B27B56042B809304009CF6B4 /* ForecastModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56032B809304009CF6B4 /* ForecastModelService.swift */; };
 		B27B56072B81ED24009CF6B4 /* DeviceLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56062B81ED24009CF6B4 /* DeviceLocationManager.swift */; };
+		B27B56122B875681009CF6B4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = B27B56112B875681009CF6B4 /* DGCharts */; };
+		B27B56142B875681009CF6B4 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B27B56132B875681009CF6B4 /* DGChartsDynamic */; };
 		B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */; };
 		B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */; };
 		B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38812B72266600D1ECD5 /* OnBoardingVC.swift */; };
@@ -91,7 +93,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B27B56142B875681009CF6B4 /* DGChartsDynamic in Frameworks */,
 				B2AF38962B722EDA00D1ECD5 /* SnapKit in Frameworks */,
+				B27B56122B875681009CF6B4 /* DGCharts in Frameworks */,
 				B2AF38982B722EDA00D1ECD5 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +285,8 @@
 			packageProductDependencies = (
 				B2AF38952B722EDA00D1ECD5 /* SnapKit */,
 				B2AF38972B722EDA00D1ECD5 /* SnapKit-Dynamic */,
+				B27B56112B875681009CF6B4 /* DGCharts */,
+				B27B56132B875681009CF6B4 /* DGChartsDynamic */,
 			);
 			productName = WeatherApp;
 			productReference = B2AF387A2B72266600D1ECD5 /* WeatherApp.app */;
@@ -312,6 +318,7 @@
 			mainGroup = B2AF38712B72266600D1ECD5;
 			packageReferences = (
 				B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B27B56102B875681009CF6B4 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = B2AF387B2B72266600D1ECD5 /* Products */;
 			projectDirPath = "";
@@ -598,6 +605,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B27B56102B875681009CF6B4 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -609,6 +624,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B27B56112B875681009CF6B4 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B27B56102B875681009CF6B4 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		B27B56132B875681009CF6B4 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B27B56102B875681009CF6B4 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
 		B2AF38952B722EDA00D1ECD5 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */;

@@ -43,14 +43,15 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
 
     func configureCel(_ data: ForecastModel) {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
 
         let timeString = dateFormatter.date(from: (data.date)!)
 
-        dateFormatter.dateFormat = "E, dd/MM"
-
-        dateLabel.text = "\(String(describing: timeString))"
+        let secondFormatter = DateFormatter()
+        secondFormatter.dateFormat = "EE,d/MM"
+        secondFormatter.locale = Locale(identifier: "ru_RU")
+        let dateStrin = secondFormatter.string(from: (timeString)!)
+        dateLabel.text = "\(dateStrin)"
     }
 
 }

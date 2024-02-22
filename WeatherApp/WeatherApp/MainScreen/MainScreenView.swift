@@ -105,7 +105,6 @@ class MainScreenView: UIView {
         tableViewTitle.snp.makeConstraints { make in
             make.top.equalTo(weatherByTimeCollectionView.snp.bottom).offset(5)
             make.leading.equalTo(safeArea.snp.leading).offset(16)
-            make.bottom.equalTo(everydayForecastTableView.snp.top).offset(-5)
         }
 
         everydayForecastTableView.snp.makeConstraints { make in

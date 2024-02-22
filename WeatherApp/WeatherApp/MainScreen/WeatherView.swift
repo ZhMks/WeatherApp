@@ -275,7 +275,7 @@ final class WeatherView: UIView {
             windSpeedLabel.text = "\(selectedHour.windSpeed) м/с"
         }
 
-        mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempAvg)!)°"
+        mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempMin)!)°"
 
         sunsetTimeLabel.text = "\(fact?.first?.sunset ?? "")"
         dawnTimeLabel.text = "\(fact?.first?.sunrise ?? "")"

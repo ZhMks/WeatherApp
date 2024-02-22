@@ -212,13 +212,13 @@ final class DetailDayTableViewCell: UITableViewCell {
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(15)
             make.leading.equalTo(weatherImageView.snp.trailing).offset(10)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-290)
+            make.height.width.equalTo(36)
         }
 
         mainWeatherLabel.snp.makeConstraints { make in
             make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
             make.leading.equalTo(contentView.snp.leading).offset(145)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-245)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-140)
         }
 
 
@@ -316,6 +316,54 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.leading.equalTo(cloudyLabel.snp.trailing).offset(85)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
+    }
+
+    func updateDayCellWith(data: DayModel, hour: HourModel) {
+
+        let currentTime = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.string(from: currentTime)
+        let components = timeString.components(separatedBy: ":")
+
+        guard let currentHour = components.first else { return }
+
+        if hour.hour!.contains(currentHour) {
+            temperatureLabel.text = "\(hour.temp)°"
+            ufLightNumber.text = "\(hour.uvIndex)"
+        }
+        feelingTempNumber.text = "\(data.feelsLike)°"
+        windSpeedNumber.text = "\(data.windSpeed) \((data.windDir)!)"
+        percitipationNumber.text = "\(data.precProb)"
+        cloudyNumber.text = "\(data.cloudness)"
+        mainWeatherLabel.text = "\((data.condition)!)"
+    }
+
+    func updateNightCellWith(data: NightModel, hour: HourModel) {
+        let currentTime = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.string(from: currentTime)
+        let components = timeString.components(separatedBy: ":")
+
+        guard let currentHour = components.first else { return }
+
+        if hour.hour!.contains(currentHour) {
+            temperatureLabel.text = "\(hour.temp)°"
+            ufLightNumber.text = "\(hour.uvIndex)"
+        }
+        feelingTempNumber.text = "\(data.feelsLike)°"
+        windSpeedNumber.text = "\(data.windSpeed) \((data.windDir)!)"
+        percitipationNumber.text = "\(data.precProb)"
+        cloudyNumber.text = "\(data.cloudness)"
+        mainWeatherLabel.text = "\((data.condition)!)"
+        dayNightLabel.text = "Ночь"
     }
 
 }
