@@ -7,8 +7,8 @@
 
 import UIKit
 import SnapKit
-import Charts
-import DGCharts
+import SwiftUI
+
 
 final class DetailTwentyFourView: UIView {
 
@@ -23,45 +23,11 @@ final class DetailTwentyFourView: UIView {
         return cityLabel
     }()
 
-    private lazy var lineChart: LineChartView = {
-        let lineChart = LineChartView()
-        lineChart.backgroundColor = .clear
-        lineChart.translatesAutoresizingMaskIntoConstraints = false
-        lineChart.rightAxis.enabled = false
-        lineChart.xAxis.labelPosition = .bottom
-        lineChart.backgroundColor = .clear
-        lineChart.drawGridBackgroundEnabled = false
-        lineChart.pinchZoomEnabled = false
-        lineChart.scaleXEnabled = false
-        lineChart.scaleYEnabled = false
-
-
-
-        let yAxis = lineChart.leftAxis
-        yAxis.axisLineColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
-        yAxis.drawLabelsEnabled = false
-        yAxis.labelTextColor = .black
-        yAxis.inverted = true
-        yAxis.drawGridLinesEnabled = false
-        yAxis.axisLineDashLengths = [CGFloat(6.0)]
-        yAxis.gridLineWidth = CGFloat(3.0)
-
-
-        let xAxis = lineChart.xAxis
-        xAxis.drawGridLinesEnabled = false
-        xAxis.drawLabelsEnabled = false
-        xAxis.axisLineDashLengths = [CGFloat(6.0)]
-
-        lineChart.xAxis.axisLineColor = .black
-
-        return lineChart
-    }()
-
-    private lazy var chartView: UIView = {
-        let chartView = UIView()
-        chartView.translatesAutoresizingMaskIntoConstraints = false
-        chartView.backgroundColor = UIColor(red: 233/255, green: 258/255, blue: 250/255, alpha: 1)
-        return chartView
+    private lazy var chartUIKitView: UIView = {
+        let chartUIKitView = UIView()
+        chartUIKitView.translatesAutoresizingMaskIntoConstraints = false
+        chartUIKitView.backgroundColor = UIColor(red: 233/255, green: 258/255, blue: 250/255, alpha: 1)
+        return chartUIKitView
     }()
 
     private lazy var twentyFourOurTableView: UITableView = {
@@ -87,9 +53,8 @@ final class DetailTwentyFourView: UIView {
     private func layout() {
         let safeArea = safeAreaLayoutGuide
         addSubview(cityLabel)
-        addSubview(chartView)
+        addSubview(chartUIKitView)
         addSubview(twentyFourOurTableView)
-        chartView.addSubview(lineChart)
 
 
         cityLabel.snp.makeConstraints { make in
@@ -98,7 +63,7 @@ final class DetailTwentyFourView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-130)
         }
 
-        chartView.snp.makeConstraints { make in
+        chartUIKitView.snp.makeConstraints { make in
             make.top.equalTo(cityLabel.snp.bottom).offset(10)
             make.leading.equalTo(safeArea.snp.leading)
             make.trailing.equalTo(safeArea.snp.trailing)
@@ -106,22 +71,33 @@ final class DetailTwentyFourView: UIView {
         }
 
         twentyFourOurTableView.snp.makeConstraints { make in
-            make.top.equalTo(chartView.snp.bottom).offset(20)
+            make.top.equalTo(chartUIKitView.snp.bottom).offset(20)
             make.leading.trailing.bottom.equalTo(safeArea)
-        }
-
-        lineChart.snp.makeConstraints { make in
-            make.top.equalTo(chartView.snp.top)
-            make.leading.equalTo(chartView.snp.leading)
-            make.trailing.equalTo(chartView.snp.trailing)
-            make.bottom.equalTo(chartView.snp.bottom)
         }
     }
 
     func updateView(with model: [HourModel]) {
         self.dataArray = model
-        setData()
         twentyFourOurTableView.reloadData()
+        updateChart()
+    }
+
+    func updateChart() {
+        var xValues = [HourModel]()
+               for index in stride(from: 0, to: dataArray!.count, by: 3) {
+                   let valueToAppend = dataArray![index]
+                   xValues.append(valueToAppend)
+               }
+        let chartView = TempChartView()
+        chartUIKitView.addSubview(chartView)
+        chartView.translatesAutoresizingMaskIntoConstraints = false
+        chartView.snp.makeConstraints { make in
+            make.top.equalTo(chartUIKitView.snp.top)
+            make.leading.equalTo(chartUIKitView.snp.leading)
+            make.trailing.equalTo(chartUIKitView.snp.trailing)
+            make.bottom.equalTo(chartUIKitView.snp.bottom)
+        }
+
     }
 
 }
@@ -150,47 +126,4 @@ extension DetailTwentyFourView: UITableViewDataSource {
 
 extension DetailTwentyFourView: UITableViewDelegate {
 
-}
-
-extension DetailTwentyFourView: ChartViewDelegate {
-
-    func setData() { 
-        var xValues = [HourModel]()
-
-        for index in stride(from: 0, to: dataArray!.count, by: 3) {
-            let valueToAppend = dataArray![index]
-            xValues.append(valueToAppend)
-        }
-
-      var dataForYCharts = [ChartDataEntry]()
-
-       for hour in xValues {
-           let newChartData = ChartDataEntry(x: Double(hour.hour!.replacingOccurrences(of: ":", with: "."))!, y: Double(hour.temp))
-           dataForYCharts.append(newChartData)
-       }
-
-        let set1 = LineChartDataSet(entries: dataForYCharts)
-        set1.mode = .linear
-        set1.circleRadius = CGFloat(3.0)
-        set1.circleColors = [.white]
-        set1.drawCirclesEnabled = true
-
-        let colorTop =  UIColor(red: 61/255.0, green: 105.0/255.0, blue: 220.0/255.0, alpha: 0.3).cgColor
-        let colorBottom = UIColor(red: 32.0/255.0, green: 78.0/255.0, blue: 199.0/255.0, alpha: 0.0).cgColor
-
-        let gradientColors = [colorTop, colorBottom] as CFArray
-        let colorLocations:[CGFloat] = [0.0, 1.0]
-        let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations)
-        set1.gradientPositions = colorLocations
-        set1.fill = LinearGradientFill(gradient: gradient!)
-        set1.drawFilledEnabled = true
-
-        let data = LineChartData(dataSet: set1)
-        lineChart.data = data
-
-    }
-
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-
-    }
 }

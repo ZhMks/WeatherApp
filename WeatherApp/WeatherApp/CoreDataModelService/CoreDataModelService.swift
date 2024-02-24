@@ -119,11 +119,11 @@ final class CoreDataModelService {
 
             hourModel.hour = localDate
 
-            hourModel.temp = Int64(hour.temp)
+            hourModel.temp = Double(hour.temp)
             hourModel.cloudness = hour.cloudness
-            hourModel.feelsLike = Int64(hour.feelsLike)
+            hourModel.feelsLike = Double(hour.feelsLike)
             hourModel.precStr = hour.precStr
-            hourModel.windSpeed = hour.windSpeed
+            hourModel.windSpeed = hour.windSpeed * 3.6
             hourModel.windDir = hour.windDir
             hourModel.condition = convertString(string: hour.condition)
             hourModel.uvIndex = Int64(hour.uvIndex)
@@ -145,14 +145,14 @@ final class CoreDataModelService {
 
         newDayModel.condition = convertString(string: day.condition)
         newDayModel.dayTime = day.daytime
-        newDayModel.feelsLike = Int64(day.feelsLike)
+        newDayModel.feelsLike = Double(day.feelsLike)
         newDayModel.humidity = Int64(day.humidity)
         newDayModel.precProb = Int64(day.precProb)
-        newDayModel.tempAvg = Int64(day.tempAvg)
-        newDayModel.tempMax = Int64(day.tempMax)
-        newDayModel.tempMin = Int64(day.tempMin)
+        newDayModel.tempAvg = Double(day.tempAvg)
+        newDayModel.tempMax = Double(day.tempMax)
+        newDayModel.tempMin = Double(day.tempMin)
         newDayModel.windDir = day.windDir
-        newDayModel.windSpeed = day.windSpeed
+        newDayModel.windSpeed = day.windSpeed.rounded(.towardZero)
         newDayModel.cloudness = day.cloudness
 
 
@@ -160,26 +160,26 @@ final class CoreDataModelService {
 
         newNightModel.condition = convertString(string: night.condition)
         newNightModel.dayTime = night.daytime
-        newNightModel.feelsLike = Int64(night.feelsLike)
+        newNightModel.feelsLike = Double(night.feelsLike)
         newNightModel.humidity = Int64(night.humidity)
         newNightModel.precProb = Int64(night.precProb)
-        newNightModel.tempAvg = Int64(night.tempAvg)
-        newNightModel.tempMax = Int64(night.tempMax)
-        newNightModel.tempMin = Int64(night.tempMin)
+        newNightModel.tempAvg = Double(night.tempAvg)
+        newNightModel.tempMax = Double(night.tempMax)
+        newNightModel.tempMin = Double(night.tempMin)
         newNightModel.windDir = night.windDir
-        newNightModel.windSpeed = night.windSpeed
+        newNightModel.windSpeed = night.windSpeed.rounded(.towardZero)
         newNightModel.cloudness = night.cloudness
 
         mainModelToSave.nightModel = newNightModel
 
         newDayShortModel.condition = convertString(string: dayShort.condition)
         newDayShortModel.dayTime = dayShort.daytime
-        newDayShortModel.feelsLike = Int64(dayShort.feelsLike)
+        newDayShortModel.feelsLike = Double(dayShort.feelsLike)
         newDayShortModel.humidity = Int64(dayShort.humidity)
         newDayShortModel.precProb = Int64(dayShort.precProb)
-        newDayShortModel.temp = Int64(dayShort.temp)
+        newDayShortModel.temp = Double(dayShort.temp)
         newDayShortModel.windDir = dayShort.windDir
-        newDayShortModel.windSpeed = dayShort.windSpeed
+        newDayShortModel.windSpeed = dayShort.windSpeed.rounded(.towardZero)
 
         mainModelToSave.dayShort = newDayShortModel
 
@@ -188,9 +188,9 @@ final class CoreDataModelService {
         newNightShortModel.feelsLike = Int64(nightShort.feelsLike)
         newNightShortModel.humidity = Int64(nightShort.humidity)
         newNightShortModel.precProb = Int64(nightShort.precProb)
-        newNightShortModel.temp = Int64(nightShort.temp)
+        newNightShortModel.temp = Double(nightShort.temp)
         newNightShortModel.windDir = nightShort.windDir
-        newNightShortModel.windSpeed = nightShort.windSpeed
+        newNightShortModel.windSpeed = nightShort.windSpeed.rounded(.towardZero)
 
         mainModelToSave.nightShort = newNightShortModel
 

@@ -164,11 +164,12 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(timeLabel.snp.bottom).offset(10)
             make.leading.equalTo(contentView.snp.leading).offset(16)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-328)
         }
 
         feelingsTempImageView.snp.makeConstraints { make in
             make.centerY.equalTo(timeLabel.snp.centerY)
-            make.leading.equalTo(timeLabel.snp.trailing).offset(11)
+            make.leading.equalTo(temperatureLabel.snp.trailing).offset(11)
             make.height.width.equalTo(12)
         }
 
@@ -204,7 +205,7 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
 
         percitipationImageView.snp.makeConstraints { make in
             make.top.equalTo(windSpeedImageView.snp.bottom).offset(12)
-            make.leading.equalTo(contentView.snp.leading).offset(65)
+            make.leading.equalTo(temperatureLabel.snp.trailing).offset(11)
             make.height.width.equalTo(12)
         }
 
@@ -222,7 +223,7 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
 
         cloudyImageView.snp.makeConstraints { make in
             make.top.equalTo(percitipationImageView.snp.bottom).offset(12)
-            make.leading.equalTo(contentView.snp.leading).offset(65)
+            make.leading.equalTo(temperatureLabel.snp.trailing).offset(11)
             make.height.width.equalTo(12)
         }
 
@@ -272,9 +273,9 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         dateFormatter.dateFormat = "E, dd/MM"
 
         timeLabel.text = model.hour
-        temperatureLabel.text = "\(model.temp)°"
-        feelingTempNumber.text = "\(model.feelsLike)°"
-        windSpeedNumber.text = "\(model.windSpeed)"
+        temperatureLabel.text = "\(model.temp.rounded(.towardZero))°"
+        feelingTempNumber.text = "\(model.feelsLike.rounded(.towardZero))°"
+        windSpeedNumber.text = "\(model.windSpeed.rounded(.towardZero))"
         percitipationNumber.text = "\(model.precStr)"
         cloudyNumber.text = "\(model.cloudness)"
         dateLabel.text = "\(dateFormatter.string(from: currentTime))"

@@ -63,6 +63,7 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(timeLabel.snp.bottom).offset(6)
             make.leading.equalTo(contentView.snp.leading).offset(15)
             make.trailing.equalTo(contentView.snp.trailing).offset(-15)
+            make.height.width.equalTo(18)
         }
 
         temperatureLabel.snp.makeConstraints { make in
@@ -71,9 +72,45 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func updateCell(date: HourModel) {
-        temperatureLabel.text = "\(date.temp)°"
-        timeLabel.text = "\((date.hour)!)"
+    func updateCell(hour: HourModel) {
+        temperatureLabel.text = "\(hour.temp.rounded(.towardZero))°"
+        timeLabel.text = "\((hour.hour)!)"
+
+        switch hour.condition {
+        case "Ясно":
+            weatherImage.image = UIImage(named: "UfLight")
+        case "Малооблачно":
+            weatherImage.image = UIImage(named: "ParticallyCloud")
+        case "Облачно с прояснениями":
+            weatherImage.image = UIImage(named: "ParticallyCloud")
+        case "Пасмурно":
+            weatherImage.image = UIImage(named: "HeavyClouds")
+        case "Небольшой дождь":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Дождь":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Сильный дождь":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Ливень":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Дождь со снегом":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Небольшой снег":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Снег":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Снегопад":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Град":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Гроза":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Дождь с грозой":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Гроза с градом":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        default: break
+        }
     }
 
 }

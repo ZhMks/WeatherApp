@@ -87,28 +87,34 @@ final class SettingsView: UIView {
         segmentedControle.translatesAutoresizingMaskIntoConstraints = false
         segmentedControle.backgroundColor = segmentedBackground
         segmentedControle.selectedSegmentTintColor = selectedBackground
+        segmentedControle.selectedSegmentIndex = 0
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControle.addTarget(self, action: #selector(tempSegmentedControlValueChange(_:)), for: .valueChanged)
         return segmentedControle
     }()
 
     private lazy var windSegmentedControle: UISegmentedControl = {
-        let segmentedControle = UISegmentedControl(items: ["Mi", "Km"])
+        let segmentedControle = UISegmentedControl(items: ["Km", "Mi"])
         segmentedControle.translatesAutoresizingMaskIntoConstraints = false
         segmentedControle.backgroundColor = segmentedBackground
         segmentedControle.selectedSegmentTintColor = selectedBackground
+        segmentedControle.selectedSegmentIndex = 0
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControle.addTarget(self, action: #selector(distanceSegmentedControlValueChange(_:)), for: .valueChanged)
         return segmentedControle
     }()
 
     private lazy var timeSegmentedControle: UISegmentedControl = {
-        let segmentedControle = UISegmentedControl(items: ["12", "24"])
+        let segmentedControle = UISegmentedControl(items: ["24", "12"])
         segmentedControle.translatesAutoresizingMaskIntoConstraints = false
         segmentedControle.backgroundColor = segmentedBackground
         segmentedControle.selectedSegmentTintColor = selectedBackground
+        segmentedControle.selectedSegmentIndex = 0
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControle.addTarget(self, action: #selector(timeSegmentedControlValueChange(_:)), for: .valueChanged)
         return segmentedControle
     }()
 
@@ -117,6 +123,7 @@ final class SettingsView: UIView {
         segmentedControle.translatesAutoresizingMaskIntoConstraints = false
         segmentedControle.backgroundColor = segmentedBackground
         segmentedControle.selectedSegmentTintColor = selectedBackground
+        segmentedControle.selectedSegmentIndex = 1
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         return segmentedControle
@@ -214,6 +221,124 @@ final class SettingsView: UIView {
 
     @objc func tapOnSetButton(_: UIButton) {
         settingsVC?.dismiss()
+    }
+
+    @objc func tempSegmentedControlValueChange(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            if let value = UserDefaults.standard.value(forKey: "temperature") as? String {
+                print(value)
+                if temperatureSegmentedControle.titleForSegment(at: 0)! == value {
+                    return
+                } else {
+                    UserDefaults.standard.setValue("C", forKey: "temperature")
+                    settingsVC?.changeToCelsium()
+                }
+            } else {
+                UserDefaults.standard.setValue("C", forKey: "temperature")
+            }
+        case 1:
+            if let value = UserDefaults.standard.value(forKey: "temperature") as? String {
+                print(value)
+                if temperatureSegmentedControle.titleForSegment(at: 1)! == value {
+                    return
+                } else {
+                    UserDefaults.standard.setValue("F", forKey: "temperature")
+                    settingsVC?.changeToCelsium()
+                }
+            } else {
+                UserDefaults.standard.setValue("F", forKey: "temperature")
+            }
+        default: break
+        }
+    }
+
+    @objc func distanceSegmentedControlValueChange(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            if let value = UserDefaults.standard.value(forKey: "distance") as? String {
+                print(value)
+                if windSegmentedControle.titleForSegment(at: 0)! == value {
+                    return
+                } else {
+                    UserDefaults.standard.setValue("Km", forKey: "distance")
+                    settingsVC?.changeToKM()
+                }
+            } else {
+                UserDefaults.standard.setValue("Km", forKey: "distance")
+            }
+        case 1:
+            if let value = UserDefaults.standard.value(forKey: "distance") as? String {
+                print(value)
+                if windSegmentedControle.titleForSegment(at: 0)! == value {
+                    return
+                } else {
+                    UserDefaults.standard.setValue("Mi", forKey: "distance")
+                    settingsVC?.changeToKM()
+                }
+            } else {
+                UserDefaults.standard.setValue("Mi", forKey: "distance")
+            }
+        default: break
+        }
+    }
+
+    @objc func timeSegmentedControlValueChange(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            if let value = UserDefaults.standard.value(forKey: "time") as? String {
+                if timeSegmentedControle.titleForSegment(at: 0)! == value {
+                    return
+                } else {
+                    UserDefaults.standard.setValue("24", forKey: "time")
+                    settingsVC?.changeToTvelveHourFormat()
+                }
+            } else {
+                UserDefaults.standard.setValue("24", forKey: "time")
+            }
+        case 1:
+            if let value = UserDefaults.standard.value(forKey: "time") as? String {
+                if timeSegmentedControle.titleForSegment(at: 1)! == value {
+                    return
+                } else {
+                    UserDefaults.standard.setValue("12", forKey: "time")
+                    settingsVC?.changeToTvelveHourFormat()
+                }
+            } else {
+                UserDefaults.standard.setValue("12", forKey: "time")
+            }
+        default: break
+        }
+    }
+
+    func checkSegmentedValue() {
+        if let tempValue = UserDefaults.standard.value(forKey: "temperature") as? String {
+            switch tempValue {
+            case "C":
+                temperatureSegmentedControle.selectedSegmentIndex = 0
+            case "F":
+                temperatureSegmentedControle.selectedSegmentIndex = 1
+            default: break
+            }
+        }
+        if let distanceValue = UserDefaults.standard.value(forKey: "distance") as? String {
+            switch distanceValue {
+            case "Km":
+                windSegmentedControle.selectedSegmentIndex = 0
+            case "Mi":
+                windSegmentedControle.selectedSegmentIndex = 1
+            default: break
+            }
+        }
+        if let timeValue = UserDefaults.standard.value(forKey: "time") as? String {
+            switch timeValue {
+            case "24":
+                timeSegmentedControle.selectedSegmentIndex = 0
+            case "12":
+                timeSegmentedControle.selectedSegmentIndex = 1
+            default: break
+            }
+        }
     }
 
 }

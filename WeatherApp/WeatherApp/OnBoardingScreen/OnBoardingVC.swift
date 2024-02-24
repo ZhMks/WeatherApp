@@ -3,7 +3,6 @@ import UIKit
 import CoreLocation
 
 protocol IOnBoardingVC: AnyObject {
-    //   func pushViewController()
     func requestAuthorisation()
 }
 

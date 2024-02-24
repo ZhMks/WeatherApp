@@ -134,7 +134,6 @@ class MainScreenView: UIView {
 //        configureCollectionView(dataSource: collectionViewDataSource)
         
         self.forecastModelArray = factModel
-        print(factModel.count)
         self.hoursModelArray = hourModel
 
         mainWeatherView.updateView(fact: forecastModelArray, hourModel: hourModel)
@@ -179,7 +178,7 @@ extension MainScreenView: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: indexPath) as? WeatherCollectionViewCell else { return UICollectionViewCell() }
         guard let hoursModelArray = hoursModelArray else { return UICollectionViewCell() }
         let hourModel = hoursModelArray[indexPath.row]
-        cell.updateCell(date: hourModel )
+        cell.updateCell(hour: hourModel )
         return cell
     }
 }

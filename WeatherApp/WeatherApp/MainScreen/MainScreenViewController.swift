@@ -43,6 +43,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
+        checkChanges()
     }
 
 
@@ -53,7 +54,6 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     private func layout() {
-        updateDataSource()
         view.addSubview(mainScreenView)
         updateViewController()
         mainScreenView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,9 +81,9 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        var stringDate = dateFormatter.string(from: currentDate)
+        let stringDate = dateFormatter.string(from: currentDate)
 
-        for (index, element) in forecastsModels.enumerated() {
+        for (_, element) in forecastsModels.enumerated() {
             if element.date! != stringDate {
                 forecastModelService.delete(item: element)
             } else {
@@ -116,7 +116,8 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     @objc private func burgerButtonTapped(_ sender: UIBarButtonItem) {
-        let settingsVC = SettingsViewController()
+        let settingsVC = SettingsViewController(coreDataModelService: self.coreDataModelService)
+        settingsVC.modalPresentationStyle = .automatic
         navigationController?.present(settingsVC, animated: true)
     }
 
@@ -130,5 +131,14 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     @objc private func startUpdate(_ notification: NotificationCenter) {
         updateDataSource()
+    }
+
+    private func checkChanges() {
+        for forecastsModel in forecastsModels {
+            if forecastsModel.managedObjectContext!.hasChanges {
+                updateDataSource()
+            }
+        }
+
     }
 }

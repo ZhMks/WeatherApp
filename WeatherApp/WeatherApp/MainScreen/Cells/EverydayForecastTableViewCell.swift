@@ -120,7 +120,43 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         dateLabel.text = "\(updatedString)"
         percentage.text = "\(day.precProb)"
         mainLabelText.text = "\((day.condition)!)"
-        temperatureLabel.text = "\(day.tempMin)° - \(day.tempMax)°"
+        temperatureLabel.text = "\(day.tempMin.rounded(.towardZero))° - \(day.tempMax.rounded(.towardZero))°"
+
+        switch day.condition {
+        case "Ясно":
+            weatherImage.image = UIImage(named: "UfLight")
+        case "Малооблачно":
+            weatherImage.image = UIImage(named: "ParticallyCloud")
+        case "Облачно с прояснениями":
+            weatherImage.image = UIImage(named: "ParticallyCloud")
+        case "Пасмурно":
+            weatherImage.image = UIImage(named: "HeavyClouds")
+        case "Небольшой дождь":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Дождь":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Сильный дождь":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Ливень":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Дождь со снегом":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Небольшой снег":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Снег":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Снегопад":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Град":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Гроза":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Дождь с грозой":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        case "Гроза с градом":
+            weatherImage.image = UIImage(named: "PercitipationImage")
+        default: break
+        }
     }
 
 }

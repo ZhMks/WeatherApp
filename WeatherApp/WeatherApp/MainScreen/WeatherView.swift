@@ -10,9 +10,9 @@ import SnapKit
 
 final class WeatherView: UIView {
 
-   var hourArray: [HourModel]?
+    var hourArray: [HourModel]?
 
-   private let yellowColor = UIColor(red: 246/255, green: 221/255, blue: 1/255, alpha: 1)
+    private let yellowColor = UIColor(red: 246/255, green: 221/255, blue: 1/255, alpha: 1)
 
 
     private lazy var devidedTemperature: UILabel = {
@@ -217,7 +217,7 @@ final class WeatherView: UIView {
             make.leading.equalTo(safeArea.snp.leading).offset(110)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-90)
         }
-        
+
         dawnTimeLabel.snp.makeConstraints { make in
             make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.top.equalTo(safeArea.snp.top).offset(205)
@@ -255,7 +255,7 @@ final class WeatherView: UIView {
     }
 
     func updateView(fact: [ForecastModel]?, hourModel: [HourModel]) {
-        
+
         let currentTime = Date()
 
         let dateFormatter = DateFormatter()
@@ -268,19 +268,74 @@ final class WeatherView: UIView {
         guard let currentHour = components.first else { return }
 
         if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
-            devidedTemperature.text = "\(selectedHour.temp)°/ \((fact?.first?.dayModel?.tempMin)!)°"
+            devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact?.first?.dayModel?.tempMin)!.rounded(.towardZero))°"
             mainWeatherLabel.text = "\(selectedHour.condition!)"
             cloudyLabel.text = "\(selectedHour.cloudness)"
             percitipationLabel.text = "\(selectedHour.precStr)"
-            windSpeedLabel.text = "\(selectedHour.windSpeed) м/с"
+            windSpeedLabel.text = "\(selectedHour.windSpeed.rounded(.towardZero))"
+            updateImageWith(hour: selectedHour)
+        } else {
+            dateFormatter.locale = Locale(identifier: "en_GB")
+            dateFormatter.dateFormat = "h:mm a"
+            let currentStringTime = dateFormatter.string(from: currentTime)
+            let components = currentStringTime.components(separatedBy: ":")
+            
+            guard let currentHour = components.first else { return }
+            
+            if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
+                devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact?.first?.dayModel?.tempMin)!.rounded(.towardZero))°"
+                mainWeatherLabel.text = "\(selectedHour.condition!)"
+                cloudyLabel.text = "\(selectedHour.cloudness)"
+                percitipationLabel.text = "\(selectedHour.precStr)"
+                windSpeedLabel.text = "\(selectedHour.windSpeed.rounded(.towardZero))"
+                updateImageWith(hour: selectedHour)
+            }
         }
 
-        mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempMin)!)°"
+            mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempMin)!.rounded(.towardZero))°"
 
-        sunsetTimeLabel.text = "\(fact?.first?.sunset ?? "")"
-        dawnTimeLabel.text = "\(fact?.first?.sunrise ?? "")"
+            sunsetTimeLabel.text = "\(fact?.first?.sunset ?? "")"
+            dawnTimeLabel.text = "\(fact?.first?.sunrise ?? "")"
 
-        dateFormatter.dateFormat = "E, dd MMMM"
-        dateTimeLabel.text = "\(timeString), \(dateFormatter.string(from: currentTime))"
+            dateFormatter.dateFormat = "E, dd MMMM"
+            dateTimeLabel.text = "\(timeString), \(dateFormatter.string(from: currentTime))"
+        }
+
+    private func updateImageWith(hour: HourModel) {
+        switch hour.condition {
+        case "Ясно":
+            cloudyImageView.image = UIImage(named: "UfLight")
+        case "Малооблачно":
+            cloudyImageView.image = UIImage(named: "ParticallyCloud")
+        case "Облачно с прояснениями":
+            cloudyImageView.image = UIImage(named: "ParticallyCloud")
+        case "Пасмурно":
+            cloudyImageView.image = UIImage(named: "HeavyClouds")
+        case "Небольшой дождь":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Дождь":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Сильный дождь":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Ливень":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Дождь со снегом":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Небольшой снег":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Снег":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Снегопад":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Град":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Гроза":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Дождь с грозой":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        case "Гроза с градом":
+            cloudyImageView.image = UIImage(named: "PercitipationImage")
+        default: break
+        }
     }
 }
