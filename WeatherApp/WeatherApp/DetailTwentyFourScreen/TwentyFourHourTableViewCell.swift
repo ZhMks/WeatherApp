@@ -267,10 +267,9 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .short
         dateFormatter.locale = Locale(identifier: "ru_RU")
-
-        let timeString = dateFormatter.string(from: currentTime)
-
         dateFormatter.dateFormat = "E, dd/MM"
+
+        let stringFromDate = dateFormatter.string(from: currentTime)
 
         timeLabel.text = model.hour
         temperatureLabel.text = "\(model.temp.rounded(.towardZero))°"
@@ -278,7 +277,7 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         windSpeedNumber.text = "\(model.windSpeed.rounded(.towardZero))"
         percitipationNumber.text = "\(model.precStr)"
         cloudyNumber.text = "\(model.cloudness)"
-        dateLabel.text = "\(dateFormatter.string(from: currentTime))"
+        dateLabel.text = "\(stringFromDate)"
     }
 
 

@@ -15,6 +15,9 @@ final class SettingsView: UIView {
     private let greyColor: UIColor = UIColor(red: 137/255, green: 131/255, blue: 131/255, alpha: 1)
     private let segmentedBackground: UIColor = UIColor(red: 254/255, green: 237/255, blue: 233/255, alpha: 1)
     private let selectedBackground: UIColor = UIColor(red: 31/255, green: 77/255, blue: 191/255, alpha: 1)
+    private var localTempValue = ""
+    private var localSpeedValue = ""
+    private var localTimeValue = ""
 
     private lazy var centerView: UIView = {
         let centerView = UIView()
@@ -94,7 +97,7 @@ final class SettingsView: UIView {
         return segmentedControle
     }()
 
-    private lazy var windSegmentedControle: UISegmentedControl = {
+    private lazy var windSpeedSegmentedControle: UISegmentedControl = {
         let segmentedControle = UISegmentedControl(items: ["Km", "Mi"])
         segmentedControle.translatesAutoresizingMaskIntoConstraints = false
         segmentedControle.backgroundColor = segmentedBackground
@@ -102,7 +105,7 @@ final class SettingsView: UIView {
         segmentedControle.selectedSegmentIndex = 0
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         segmentedControle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        segmentedControle.addTarget(self, action: #selector(distanceSegmentedControlValueChange(_:)), for: .valueChanged)
+        segmentedControle.addTarget(self, action: #selector(speedSegmentedControleValueChanged(_:)), for: .valueChanged)
         return segmentedControle
     }()
 
@@ -134,11 +137,11 @@ final class SettingsView: UIView {
         backgroundColor = .clear
         layout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func layout() {
         let safeArea = safeAreaLayoutGuide
         addSubview(centerView)
@@ -149,7 +152,7 @@ final class SettingsView: UIView {
         centerView.addSubview(notificationLabel)
         centerView.addSubview(setupButton)
         centerView.addSubview(temperatureSegmentedControle)
-        centerView.addSubview(windSegmentedControle)
+        centerView.addSubview(windSpeedSegmentedControle)
         centerView.addSubview(timeSegmentedControle)
         centerView.addSubview(notificationsSegmentedControle)
 
@@ -178,11 +181,11 @@ final class SettingsView: UIView {
 
         speedOfWindLabel.snp.makeConstraints { make in
             make.leading.equalTo(centerView.snp.leading).offset(20)
-            make.centerY.equalTo(windSegmentedControle.snp.centerY)
+            make.centerY.equalTo(windSpeedSegmentedControle.snp.centerY)
 
         }
 
-        windSegmentedControle.snp.makeConstraints { make in
+        windSpeedSegmentedControle.snp.makeConstraints { make in
             make.top.equalTo(temperatureSegmentedControle.snp.bottom).offset(20)
             make.trailing.equalTo(centerView.snp.trailing).offset(-15)
         }
@@ -194,7 +197,7 @@ final class SettingsView: UIView {
         }
 
         timeSegmentedControle.snp.makeConstraints { make in
-            make.top.equalTo(windSegmentedControle.snp.bottom).offset(20)
+            make.top.equalTo(windSpeedSegmentedControle.snp.bottom).offset(20)
             make.trailing.equalTo(centerView.snp.trailing).offset(-15)
         }
 
@@ -220,95 +223,67 @@ final class SettingsView: UIView {
     }
 
     @objc func tapOnSetButton(_: UIButton) {
+        if localTempValue.isEmpty {
+            if let _ = UserDefaults.standard.value(forKey: "temperature") {
+                settingsVC?.changeToCelsium()
+                settingsVC?.dismiss()
+            }
+        } else {
+            checkLocalValues()
+        }
+
+        if localTimeValue.isEmpty {
+            if let _ = UserDefaults.standard.value(forKey: "distance") {
+                settingsVC?.changeToKM()
+                settingsVC?.dismiss()
+            }
+        } else {
+            checkLocalValues()
+        }
+
+        if localSpeedValue.isEmpty {
+
+            if let _ = UserDefaults.standard.value(forKey: "time") {
+                settingsVC?.changeToTvelveHourFormat()
+                settingsVC?.dismiss()
+            }
+        } else {
+            checkLocalValues()
+        }
         settingsVC?.dismiss()
     }
 
     @objc func tempSegmentedControlValueChange(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            if let value = UserDefaults.standard.value(forKey: "temperature") as? String {
-                print(value)
-                if temperatureSegmentedControle.titleForSegment(at: 0)! == value {
-                    return
-                } else {
-                    UserDefaults.standard.setValue("C", forKey: "temperature")
-                    settingsVC?.changeToCelsium()
-                }
-            } else {
-                UserDefaults.standard.setValue("C", forKey: "temperature")
-            }
+            UserDefaults.standard.setValue("C", forKey: "temperature")
         case 1:
-            if let value = UserDefaults.standard.value(forKey: "temperature") as? String {
-                print(value)
-                if temperatureSegmentedControle.titleForSegment(at: 1)! == value {
-                    return
-                } else {
-                    UserDefaults.standard.setValue("F", forKey: "temperature")
-                    settingsVC?.changeToCelsium()
-                }
-            } else {
-                UserDefaults.standard.setValue("F", forKey: "temperature")
-            }
+            UserDefaults.standard.setValue("F", forKey: "temperature")
         default: break
         }
+        UserDefaults.standard.synchronize()
     }
 
-    @objc func distanceSegmentedControlValueChange(_ sender: UISegmentedControl) {
+    @objc func speedSegmentedControleValueChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            if let value = UserDefaults.standard.value(forKey: "distance") as? String {
-                print(value)
-                if windSegmentedControle.titleForSegment(at: 0)! == value {
-                    return
-                } else {
-                    UserDefaults.standard.setValue("Km", forKey: "distance")
-                    settingsVC?.changeToKM()
-                }
-            } else {
-                UserDefaults.standard.setValue("Km", forKey: "distance")
-            }
+            UserDefaults.standard.setValue("Km", forKey: "distance")
         case 1:
-            if let value = UserDefaults.standard.value(forKey: "distance") as? String {
-                print(value)
-                if windSegmentedControle.titleForSegment(at: 0)! == value {
-                    return
-                } else {
-                    UserDefaults.standard.setValue("Mi", forKey: "distance")
-                    settingsVC?.changeToKM()
-                }
-            } else {
-                UserDefaults.standard.setValue("Mi", forKey: "distance")
-            }
+            UserDefaults.standard.setValue("Mi", forKey: "distance")
         default: break
         }
+        UserDefaults.standard.synchronize()
     }
 
     @objc func timeSegmentedControlValueChange(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            if let value = UserDefaults.standard.value(forKey: "time") as? String {
-                if timeSegmentedControle.titleForSegment(at: 0)! == value {
-                    return
-                } else {
-                    UserDefaults.standard.setValue("24", forKey: "time")
-                    settingsVC?.changeToTvelveHourFormat()
-                }
-            } else {
-                UserDefaults.standard.setValue("24", forKey: "time")
-            }
+            UserDefaults.standard.setValue("24", forKey: "time")
         case 1:
-            if let value = UserDefaults.standard.value(forKey: "time") as? String {
-                if timeSegmentedControle.titleForSegment(at: 1)! == value {
-                    return
-                } else {
-                    UserDefaults.standard.setValue("12", forKey: "time")
-                    settingsVC?.changeToTvelveHourFormat()
-                }
-            } else {
-                UserDefaults.standard.setValue("12", forKey: "time")
-            }
+            UserDefaults.standard.setValue("12", forKey: "time")
         default: break
         }
+        UserDefaults.standard.synchronize()
     }
 
     func checkSegmentedValue() {
@@ -316,17 +291,21 @@ final class SettingsView: UIView {
             switch tempValue {
             case "C":
                 temperatureSegmentedControle.selectedSegmentIndex = 0
+                localTempValue = "C"
             case "F":
                 temperatureSegmentedControle.selectedSegmentIndex = 1
+                localTempValue = "F"
             default: break
             }
         }
         if let distanceValue = UserDefaults.standard.value(forKey: "distance") as? String {
             switch distanceValue {
             case "Km":
-                windSegmentedControle.selectedSegmentIndex = 0
+                windSpeedSegmentedControle.selectedSegmentIndex = 0
+                localSpeedValue = "Km"
             case "Mi":
-                windSegmentedControle.selectedSegmentIndex = 1
+                windSpeedSegmentedControle.selectedSegmentIndex = 1
+                localSpeedValue = "Mi"
             default: break
             }
         }
@@ -334,11 +313,33 @@ final class SettingsView: UIView {
             switch timeValue {
             case "24":
                 timeSegmentedControle.selectedSegmentIndex = 0
+                localTimeValue = "24"
             case "12":
                 timeSegmentedControle.selectedSegmentIndex = 1
+                localTimeValue = "12"
             default: break
             }
         }
     }
 
+    private func checkLocalValues() {
+        if let tempValue = UserDefaults.standard.value(forKey: "temperature") as? String {
+            if localTempValue == tempValue {
+            } else {
+                settingsVC?.changeToCelsium()
+            }
+        }
+        if let speedValue = UserDefaults.standard.value(forKey: "distance") as? String {
+            if localSpeedValue == speedValue {
+            } else {
+                settingsVC?.changeToKM()
+            }
+        }
+        if let timeValue = UserDefaults.standard.value(forKey: "time") as? String {
+            if localTimeValue == timeValue {
+            } else {
+                settingsVC?.changeToTvelveHourFormat()
+            }
+        }
+    }
 }

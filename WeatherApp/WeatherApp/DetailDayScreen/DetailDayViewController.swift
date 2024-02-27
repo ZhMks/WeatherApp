@@ -36,11 +36,10 @@ class DetailDayViewController: UIViewController {
         }
     }
 
-    func updateDataForView(data: [ForecastModel]?) {
-        guard let data = data else { return }
-        let hourService = HoursModelService(coreDataModel: data.first!)
+    func updateDataForView(data: ForecastModel, forecstModelsArray: [ForecastModel]) {
+        let hourService = HoursModelService(coreDataModel: data)
         let hoursArray = hourService.hoursArray
-        detailDayView.updateView(dataSource: data, hours: hoursArray)
+        detailDayView.updateView(dataSource: forecstModelsArray, hours: hoursArray)
     }
 
 }

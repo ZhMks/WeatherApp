@@ -126,9 +126,9 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         case "Ясно":
             weatherImage.image = UIImage(named: "UfLight")
         case "Малооблачно":
-            weatherImage.image = UIImage(named: "ParticallyCloud")
+            weatherImage.image = UIImage(named: "CloudyImage")
         case "Облачно с прояснениями":
-            weatherImage.image = UIImage(named: "ParticallyCloud")
+            weatherImage.image = UIImage(named: "CloudyImage")
         case "Пасмурно":
             weatherImage.image = UIImage(named: "HeavyClouds")
         case "Небольшой дождь":

@@ -34,30 +34,24 @@ final class CoreDataModelService {
             fetchFromCoreData()
 
         } else {
-            guard let firstModel = modelArray.first else { return }
-            let forecastService = ForecastModelService(coreDataModel: firstModel)
-            guard let forecastArray = forecastService.forecastModel else { return }
 
+            let components = networkModel.info.tzInfo.name.components(separatedBy: "/")
 
-            for networkForecast in networkModel.forecast {
+            let formattedStrings = "\(components[1]), \(components[0])"
 
-                var isValuePresent = false
+            print(formattedStrings)
 
-                for forecast in forecastArray {
-                    if forecast.date! == networkForecast.date {
-                        isValuePresent = true
-                    }
-                }
+            if modelArray.contains(where: { $0.name! == formattedStrings }) {
+                print("Contrains")
+                return
+            } else {
+                newModelToSave!.name = formattedStrings
 
-                if isValuePresent == false {
+                saveForecast(networkModel: networkModel, mainModel: newModelToSave!)
 
-                    saveForecastModel(network: networkForecast, mainModel: (modelArray.first)!)
+                coreDataService.saveContext()
 
-                    coreDataService.saveContext()
-
-                    fetchFromCoreData()
-
-                }
+                fetchFromCoreData()
             }
         }
     }
@@ -95,12 +89,12 @@ final class CoreDataModelService {
         newForecastModel.sunrise = network.sunrise
         mainModel.addToForecastArray(newForecastModel)
 
-            saveHours(networkModel: network.hours, mainModelToSave: newForecastModel)
-            save(day: network.partObj.day,
-                 night: network.partObj.night,
-                 dayShort: network.partObj.dayShort,
-                 nightShort: network.partObj.nightShort,
-                 mainModelToSave: newForecastModel)
+        saveHours(networkModel: network.hours, mainModelToSave: newForecastModel)
+        save(day: network.partObj.day,
+             night: network.partObj.night,
+             dayShort: network.partObj.dayShort,
+             nightShort: network.partObj.nightShort,
+             mainModelToSave: newForecastModel)
 
     }
 

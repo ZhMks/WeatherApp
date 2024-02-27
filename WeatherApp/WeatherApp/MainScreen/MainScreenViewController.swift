@@ -17,23 +17,24 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     private let coreDataModelService: CoreDataModelService
 
-    private var mainModel: [MainForecastsModels]
-    private var forecastsModels: [ForecastModel]
+    var mainModel: MainForecastsModels?
+    private var forecastsModel: ForecastModel
+    private var forecastModeslArray: [ForecastModel]
     private let hoursModels: [HourModel]
+
+    weak var mainPageViewController: iPageViewController?
 
     private let mainScreenView = MainScreenView(frame: .zero)
 
-    init(coreDataModelService: CoreDataModelService,
-         mainModel: [MainForecastsModels],
-         forecastsModels: [ForecastModel],
-         hoursModels: [HourModel])
-    {
-        self.mainModel = mainModel
-        self.forecastsModels = forecastsModels
-        print(self.forecastsModels.count)
+    init(coreDataModelService: CoreDataModelService, forecastsModel: ForecastModel, hoursModels: [HourModel],
+         forecastModelsArray: [ForecastModel], mainModel: MainForecastsModels) {
+        self.forecastsModel = forecastsModel
+        self.forecastModeslArray = forecastModelsArray
         self.hoursModels = hoursModels
+        self.mainModel = mainModel
         self.coreDataModelService = coreDataModelService
         super.init(nibName: nil, bundle: nil)
+        updateViewController()
     }
 
     required init?(coder: NSCoder) {
@@ -43,7 +44,10 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
-        checkChanges()
+            if forecastsModel.managedObjectContext!.hasChanges {
+                updateDataSource()
+            }
+
     }
 
 
@@ -51,11 +55,11 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
+        updateDataSource()
     }
 
     private func layout() {
         view.addSubview(mainScreenView)
-        updateViewController()
         mainScreenView.translatesAutoresizingMaskIntoConstraints = false
         let safeArea = view.safeAreaLayoutGuide
 
@@ -65,10 +69,9 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     private func updateViewController() {
+        updateDataSource()
         mainScreenView.mainScreenVC = self
-
-        navigationItem.title = "\((mainModel.first?.name)!)"
-
+        navigationItem.title = mainModel?.name!
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Landmark"), style: .plain, target: self, action: #selector(rightButtonTapped(_:)))
@@ -76,69 +79,49 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     private func updateDataSource() {
-        let forecastModelService = ForecastModelService(coreDataModel: mainModel.first!)
 
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let stringDate = dateFormatter.string(from: currentDate)
-
-        for (_, element) in forecastsModels.enumerated() {
-            if element.date! != stringDate {
-                forecastModelService.delete(item: element)
-            } else {
-                break
-            }
-        }
-
-        forecastModelService.fetchData()
-
-        guard let convertedModels = forecastModelService.forecastModel else { return }
-
-        self.forecastsModels = convertedModels
 
         let mainTableViewDataSource = DataSourceForMainScreen()
         let mainCollectionDataSource = DataSourceForMainCollectionCell()
 
-        mainCollectionDataSource.updateData(data: hoursModels)
-        mainTableViewDataSource.updateData(data: forecastsModels)
+//        mainCollectionDataSource.updateData(data: hoursModels)
+//        mainTableViewDataSource.updateData(data: forecas)
 
         mainScreenView.updateViewWith(tbDataSource: mainTableViewDataSource,
                                       collectionDataSource: mainCollectionDataSource,
-                                      factModel: forecastsModels, hourModel: hoursModels)
+                                      forecastModels: forecastModeslArray, hourModels: hoursModels, factModel: forecastsModel)
 
     }
 
     func pushTwentyFourVc() {
         let twentyFourVC = DetailTwentyFourViewController()
-        twentyFourVC.updateView(with: forecastsModels)
+        twentyFourVC.updateView(with: forecastsModel)
         navigationController?.pushViewController(twentyFourVC, animated: true)
     }
 
     @objc private func burgerButtonTapped(_ sender: UIBarButtonItem) {
-        let settingsVC = SettingsViewController(coreDataModelService: self.coreDataModelService)
-        settingsVC.modalPresentationStyle = .automatic
+        guard let mainModel = mainModel else { return }
+        let settingsVC = SettingsViewController(mainModel: mainModel)
+        settingsVC.modalPresentationStyle = .fullScreen
         navigationController?.present(settingsVC, animated: true)
     }
 
     func pushDayNightVc() {
         let detailDayVC = DetailDayViewController()
-        detailDayVC.updateDataForView(data: forecastsModels)
+        detailDayVC.updateDataForView(data: forecastsModel, forecstModelsArray: forecastModeslArray)
         navigationController?.pushViewController(detailDayVC, animated: true)
     }
 
-    @objc private func rightButtonTapped(_ sender: UIBarButtonItem) {}
+    @objc private func rightButtonTapped(_ sender: UIBarButtonItem) {
+        let geoView = GeoLocationView()
+        let geoLocationService = GeoLocationService()
+        let networkService = NetworkService()
+        let geoLocationViewController = GeoLocationViewController(geoView: geoView, geoLocationService: geoLocationService, networkService: networkService, coredataModelService: coreDataModelService)
+        geoLocationViewController.mainPageViewController = self.mainPageViewController
+        navigationController?.pushViewController(geoLocationViewController, animated: true)
+    }
 
     @objc private func startUpdate(_ notification: NotificationCenter) {
         updateDataSource()
-    }
-
-    private func checkChanges() {
-        for forecastsModel in forecastsModels {
-            if forecastsModel.managedObjectContext!.hasChanges {
-                updateDataSource()
-            }
-        }
-
     }
 }

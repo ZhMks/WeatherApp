@@ -78,6 +78,7 @@ final class OnboardingView: UIView {
         accessGeoButton.titleLabel?.font = UIFont(name: "Rubik-Regular", size: 12.0)
         accessGeoButton.setTitle("НЕТ, Я БУДУ ДОБАВЛЯТЬ ЛОКАЦИИ", for: .normal)
         accessGeoButton.setTitleColor(.white, for: .normal)
+        accessGeoButton.addTarget(self, action: #selector(ignoreGeoButtonTappe(_:)), for: .touchUpInside)
         return accessGeoButton
     }()
 
@@ -292,6 +293,9 @@ final class OnboardingView: UIView {
 
     @objc private func accessGeoButtonTapped(_ sender: UIButton) {
         loginVC?.requestAuthorisation()
-    //    loginVC?.pushViewController()
+    }
+
+    @objc private func ignoreGeoButtonTappe(_ sender: UIButton) {
+        loginVC?.pushGeoVC()
     }
 }

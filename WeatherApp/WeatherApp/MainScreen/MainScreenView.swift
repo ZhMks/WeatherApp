@@ -7,6 +7,7 @@
 
 import SnapKit
 import UIKit
+
 class MainScreenView: UIView {
     
     private var forecastModelArray: [ForecastModel]?
@@ -127,16 +128,16 @@ class MainScreenView: UIView {
 //        self.weatherByTimeCollectionView.dataSource = dataSource
 //    }
 
-    func updateViewWith(tbDataSource: UITableViewDataSource, collectionDataSource: UICollectionViewDataSource, factModel: [ForecastModel], hourModel: [HourModel]) {
+    func updateViewWith(tbDataSource: UITableViewDataSource, collectionDataSource: UICollectionViewDataSource, forecastModels: [ForecastModel], hourModels: [HourModel], factModel: ForecastModel) {
 
 //        
 //        configureTableView(dataSource: tableViewDataSource)
 //        configureCollectionView(dataSource: collectionViewDataSource)
         
-        self.forecastModelArray = factModel
-        self.hoursModelArray = hourModel
+        self.forecastModelArray = forecastModels
+        self.hoursModelArray = hourModels
 
-        mainWeatherView.updateView(fact: forecastModelArray, hourModel: hourModel)
+        mainWeatherView.updateView(fact: factModel, hourModel: hourModels)
 
         everydayForecastTableView.reloadData()
         weatherByTimeCollectionView.reloadData()
@@ -199,8 +200,7 @@ extension MainScreenView: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EverydayForecastTableViewCell.id, for: indexPath) as? EverydayForecastTableViewCell else { return UITableViewCell() }
         cell.accessoryType = .disclosureIndicator
         guard let forecastModelArray = forecastModelArray else { return UITableViewCell() }
-        guard let hoursModelArray = hoursModelArray else { return UITableViewCell() }
-        let forecastModel = forecastModelArray[indexPath.row]
+        let forecastModel = forecastModelArray[indexPath.section]
         cell.updateCellWith(model: forecastModel)
         return cell
     }

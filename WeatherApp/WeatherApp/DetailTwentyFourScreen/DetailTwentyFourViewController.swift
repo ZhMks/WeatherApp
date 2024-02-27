@@ -10,8 +10,6 @@ import SnapKit
 
 class DetailTwentyFourViewController: UIViewController {
 
-    var modelForeView: [ForecastModel] = []
-
     private let detailView = DetailTwentyFourView()
 
     override func viewDidLoad() {
@@ -34,9 +32,8 @@ class DetailTwentyFourViewController: UIViewController {
         }
     }
 
-    func updateView(with forecast: [ForecastModel]) {
-        self.modelForeView = forecast
-        let hourModelService = HoursModelService(coreDataModel: self.modelForeView.first!)
+    func updateView(with forecast: ForecastModel) {
+        let hourModelService = HoursModelService(coreDataModel: forecast)
         let hourArray = hourModelService.hoursArray
         detailView.updateView(with: hourArray)
     }

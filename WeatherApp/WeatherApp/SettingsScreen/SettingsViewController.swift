@@ -17,12 +17,13 @@ protocol ISettingsViewController: AnyObject {
 
 class SettingsViewController: UIViewController, ISettingsViewController {
 
+    private let mainModel: MainForecastsModels
+
     private let settingsView: SettingsView = SettingsView()
-    private var coreDataModelService: CoreDataModelService
     private var forecastModelService: ForecastModelService?
 
-    init(coreDataModelService: CoreDataModelService) {
-        self.coreDataModelService = coreDataModelService
+    init( mainModel: MainForecastsModels) {
+        self.mainModel = mainModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -54,8 +55,7 @@ class SettingsViewController: UIViewController, ISettingsViewController {
     }
 
     func updateModel() {
-        guard let model = coreDataModelService.modelArray?.first else { return }
-        let forecastModelService = ForecastModelService(coreDataModel: model)
+        let forecastModelService = ForecastModelService(coreDataModel: mainModel)
         self.forecastModelService = forecastModelService
     }
 

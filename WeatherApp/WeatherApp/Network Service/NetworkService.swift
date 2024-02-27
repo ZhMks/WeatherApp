@@ -26,12 +26,12 @@ enum NetworkErrors: Error {
 
 
 protocol INetworkService {
-    func fetchData(lat: CGFloat, lon: CGFloat, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void)
+    func fetchData(lat: String, lon: String, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void)
 }
 
 final class NetworkService: INetworkService {
 
-    func fetchData(lat: CGFloat, lon: CGFloat, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void) {
+    func fetchData(lat: String, lon: String, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void) {
         let headers = [ "X-Yandex-API-Key": "4bd7f22d-9199-40cc-ae2a-0bfe13a20973" ]
         let baseURL = "https://api.weather.yandex.ru/v2/forecast?lat=\(lat)&lon=\(lon)&lang=&limit=2&hours=true&extra=false"
         guard let fetchURL = URL.init(string: baseURL) else { return }
@@ -77,9 +77,5 @@ final class NetworkService: INetworkService {
             }
         }
         dataTask.resume()
-    }
-
-    func fetchLocation() {
-        
     }
 }

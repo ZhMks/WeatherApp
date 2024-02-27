@@ -16,8 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         let networkService = NetworkService()
+        let coreDataModelService = CoreDataModelService()
         let onboardingView = OnboardingView()
-        let controller = OnboardingViewController(mainView: onboardingView, networkService: networkService)
+        let controller = OnboardingViewController(mainView: onboardingView, networkService: networkService, coreDataModelService: coreDataModelService)
         let navigationControoler = UINavigationController(rootViewController: controller)
         window.rootViewController = navigationControoler
         window.makeKeyAndVisible()

@@ -20,9 +20,13 @@
 		B27B55FD2B7F3E96009CF6B4 /* DaysModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */; };
 		B27B56022B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56012B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift */; };
 		B27B56042B809304009CF6B4 /* ForecastModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56032B809304009CF6B4 /* ForecastModelService.swift */; };
-		B27B56072B81ED24009CF6B4 /* DeviceLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56062B81ED24009CF6B4 /* DeviceLocationManager.swift */; };
+		B27B56072B81ED24009CF6B4 /* GeoLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56062B81ED24009CF6B4 /* GeoLocationService.swift */; };
 		B27B56182B88B5D8009CF6B4 /* TempChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56172B88B5D8009CF6B4 /* TempChartView.swift */; };
 		B27B561A2B88B5F1009CF6B4 /* HumidityChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B56192B88B5F1009CF6B4 /* HumidityChartView.swift */; };
+		B29AE9F22B8B57F80007ED1D /* GeoLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29AE9F12B8B57F80007ED1D /* GeoLocationModel.swift */; };
+		B29AE9F52B8B59A70007ED1D /* GeoLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29AE9F42B8B59A70007ED1D /* GeoLocationViewController.swift */; };
+		B29AE9F72B8B59B00007ED1D /* GeoLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29AE9F62B8B59B00007ED1D /* GeoLocationView.swift */; };
+		B29AE9FC2B8C96360007ED1D /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29AE9FB2B8C96360007ED1D /* PageViewController.swift */; };
 		B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */; };
 		B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */; };
 		B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38812B72266600D1ECD5 /* OnBoardingVC.swift */; };
@@ -62,9 +66,13 @@
 		B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysModelService.swift; sourceTree = "<group>"; };
 		B27B56012B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceForMainScreen.swift; sourceTree = "<group>"; };
 		B27B56032B809304009CF6B4 /* ForecastModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModelService.swift; sourceTree = "<group>"; };
-		B27B56062B81ED24009CF6B4 /* DeviceLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLocationManager.swift; sourceTree = "<group>"; };
+		B27B56062B81ED24009CF6B4 /* GeoLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationService.swift; sourceTree = "<group>"; };
 		B27B56172B88B5D8009CF6B4 /* TempChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempChartView.swift; sourceTree = "<group>"; };
 		B27B56192B88B5F1009CF6B4 /* HumidityChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityChartView.swift; sourceTree = "<group>"; };
+		B29AE9F12B8B57F80007ED1D /* GeoLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModel.swift; sourceTree = "<group>"; };
+		B29AE9F42B8B59A70007ED1D /* GeoLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewController.swift; sourceTree = "<group>"; };
+		B29AE9F62B8B59B00007ED1D /* GeoLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationView.swift; sourceTree = "<group>"; };
+		B29AE9FB2B8C96360007ED1D /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		B2AF387A2B72266600D1ECD5 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,9 +172,27 @@
 		B27B56052B81ECE1009CF6B4 /* DeviceLocationService */ = {
 			isa = PBXGroup;
 			children = (
-				B27B56062B81ED24009CF6B4 /* DeviceLocationManager.swift */,
+				B27B56062B81ED24009CF6B4 /* GeoLocationService.swift */,
+				B29AE9F12B8B57F80007ED1D /* GeoLocationModel.swift */,
 			);
 			path = DeviceLocationService;
+			sourceTree = "<group>";
+		};
+		B29AE9F32B8B59940007ED1D /* GeoLocationScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B29AE9F42B8B59A70007ED1D /* GeoLocationViewController.swift */,
+				B29AE9F62B8B59B00007ED1D /* GeoLocationView.swift */,
+			);
+			path = GeoLocationScreen;
+			sourceTree = "<group>";
+		};
+		B29AE9F82B8C961C0007ED1D /* PageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B29AE9FB2B8C96360007ED1D /* PageViewController.swift */,
+			);
+			path = PageViewController;
 			sourceTree = "<group>";
 		};
 		B2AF38712B72266600D1ECD5 = {
@@ -189,6 +215,8 @@
 		B2AF387C2B72266600D1ECD5 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				B29AE9F82B8C961C0007ED1D /* PageViewController */,
+				B29AE9F32B8B59940007ED1D /* GeoLocationScreen */,
 				B27B56052B81ECE1009CF6B4 /* DeviceLocationService */,
 				B27B56002B7F9D12009CF6B4 /* ExtensionDataSource */,
 				B2AF38992B722EE900D1ECD5 /* OnBoardingScreen */,
@@ -353,7 +381,7 @@
 				B27B56182B88B5D8009CF6B4 /* TempChartView.swift in Sources */,
 				B26A56F82B75FEB800FC7255 /* DetailTwentyFourViewController.swift in Sources */,
 				B2AF38B52B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift in Sources */,
-				B27B56072B81ED24009CF6B4 /* DeviceLocationManager.swift in Sources */,
+				B27B56072B81ED24009CF6B4 /* GeoLocationService.swift in Sources */,
 				B27B55FB2B7E0662009CF6B4 /* ForecastsModels.xcdatamodeld in Sources */,
 				B2AF389B2B722EF500D1ECD5 /* OnBoardingView.swift in Sources */,
 				B2AF38A92B723C1300D1ECD5 /* SettingsViewController.swift in Sources */,
@@ -361,7 +389,9 @@
 				B26A56F62B75FCAB00FC7255 /* DetailTwentyFourView.swift in Sources */,
 				B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */,
 				B27B56022B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift in Sources */,
+				B29AE9F22B8B57F80007ED1D /* GeoLocationModel.swift in Sources */,
 				B27B55EE2B7B6D3F009CF6B4 /* CoreDataService.swift in Sources */,
+				B29AE9F52B8B59A70007ED1D /* GeoLocationViewController.swift in Sources */,
 				B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */,
 				B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */,
 				B27B55F02B7B78A8009CF6B4 /* CoreDataModelService.swift in Sources */,
@@ -370,8 +400,10 @@
 				B2B9458B2B7A21E800713164 /* NetworkServiceModel.swift in Sources */,
 				B26A57012B764BB200FC7255 /* DetailDayTableViewCell.swift in Sources */,
 				B26A56FD2B7645A700FC7255 /* DetailDayView.swift in Sources */,
+				B29AE9F72B8B59B00007ED1D /* GeoLocationView.swift in Sources */,
 				B27B56042B809304009CF6B4 /* ForecastModelService.swift in Sources */,
 				B2AF38B32B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift in Sources */,
+				B29AE9FC2B8C96360007ED1D /* PageViewController.swift in Sources */,
 				B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */,
 				B2B945862B7A18C500713164 /* DetailDayCollectionViewCell.swift in Sources */,
 				B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */,

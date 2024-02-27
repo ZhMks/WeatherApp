@@ -4,6 +4,7 @@ import CoreLocation
 
 protocol IOnBoardingVC: AnyObject {
     func requestAuthorisation()
+    func pushGeoVC()
 }
 
 class OnboardingViewController: UIViewController, IOnBoardingVC  {
@@ -12,7 +13,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
     private let networkService: NetworkService
 
-    private let coredataModelService = CoreDataModelService()
+    private let coredataModelService: CoreDataModelService
 
     private let mainView: OnboardingView
 
@@ -24,9 +25,10 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     }()
 
 
-    init(mainView: OnboardingView, networkService: NetworkService) {
+    init(mainView: OnboardingView, networkService: NetworkService, coreDataModelService: CoreDataModelService) {
         self.mainView = mainView
         self.networkService = networkService
+        self.coredataModelService = coreDataModelService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -38,6 +40,10 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
+        guard let array = coredataModelService.modelArray else  { return }
+        if !array.isEmpty {
+            checkModelsArray()
+        }
     }
 
     private func layout() {
@@ -51,39 +57,48 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         locationManager.startUpdatingLocation()
     }
 
-    private func fetchData(with lat: Double, lon: Double) {
+    private func fetchData(with lat: String, lon: String) {
+
         networkService.fetchData(lat: lat, lon: lon) { [weak self] result in
             guard let self else { return }
 
             switch result {
             case .success(let fetchedData):
-                
-               coredataModelService.saveModelToCoreData(networkModel: fetchedData)
+
+                coredataModelService.saveModelToCoreData(networkModel: fetchedData)
 
                 guard let modelsArray = coredataModelService.modelArray else { return }
+                guard let firstModel = modelsArray.first else { return }
 
                 DispatchQueue.main.async {[weak self] in
+
                     guard let self else { return }
 
-                    let forecastModelService = ForecastModelService(coreDataModel: (modelsArray.first)!)
-                    let hoursModelService = HoursModelService(coreDataModel: (forecastModelService.forecastModel?.first)!)
+                    let pageViewController = PageViewController(coreDataModelService: coredataModelService)
 
-                    guard var forecastsArray = forecastModelService.forecastModel else { return }
+                    pageViewController.initialCreation()
 
-                    let hoursArray = hoursModelService.hoursArray
-
-                    let mainViewController = MainScreenViewController(coreDataModelService: coredataModelService,
-                                                                      mainModel: modelsArray,
-                                                                      forecastsModels: forecastsArray,
-                                                                      hoursModels: hoursArray)
-
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainViewController)
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
                 }
 
             case .failure(let failure):
                 print(failure.description)
             }
         }
+    }
+
+    func pushGeoVC() {
+        let networkService = NetworkService()
+        let geoLoactionService = GeoLocationService()
+        let geoView = GeoLocationView()
+        let geoVC = GeoLocationViewController(geoView: geoView, geoLocationService: geoLoactionService, networkService: networkService, coredataModelService: coredataModelService)
+        navigationController?.pushViewController(geoVC, animated: true)
+    }
+
+    private func checkModelsArray() {
+        let pageViewController = PageViewController(coreDataModelService: coredataModelService)
+        pageViewController.initialCreation()
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
     }
 }
 
@@ -94,8 +109,8 @@ extension OnboardingViewController: CLLocationManagerDelegate {
 
         guard let location = locations.first?.coordinate else { return }
 
-        let lat = location.latitude
-        let lon = location.longitude
+        let lat = String(location.latitude)
+        let lon = String(location.longitude)
 
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:

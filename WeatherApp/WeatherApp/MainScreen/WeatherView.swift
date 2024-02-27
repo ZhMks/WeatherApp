@@ -254,7 +254,7 @@ final class WeatherView: UIView {
         self.layer.addSublayer(shapeLayer)
     }
 
-    func updateView(fact: [ForecastModel]?, hourModel: [HourModel]) {
+    func updateView(fact: ForecastModel, hourModel: [HourModel]) {
 
         let currentTime = Date()
 
@@ -268,7 +268,7 @@ final class WeatherView: UIView {
         guard let currentHour = components.first else { return }
 
         if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
-            devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact?.first?.dayModel?.tempMin)!.rounded(.towardZero))°"
+            devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact.dayModel?.tempMin)!.rounded(.towardZero))°"
             mainWeatherLabel.text = "\(selectedHour.condition!)"
             cloudyLabel.text = "\(selectedHour.cloudness)"
             percitipationLabel.text = "\(selectedHour.precStr)"
@@ -283,7 +283,7 @@ final class WeatherView: UIView {
             guard let currentHour = components.first else { return }
             
             if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
-                devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact?.first?.dayModel?.tempMin)!.rounded(.towardZero))°"
+                devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact.dayModel?.tempMin)!.rounded(.towardZero))°"
                 mainWeatherLabel.text = "\(selectedHour.condition!)"
                 cloudyLabel.text = "\(selectedHour.cloudness)"
                 percitipationLabel.text = "\(selectedHour.precStr)"
@@ -292,10 +292,10 @@ final class WeatherView: UIView {
             }
         }
 
-            mainTemperatureLabel.text = "\((fact?.first?.dayModel?.tempMin)!.rounded(.towardZero))°"
+            mainTemperatureLabel.text = "\((fact.dayModel?.tempMin)!.rounded(.towardZero))°"
 
-            sunsetTimeLabel.text = "\(fact?.first?.sunset ?? "")"
-            dawnTimeLabel.text = "\(fact?.first?.sunrise ?? "")"
+            sunsetTimeLabel.text = "\(fact.sunset ?? "")"
+            dawnTimeLabel.text = "\(fact.sunrise ?? "")"
 
             dateFormatter.dateFormat = "E, dd MMMM"
             dateTimeLabel.text = "\(timeString), \(dateFormatter.string(from: currentTime))"
