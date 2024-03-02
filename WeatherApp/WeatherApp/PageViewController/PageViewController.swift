@@ -56,6 +56,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
     func createViewControllerWithModel(model: MainForecastsModels) {
 
         let forecastModelService = ForecastModelService(coreDataModel: model)
+        forecastModelService.updateCurrentForecastByDate()
         guard let forecastArray = forecastModelService.forecastModel else { return }
         if let forecast = forecastArray.first {
             let hourModelService = HoursModelService(coreDataModel: forecast)
@@ -76,6 +77,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
 
         for model in modelArray {
             let forecastModelService = ForecastModelService(coreDataModel: model)
+            forecastModelService.updateCurrentForecastByDate()
             guard let forecastArray = forecastModelService.forecastModel else { return }
             if let forecast = forecastArray.first {
                 let hourModelService = HoursModelService(coreDataModel: forecast)

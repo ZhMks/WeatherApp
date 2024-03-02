@@ -77,6 +77,9 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(6)
             make.leading.equalTo(contentView.snp.leading).offset(5)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-240)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-31)
+            make.width.equalTo(53)
         }
 
         weatherImage.snp.makeConstraints { make in
@@ -91,18 +94,20 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         percentage.snp.makeConstraints { make in
             make.top.equalTo(dateLabel.snp.bottom).offset(5)
             make.bottom.equalTo(contentView.snp.bottom).offset(-5)
+            make.leading.equalTo(weatherImage.snp.trailing).offset(5)
             make.width.equalTo(20)
         }
 
         mainLabelText.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(17)
             make.leading.equalTo(percentage.snp.trailing).offset(5)
-            make.trailing.equalTo(temperatureLabel.snp.leading).offset(-15)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-100)
         }
 
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(17)
             make.trailing.equalTo(contentView.snp.trailing).offset(-5)
+            make.leading.equalTo(mainLabelText.snp.trailing).offset(5)
         }
     }
 

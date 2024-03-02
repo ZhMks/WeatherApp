@@ -19,7 +19,6 @@ final class ForecastModelService {
     init (coreDataModel: MainForecastsModels) {
         self.coreDataModel = coreDataModel
         fetchData()
-        updateCurrentForecastByDate()
     }
 
     func fetchData() {
@@ -36,16 +35,20 @@ final class ForecastModelService {
         fetchData()
     }
 
-    private func updateCurrentForecastByDate() {
+    func updateCurrentForecastByDate() {
 
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let stringDate = dateFormatter.string(from: currentDate)
 
-        if let forecastModelsArray = forecastModel {
-         let element =  forecastModelsArray.first { $0.date! == stringDate }
-            print(element)
+        if let forecastModelArray = forecastModel {
+            guard let firstForecast = forecastModelArray.first else { return }
+            if stringDate != firstForecast.date! {
+                let firstElement = forecastModelArray.first { $0.date! != stringDate }
+                delete(item: firstElement!)
+                fetchData()
+            }
         }
     }
 }

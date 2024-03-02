@@ -226,6 +226,7 @@ final class DetailDayView: UIView {
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(10)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-10)
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.top.equalTo(dateCollectionView.snp.bottom).offset(10)
         }
 
         contentView.snp.makeConstraints { make in
@@ -240,7 +241,6 @@ final class DetailDayView: UIView {
             make.top.equalTo(contentView.snp.top)
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
-            make.height.equalTo(682)
         }
 
         sunAndMoonLabel.snp.makeConstraints { make in
@@ -390,7 +390,11 @@ extension DetailDayView: UICollectionViewDataSource {
 extension DetailDayView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("select")
+        let dataSource = forecastArray![indexPath.row]
+        let hoursModelService = HoursModelService(coreDataModel: dataSource)
+        let hoursArray = hoursModelService.hoursArray
+        self.updateView(dataSource: dataSource, hours: hoursArray, mainModel: mainModel!, forecastArray: forecastArray!)
+        collectionView.reloadData()
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

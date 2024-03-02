@@ -43,6 +43,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
+        updateDataSource()
     }
 
 
@@ -50,7 +51,6 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
-        updateDataSource()
     }
 
     func updateNavigationItems(model: MainForecastsModels) {
