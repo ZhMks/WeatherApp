@@ -9,47 +9,56 @@ import Foundation
 
 final class NetworkServiceModel: Codable {
      let serverTime: String
-     let info: InfoNetworkModel
      let forecast: [ForecastNetworkModel]
+    let geoObject: GeoObject
 
     private enum CodingKeys: String, CodingKey {
         case serverTime = "now_dt"
-        case info = "info"
+        case geoObject = "geo_object"
         case forecast = "forecasts"
     }
 
-    init(serverTime: String, info: InfoNetworkModel, forecast: [ForecastNetworkModel]) {
+    init(serverTime: String, geoObject: GeoObject, forecast: [ForecastNetworkModel]) {
         self.serverTime = serverTime
-        self.info = info
+        self.geoObject = geoObject
         self.forecast = forecast
     }
 }
 
-
-final class InfoNetworkModel: Codable {
-    let lat: Double
-    let lon: Double
-    let tzInfo: TzInfo
+final class GeoObject: Codable {
+    let locality: Locality
+    let country: Country
 
     private enum CodingKeys: String, CodingKey {
-        case lat = "lat"
-        case lon = "lon"
-        case tzInfo = "tzinfo"
+        case locality = "locality"
+        case country = "country"
     }
 
-    init(lat: Double, lon:  Double, tzInfo: TzInfo) {
-        self.lat = lat
-        self.lon = lon
-        self.tzInfo = tzInfo
+    init(locality: Locality, country:  Country) {
+        self.locality = locality
+        self.country = country
     }
 }
 
-final class TzInfo: Codable {
+final class Locality: Codable {
     let name: String
 
     private enum CodingKeys: String, CodingKey {
         case name = "name"
     }
+    init(name: String) {
+        self.name = name
+    }
+}
+
+final class Country: Codable {
+
+    let name: String
+
+    private enum CodingKeys: String, CodingKey {
+        case name = "name"
+    }
+
     init(name: String) {
         self.name = name
     }

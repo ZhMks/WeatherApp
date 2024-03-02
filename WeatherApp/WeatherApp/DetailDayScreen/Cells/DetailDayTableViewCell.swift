@@ -59,7 +59,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
     private lazy var feelingTempNumber: UILabel = {
         let feelingTempNumber = UILabel()
-        feelingTempNumber.font = UIFont(name: "Rubik-Regular", size: 14)
+        feelingTempNumber.font = UIFont(name: "Rubik-Regular", size: 18)
         feelingTempNumber.text = "10"
         feelingTempNumber.translatesAutoresizingMaskIntoConstraints = false
         return feelingTempNumber
@@ -82,7 +82,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
     private lazy var windSpeedNumber: UILabel = {
         let temperatureNumber = UILabel()
-        temperatureNumber.font = UIFont(name: "Rubik-Regular", size: 14)
+        temperatureNumber.font = UIFont(name: "Rubik-Regular", size: 18)
         temperatureNumber.text = "2 m/s ССЗ"
         temperatureNumber.translatesAutoresizingMaskIntoConstraints = false
         return temperatureNumber
@@ -106,8 +106,8 @@ final class DetailDayTableViewCell: UITableViewCell {
     private lazy var ufLightNumber: UILabel = {
         let ufLightNumber = UILabel()
         ufLightNumber.translatesAutoresizingMaskIntoConstraints = false
-        ufLightNumber.font = UIFont(name: "Rubik-Regular", size: 14)
-        ufLightNumber.text = "4 (умерен.)"
+        ufLightNumber.font = UIFont(name: "Rubik-Regular", size: 18)
+        ufLightNumber.text = "4"
         return ufLightNumber
     }()
 
@@ -128,7 +128,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
     private lazy var percitipationNumber: UILabel = {
         let temperatureNumber = UILabel()
-        temperatureNumber.font = UIFont(name: "Rubik-Regular", size: 14)
+        temperatureNumber.font = UIFont(name: "Rubik-Regular", size: 18)
         temperatureNumber.text = "0%"
         temperatureNumber.translatesAutoresizingMaskIntoConstraints = false
         return temperatureNumber
@@ -153,7 +153,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
     private lazy var cloudyNumber: UILabel = {
         let cloudyNumber = UILabel()
-        cloudyNumber.font = UIFont(name: "Rubik-Regular", size: 14)
+        cloudyNumber.font = UIFont(name: "Rubik-Regular", size: 18)
         cloudyNumber.text = "29%"
         cloudyNumber.translatesAutoresizingMaskIntoConstraints = false
         return cloudyNumber
@@ -206,19 +206,21 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         weatherImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(20)
-            make.leading.equalTo(contentView.snp.leading).offset(134)
+            make.leading.equalTo(contentView.snp.leading).offset(125)
+            make.height.width.equalTo(32)
         }
 
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(15)
             make.leading.equalTo(weatherImageView.snp.trailing).offset(10)
-            make.height.width.equalTo(36)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-90)
+            make.height.equalTo(36)
         }
 
         mainWeatherLabel.snp.makeConstraints { make in
             make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
-            make.leading.equalTo(contentView.snp.leading).offset(145)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-140)
+            make.leading.equalTo(contentView.snp.leading).offset(130)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-50)
         }
 
 
@@ -237,8 +239,8 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         feelingTempNumber.snp.makeConstraints { make in
             make.centerY.equalTo(feelingsTempLabel.snp.centerY)
-            make.leading.equalTo(feelingsTempLabel.snp.trailing).offset(90)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+            make.leading.equalTo(feelingsTempLabel.snp.trailing).offset(60)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
         }
 
         windSpeedImageView.snp.makeConstraints { make in
@@ -256,8 +258,8 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         windSpeedNumber.snp.makeConstraints { make in
             make.centerY.equalTo(windSpeedLabel.snp.centerY)
-            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(35)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(50)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
         }
 
         ufLightImageView.snp.makeConstraints { make in
@@ -275,7 +277,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         ufLightNumber.snp.makeConstraints { make in
             make.centerY.equalTo(ufLightLabel.snp.centerY)
-            make.leading.equalTo(ufLightLabel.snp.trailing).offset(35)
+            make.leading.equalTo(ufLightLabel.snp.trailing).offset(85)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
 
@@ -318,7 +320,7 @@ final class DetailDayTableViewCell: UITableViewCell {
         }
     }
 
-    func updateDayCellWith(data: DayModel, hour: HourModel) {
+    func updateDayCellWith(data: DayModel, hourArray: [HourModel]) {
 
         let currentTime = Date()
 
@@ -331,18 +333,21 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         guard let currentHour = components.first else { return }
 
-        if hour.hour!.contains(currentHour) {
-            temperatureLabel.text = "\(hour.temp)°"
-            ufLightNumber.text = "\(hour.uvIndex)"
+        for hour in hourArray {
+            if hour.hour! == currentHour {
+                ufLightNumber.text = "\(hour.uvIndex)"
+            }
         }
-        feelingTempNumber.text = "\(data.feelsLike)°"
-        windSpeedNumber.text = "\(data.windSpeed) \((data.windDir)!)"
+
+        feelingTempNumber.text = "\(data.feelsLike.rounded(.towardZero))°"
+        windSpeedNumber.text = "\(data.windSpeed.rounded(.towardZero)) \((data.windDir)!)"
         percitipationNumber.text = "\(data.precProb)"
         cloudyNumber.text = "\(data.cloudness)"
         mainWeatherLabel.text = "\((data.condition)!)"
+        temperatureLabel.text = "\(data.tempAvg.rounded(.towardZero))"
     }
 
-    func updateNightCellWith(data: NightModel, hour: HourModel) {
+    func updateNightCellWith(data: NightModel, hourArray: [HourModel]) {
         let currentTime = Date()
 
         let dateFormatter = DateFormatter()
@@ -354,16 +359,19 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         guard let currentHour = components.first else { return }
 
-        if hour.hour!.contains(currentHour) {
-            temperatureLabel.text = "\(hour.temp)°"
-            ufLightNumber.text = "\(hour.uvIndex)"
+        for hour in hourArray {
+            if hour.hour!.contains(currentHour) {
+                ufLightNumber.text = "\(hour.uvIndex)"
+            }
         }
-        feelingTempNumber.text = "\(data.feelsLike)°"
-        windSpeedNumber.text = "\(data.windSpeed) \((data.windDir)!)"
+
+        feelingTempNumber.text = "\(data.feelsLike.rounded(.towardZero))°"
+        windSpeedNumber.text = "\(data.windSpeed.rounded(.towardZero)) \((data.windDir)!)"
         percitipationNumber.text = "\(data.precProb)"
-        cloudyNumber.text = "\(data.cloudness)"
+        cloudyNumber.text = "\(data.cloudness.rounded(.towardZero))"
         mainWeatherLabel.text = "\((data.condition)!)"
         dayNightLabel.text = "Ночь"
+        temperatureLabel.text = "\(data.tempAvg.rounded(.towardZero))"
     }
 
 }

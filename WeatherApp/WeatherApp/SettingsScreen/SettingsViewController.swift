@@ -64,18 +64,15 @@ class SettingsViewController: UIViewController, ISettingsViewController {
     }
 
     func changeToKM() {
-        guard let forecastModelService = self.forecastModelService else { return }
-        forecastModelService.convertSpeedValues()
+        ValueConverter.shared.convertSpeedValues()
     }
 
     func changeToCelsium() {
-        guard let forecastModelService = self.forecastModelService else { return }
-        forecastModelService.convertTempValues()
+        ValueConverter.shared.convertTempValues()
     }
 
     func changeToTvelveHourFormat() {
-        guard let forecastModelService = self.forecastModelService else { return }
-        forecastModelService.convertHourFormat()
+        ValueConverter.shared.convertHourFormat()
     }
 
 

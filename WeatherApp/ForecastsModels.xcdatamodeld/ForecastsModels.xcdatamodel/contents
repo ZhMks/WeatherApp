@@ -52,7 +52,8 @@
         <relationship name="forecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ForecastModel" inverseName="hoursArray" inverseEntity="ForecastModel"/>
     </entity>
     <entity name="MainForecastsModels" representedClassName="MainForecastsModels" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="locality" optional="YES" attributeType="String"/>
         <relationship name="forecastArray" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ForecastModel" inverseName="mainForecastModel" inverseEntity="ForecastModel"/>
     </entity>
     <entity name="NightModel" representedClassName="NightModel" syncable="YES" codeGenerationType="class">

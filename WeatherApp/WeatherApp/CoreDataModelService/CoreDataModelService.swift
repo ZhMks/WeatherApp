@@ -1,60 +1,64 @@
 import Foundation
 
 
+enum ErrorsInSaving: Error {
+    case alreadyExist
+
+    var description: String {
+        switch self {
+        case .alreadyExist: return "Город уже был добавлен"
+        }
+    }
+}
+
+
+
 final class CoreDataModelService {
 
     private(set) var modelArray: [MainForecastsModels]?
     let coreDataService = CoreDataService.shared
-    var newModelToSave: MainForecastsModels?
+
 
 
     init()
     {
         fetchFromCoreData()
-        let modelToSave = MainForecastsModels(context: coreDataService.managedContext)
-        self.newModelToSave = modelToSave
     }
 
-    func saveModelToCoreData(networkModel: NetworkServiceModel) {
+    func saveModelToCoreData(networkModel: NetworkServiceModel, completion: @escaping (Result<MainForecastsModels, ErrorsInSaving>) -> Void) {
 
         guard let modelArray = modelArray else { return }
 
-        if modelArray.isEmpty {
+                if modelArray.isEmpty {
+                let modelToSave = MainForecastsModels(context: coreDataService.managedContext)
+                modelToSave.locality = networkModel.geoObject.locality.name
+                modelToSave.country = networkModel.geoObject.country.name
+                saveForecast(networkModel: networkModel, mainModel: modelToSave)
+                coreDataService.saveContext()
+                fetchFromCoreData()
+                completion(.success(modelToSave))
+                return
+            }
 
-            let components = networkModel.info.tzInfo.name.components(separatedBy: "/")
+            let locality = networkModel.geoObject.locality.name
 
-            let formattedString = "\(components[1]), \(components[0])"
+        for model in modelArray {
+            print(model.locality!)
+        }
 
-            newModelToSave!.name = formattedString
-
-            saveForecast(networkModel: networkModel, mainModel: newModelToSave!)
-
-            coreDataService.saveContext()
-
-            fetchFromCoreData()
-
-        } else {
-
-            let components = networkModel.info.tzInfo.name.components(separatedBy: "/")
-
-            let formattedStrings = "\(components[1]), \(components[0])"
-
-            print(formattedStrings)
-
-            if modelArray.contains(where: { $0.name! == formattedStrings }) {
-                print("Contrains")
+            if modelArray.contains(where: { $0.locality! == locality }) {
+                completion(.failure(ErrorsInSaving.alreadyExist))
                 return
             } else {
-                newModelToSave!.name = formattedStrings
-
-                saveForecast(networkModel: networkModel, mainModel: newModelToSave!)
-
+                let modelToSave = MainForecastsModels(context: coreDataService.managedContext)
+                modelToSave.locality = locality
+                modelToSave.country = networkModel.geoObject.country.name
+                saveForecast(networkModel: networkModel, mainModel: modelToSave)
                 coreDataService.saveContext()
-
                 fetchFromCoreData()
+                completion(.success(modelToSave))
             }
         }
-    }
 
     private func fetchFromCoreData() {
         let request = MainForecastsModels.fetchRequest()
@@ -189,23 +193,10 @@ final class CoreDataModelService {
         mainModelToSave.nightShort = newNightShortModel
 
     }
-
-    func deleteForecast(model: ForecastModel) {
-
-        let forecastSerivce = ForecastModelService(coreDataModel: (modelArray?.first)!)
-
-        guard let forecastArray = forecastSerivce.forecastModel else { return }
-
-        if let index = forecastArray.firstIndex(where: { $0 == model }) {
-            forecastArray[index].managedObjectContext?.delete(model)
-            coreDataService.saveContext()
-        }
-
-    }
 }
 
 extension CoreDataModelService {
-    func convertString(string: String) -> String {
+  private  func convertString(string: String) -> String {
         var stringToSwitch = string
         switch stringToSwitch {
         case "clear":

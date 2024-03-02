@@ -64,15 +64,33 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
             case .success(let success):
                 networkService.fetchData(lat: success.lat, lon: success.lon) { [weak self] result in
                     guard self != nil else { return }
+
                     switch result {
                     case .success(let success):
-                        print(success.info.tzInfo.name)
 
-                        self?.coreDataModelService.saveModelToCoreData(networkModel: success)
-
-                        self?.mainPageViewController?.addToPageViewControllerWith(name: success.info.tzInfo.name)
-                        DispatchQueue.main.async {
-                            self?.navigationController?.popViewController(animated: true)
+                        self?.coreDataModelService.saveModelToCoreData(networkModel: success) { [weak self] result in
+                            guard let self else { return }
+                            switch result {
+                            case .success(let success):
+                                mainPageViewController?.createViewControllerWithModel(model: success)
+                                DispatchQueue.main.async { [weak self] in
+                                    self?.mainPageViewController?.updateViewControllers()
+                                    self?.navigationController?.popViewController(animated: true)
+                                }
+                            case .failure(let failure):
+                                let uiAlert = UIAlertController(title: "Ошибка", message: "\(failure.description)", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
+                                    if action.isEnabled {
+                                        DispatchQueue.main.async { [weak self] in
+                                            self?.navigationController?.popViewController(animated: true)
+                                        }
+                                    }
+                                }
+                                uiAlert.addAction(action)
+                                DispatchQueue.main.async {
+                                    self.navigationController?.present(uiAlert, animated: true)
+                                }
+                            }
                         }
                     case .failure(let failure):
                         print("\(failure)")

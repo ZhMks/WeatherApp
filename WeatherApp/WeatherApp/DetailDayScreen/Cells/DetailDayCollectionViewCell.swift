@@ -41,17 +41,28 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configureCel(_ data: ForecastModel) {
+    func configureCell(data: ForecastModel) {
+        let currentDate = Date()
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
         let timeString = dateFormatter.date(from: (data.date)!)
+        let currentDateString = dateFormatter.string(from: currentDate)
+        let forecastDateString = dateFormatter.string(from: timeString!)
+
 
         let secondFormatter = DateFormatter()
         secondFormatter.dateFormat = "EE,d/MM"
         secondFormatter.locale = Locale(identifier: "ru_RU")
         let dateStrin = secondFormatter.string(from: (timeString)!)
         dateLabel.text = "\(dateStrin)"
+        
+        if forecastDateString == currentDateString {
+            isSelected = true
+            backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
+            dateLabel.textColor = .white
+        }
     }
 
 }

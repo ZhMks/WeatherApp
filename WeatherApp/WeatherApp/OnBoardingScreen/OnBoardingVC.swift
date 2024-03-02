@@ -63,24 +63,37 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
             guard let self else { return }
 
             switch result {
+                
             case .success(let fetchedData):
 
-                coredataModelService.saveModelToCoreData(networkModel: fetchedData)
-
-                guard let modelsArray = coredataModelService.modelArray else { return }
-                guard let firstModel = modelsArray.first else { return }
-
-                DispatchQueue.main.async {[weak self] in
+                coredataModelService.saveModelToCoreData(networkModel: fetchedData) { [weak self]  result in
 
                     guard let self else { return }
 
-                    let pageViewController = PageViewController(coreDataModelService: coredataModelService)
+                    switch result {
+                    case .success(let success):
 
-                    pageViewController.initialCreation()
+                        DispatchQueue.main.async { [weak self] in
 
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
+                            guard let self else { return }
+
+                            let pageViewController = PageViewController(coreDataModelService: coredataModelService)
+
+                            pageViewController.createViewControllerWithModel(model: success)
+
+                            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
+                        }
+                    case .failure(_):
+                        let uiAlert = UIAlertController(title: "Ошибка", message: "Невозможно определить локацию", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
+                            if action.isEnabled {
+                                self.navigationController?.dismiss(animated: true)
+                            }
+                        }
+                        uiAlert.addAction(action)
+                        navigationController?.present(uiAlert, animated: true)
+                    }
                 }
-
             case .failure(let failure):
                 print(failure.description)
             }
@@ -97,7 +110,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
     private func checkModelsArray() {
         let pageViewController = PageViewController(coreDataModelService: coredataModelService)
-        pageViewController.initialCreation()
+        pageViewController.initialFetch()
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
     }
 }

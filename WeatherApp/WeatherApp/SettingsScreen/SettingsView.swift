@@ -224,28 +224,24 @@ final class SettingsView: UIView {
 
     @objc func tapOnSetButton(_: UIButton) {
         if localTempValue.isEmpty {
-            if let _ = UserDefaults.standard.value(forKey: "temperature") {
-                settingsVC?.changeToCelsium()
-                settingsVC?.dismiss()
+            if let _ = UserDefaults.standard.value(forKey: "temperature") as? String {
+                ValueConverter.shared.convertTempValues()
             }
         } else {
             checkLocalValues()
         }
 
         if localTimeValue.isEmpty {
-            if let _ = UserDefaults.standard.value(forKey: "distance") {
-                settingsVC?.changeToKM()
-                settingsVC?.dismiss()
+            if let _ = UserDefaults.standard.value(forKey: "time") as? String {
+                ValueConverter.shared.convertHourFormat()
             }
         } else {
             checkLocalValues()
         }
 
         if localSpeedValue.isEmpty {
-
-            if let _ = UserDefaults.standard.value(forKey: "time") {
-                settingsVC?.changeToTvelveHourFormat()
-                settingsVC?.dismiss()
+            if let _ = UserDefaults.standard.value(forKey: "distance") as? String {
+                ValueConverter.shared.convertSpeedValues()
             }
         } else {
             checkLocalValues()

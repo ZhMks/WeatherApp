@@ -200,7 +200,7 @@ extension MainScreenView: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EverydayForecastTableViewCell.id, for: indexPath) as? EverydayForecastTableViewCell else { return UITableViewCell() }
         cell.accessoryType = .disclosureIndicator
         guard let forecastModelArray = forecastModelArray else { return UITableViewCell() }
-        let forecastModel = forecastModelArray[indexPath.section]
+        let forecastModel = forecastModelArray[indexPath.row]
         cell.updateCellWith(model: forecastModel)
         return cell
     }

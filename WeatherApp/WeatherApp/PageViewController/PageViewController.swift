@@ -10,12 +10,14 @@ import UIKit
 import SnapKit
 
 protocol iPageViewController: AnyObject {
-    func addToPageViewControllerWith(name: String)
     var coreDataModelService: CoreDataModelService {get set}
+    func createViewControllerWithModel(model: MainForecastsModels)
+    func initialFetch()
+    func updateViewControllers()
 }
 
 final class PageViewController: UIPageViewController, iPageViewController {
-    
+
     var coreDataModelService: CoreDataModelService
 
     private(set) var viewControllersArray: [MainScreenViewController]?
@@ -51,84 +53,106 @@ final class PageViewController: UIPageViewController, iPageViewController {
         pageControle.pageIndicatorTintColor = .gray
     }
 
-    func initialCreation() {
+    func createViewControllerWithModel(model: MainForecastsModels) {
 
-        let mainForecastModelsArray = coreDataModelService.modelArray
+        let forecastModelService = ForecastModelService(coreDataModel: model)
+        guard let forecastArray = forecastModelService.forecastModel else { return }
+        if let forecast = forecastArray.first {
+            let hourModelService = HoursModelService(coreDataModel: forecast)
+            let hoursArray = hourModelService.hoursArray
 
-        if let mainForecastModelsArray {
-            if let _ = self.viewControllersArray {
-                for model in mainForecastModelsArray {
+            let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model)
+            self.viewControllersArray?.append(mainScreenVC)
+            self.navigationItem.title = mainScreenVC.navigationItem.title
+            self.navigationItem.leftBarButtonItem = mainScreenVC.navigationItem.leftBarButtonItem
+            self.navigationItem.rightBarButtonItem = mainScreenVC.navigationItem.rightBarButtonItem
+        }
+        updateViewControllers()
+    }
 
-                    let forecastModelService = ForecastModelService(coreDataModel: model)
+    func initialFetch() {
 
-                    let forecastArray = forecastModelService.forecastModel
+        guard let modelArray = coreDataModelService.modelArray else { return }
 
-                    for forecast in forecastArray! {
-                        let hourModelService = HoursModelService(coreDataModel: forecast)
-                        let hoursArray = hourModelService.hoursArray
-                        let mainScreenViewController = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray!, mainModel: model)
-                        mainScreenViewController.mainPageViewController = self
-                        self.viewControllersArray?.append(mainScreenViewController)
-                        self.navigationItem.title = mainScreenViewController.navigationItem.title
-                        self.navigationItem.leftBarButtonItem = mainScreenViewController.navigationItem.leftBarButtonItem
-                        self.navigationItem.rightBarButtonItem = mainScreenViewController.navigationItem.rightBarButtonItem
-                        setViewControllers([self.viewControllersArray![0]], direction: .forward, animated: true)
-                    }
+        for model in modelArray {
+            let forecastModelService = ForecastModelService(coreDataModel: model)
+            guard let forecastArray = forecastModelService.forecastModel else { return }
+            if let forecast = forecastArray.first {
+                let hourModelService = HoursModelService(coreDataModel: forecast)
+                let hoursArray = hourModelService.hoursArray
+
+                let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model)
+                self.viewControllersArray?.append(mainScreenVC)
+                guard let model = coreDataModelService.modelArray?.first else { return  }
+                mainScreenVC.updateNavigationItems(model: model)
+                self.navigationItem.title = mainScreenVC.navigationItem.title
+                self.navigationItem.rightBarButtonItem = mainScreenVC.navigationItem.rightBarButtonItem
+                self.navigationItem.leftBarButtonItem = mainScreenVC.navigationItem.leftBarButtonItem
+            }
+        }
+        updateViewControllers()
+    }
+
+    func updateViewControllers() {
+        if let viewControllersArray = viewControllersArray {
+            setViewControllers([viewControllersArray.first!], direction: .forward, animated: true)
+        }
+    }
+}
+
+
+    extension PageViewController: UIPageViewControllerDataSource {
+
+        func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+            guard let viewController = viewController as? MainScreenViewController else { return nil }
+            if let index = viewControllersArray?.firstIndex(of: viewController) {
+                if index > 0 {
+                    guard let model = coreDataModelService.modelArray?[index] else { return UIViewController() }
+                    viewController.updateNavigationItems(model: model)
+                    self.navigationItem.title = viewController.navigationItem.title
+                    self.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
+                    self.navigationItem.leftBarButtonItem = viewController.navigationItem.leftBarButtonItem
+                    return viewControllersArray![index - 1]
                 }
             }
+            guard let model = coreDataModelService.modelArray?.first else { return UIViewController() }
+            viewController.updateNavigationItems(model: model)
+            self.navigationItem.title = viewController.navigationItem.title
+            self.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
+            self.navigationItem.leftBarButtonItem = viewController.navigationItem.leftBarButtonItem
+            return nil
         }
-    }
 
-    func addToPageViewControllerWith(name: String) {
-        let mainForecastModelsArray = coreDataModelService.modelArray
-
-        let components = name.components(separatedBy: "/")
-
-        let formattedString = "\(components[1]), \(components[0])"
-
-        guard let firstElement = mainForecastModelsArray?.first(where: { $0.name! == formattedString }) else { return }
-
-       // let forecastModelService = ForecastModelService(coreDataModel: firstElement)
-
-    }
-
-}
-
-extension PageViewController: UIPageViewControllerDataSource {
-
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        guard let viewControllersArray = viewControllersArray else { return 0 }
-        return viewControllersArray.count
-    }
-
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        0
-    }
-
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewController = viewController as? MainScreenViewController else { return nil }
-        if let index = viewControllersArray?.firstIndex(of: viewController) {
-            if index > 0 {
-                return viewControllersArray![index - 1]
+        func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+            guard let viewController = viewController as? MainScreenViewController else { return nil }
+            if let index = viewControllersArray?.firstIndex(of: viewController) {
+                if index < viewControllersArray!.count - 1 {
+                    guard let model = coreDataModelService.modelArray?[index] else { return UIViewController() }
+                    viewController.updateNavigationItems(model: model)
+                    self.navigationItem.title = viewController.navigationItem.title
+                    self.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
+                    self.navigationItem.leftBarButtonItem = viewController.navigationItem.leftBarButtonItem
+                    return viewControllersArray![index + 1]
+                }
             }
+            guard let model = coreDataModelService.modelArray?.last else { return UIViewController() }
+            viewController.updateNavigationItems(model: model)
+            self.navigationItem.title = viewController.navigationItem.title
+            self.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
+            self.navigationItem.leftBarButtonItem = viewController.navigationItem.leftBarButtonItem
+            return nil
         }
-        return nil
+
     }
-
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewController = viewController as? MainScreenViewController else { return nil }
-        if let index = viewControllersArray?.firstIndex(of: viewController) {
-            if index < viewControllersArray!.count - 1 {
-                return viewControllersArray![index + 1]
-            }
-        }
-        return nil
-    }
-
-
-}
 
 extension PageViewController: UIPageViewControllerDelegate {
 
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if !completed { return }
+            DispatchQueue.main.async { [weak self] in
+                self?.dataSource = nil
+                self?.dataSource = self
+            }
+    }
 
 }

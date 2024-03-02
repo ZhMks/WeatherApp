@@ -13,6 +13,7 @@ import SwiftUI
 final class DetailTwentyFourView: UIView {
 
     var dataArray: [HourModel]?
+    var mainModel: MainForecastsModels?
 
     private lazy var cityLabel: UILabel = {
         let cityLabel = UILabel()
@@ -76,8 +77,10 @@ final class DetailTwentyFourView: UIView {
         }
     }
 
-    func updateView(with model: [HourModel]) {
+    func updateView(with model: [HourModel], mainModel: MainForecastsModels) {
         self.dataArray = model
+        self.mainModel = mainModel
+        cityLabel.text = "\((mainModel.locality)!), \((mainModel.country)!)"
         twentyFourOurTableView.reloadData()
         updateChart()
     }

@@ -34,7 +34,6 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         self.mainModel = mainModel
         self.coreDataModelService = coreDataModelService
         super.init(nibName: nil, bundle: nil)
-        updateViewController()
     }
 
     required init?(coder: NSCoder) {
@@ -44,10 +43,6 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
-            if forecastsModel.managedObjectContext!.hasChanges {
-                updateDataSource()
-            }
-
     }
 
 
@@ -56,6 +51,14 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         view.backgroundColor = .systemBackground
         layout()
         updateDataSource()
+    }
+
+    func updateNavigationItems(model: MainForecastsModels) {
+        navigationItem.title = "\((model.locality)!), \((model.country)!)"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
+        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Landmark"), style: .plain, target: self, action: #selector(rightButtonTapped(_:)))
+        navigationItem.rightBarButtonItem?.tintColor = .black
     }
 
     private func layout() {
@@ -68,18 +71,8 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         }
     }
 
-    private func updateViewController() {
-        updateDataSource()
-        mainScreenView.mainScreenVC = self
-        navigationItem.title = mainModel?.name!
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Burger"), style: .plain, target: self, action: #selector(burgerButtonTapped(_:)))
-        navigationItem.leftBarButtonItem?.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Landmark"), style: .plain, target: self, action: #selector(rightButtonTapped(_:)))
-        navigationItem.rightBarButtonItem?.tintColor = .black
-    }
-
     private func updateDataSource() {
-
+        mainScreenView.mainScreenVC = self
 
         let mainTableViewDataSource = DataSourceForMainScreen()
         let mainCollectionDataSource = DataSourceForMainCollectionCell()
@@ -95,7 +88,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     func pushTwentyFourVc() {
         let twentyFourVC = DetailTwentyFourViewController()
-        twentyFourVC.updateView(with: forecastsModel)
+        twentyFourVC.updateView(with: forecastsModel, mainModel: mainModel!)
         navigationController?.pushViewController(twentyFourVC, animated: true)
     }
 
@@ -108,7 +101,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     func pushDayNightVc() {
         let detailDayVC = DetailDayViewController()
-        detailDayVC.updateDataForView(data: forecastsModel, forecstModelsArray: forecastModeslArray)
+        detailDayVC.updateDataForView(forecastModel: forecastsModel, mainModel: mainModel!, hoursArray: hoursModels, forecastArray: forecastModeslArray)
         navigationController?.pushViewController(detailDayVC, animated: true)
     }
 
