@@ -13,8 +13,8 @@
 		B26A56FD2B7645A700FC7255 /* DetailDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A56FC2B7645A700FC7255 /* DetailDayView.swift */; };
 		B26A57012B764BB200FC7255 /* DetailDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A57002B764BB200FC7255 /* DetailDayTableViewCell.swift */; };
 		B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A57022B76543B00FC7255 /* DetailDayViewController.swift */; };
-		B27B55EE2B7B6D3F009CF6B4 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */; };
-		B27B55F02B7B78A8009CF6B4 /* CoreDataModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */; };
+		B27B55EE2B7B6D3F009CF6B4 /* ForecastDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55ED2B7B6D3F009CF6B4 /* ForecastDataService.swift */; };
+		B27B55F02B7B78A8009CF6B4 /* MainForecastModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55EF2B7B78A8009CF6B4 /* MainForecastModelService.swift */; };
 		B27B55F82B7E04FF009CF6B4 /* HoursModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55F72B7E04FF009CF6B4 /* HoursModelService.swift */; };
 		B27B55FB2B7E0662009CF6B4 /* ForecastsModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B27B55F92B7E0662009CF6B4 /* ForecastsModels.xcdatamodeld */; };
 		B27B55FD2B7F3E96009CF6B4 /* DaysModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */; };
@@ -51,6 +51,9 @@
 		B2B945862B7A18C500713164 /* DetailDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B945852B7A18C500713164 /* DetailDayCollectionViewCell.swift */; };
 		B2B945892B7A219D00713164 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B945882B7A219D00713164 /* NetworkService.swift */; };
 		B2B9458B2B7A21E800713164 /* NetworkServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9458A2B7A21E800713164 /* NetworkServiceModel.swift */; };
+		B2C065882B96074A004182DB /* GeoLocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2C065862B96074A004182DB /* GeoLocationModel.xcdatamodeld */; };
+		B2C0658A2B9607E8004182DB /* GeoDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C065892B9607E8004182DB /* GeoDataService.swift */; };
+		B2C0658C2B96085E004182DB /* GeoDataModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C0658B2B96085E004182DB /* GeoDataModelService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,8 +63,8 @@
 		B26A56FC2B7645A700FC7255 /* DetailDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayView.swift; sourceTree = "<group>"; };
 		B26A57002B764BB200FC7255 /* DetailDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayTableViewCell.swift; sourceTree = "<group>"; };
 		B26A57022B76543B00FC7255 /* DetailDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayViewController.swift; sourceTree = "<group>"; };
-		B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
-		B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModelService.swift; sourceTree = "<group>"; };
+		B27B55ED2B7B6D3F009CF6B4 /* ForecastDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDataService.swift; sourceTree = "<group>"; };
+		B27B55EF2B7B78A8009CF6B4 /* MainForecastModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainForecastModelService.swift; sourceTree = "<group>"; };
 		B27B55F72B7E04FF009CF6B4 /* HoursModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursModelService.swift; sourceTree = "<group>"; };
 		B27B55FA2B7E0662009CF6B4 /* ForecastsModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ForecastsModels.xcdatamodel; sourceTree = "<group>"; };
 		B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysModelService.swift; sourceTree = "<group>"; };
@@ -98,6 +101,9 @@
 		B2B945852B7A18C500713164 /* DetailDayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		B2B945882B7A219D00713164 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B2B9458A2B7A21E800713164 /* NetworkServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceModel.swift; sourceTree = "<group>"; };
+		B2C065872B96074A004182DB /* GeoLocationModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GeoLocationModel.xcdatamodel; sourceTree = "<group>"; };
+		B2C065892B9607E8004182DB /* GeoDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoDataService.swift; sourceTree = "<group>"; };
+		B2C0658B2B96085E004182DB /* GeoDataModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoDataModelService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +153,8 @@
 		B27B55EB2B7B6D19009CF6B4 /* CoreDataService */ = {
 			isa = PBXGroup;
 			children = (
-				B27B55ED2B7B6D3F009CF6B4 /* CoreDataService.swift */,
+				B27B55ED2B7B6D3F009CF6B4 /* ForecastDataService.swift */,
+				B2C065892B9607E8004182DB /* GeoDataService.swift */,
 			);
 			path = CoreDataService;
 			sourceTree = "<group>";
@@ -155,10 +162,11 @@
 		B27B55EC2B7B6D23009CF6B4 /* CoreDataModelService */ = {
 			isa = PBXGroup;
 			children = (
-				B27B55EF2B7B78A8009CF6B4 /* CoreDataModelService.swift */,
+				B27B55EF2B7B78A8009CF6B4 /* MainForecastModelService.swift */,
 				B27B55F72B7E04FF009CF6B4 /* HoursModelService.swift */,
 				B27B55FC2B7F3E96009CF6B4 /* DaysModelService.swift */,
 				B27B56032B809304009CF6B4 /* ForecastModelService.swift */,
+				B2C0658B2B96085E004182DB /* GeoDataModelService.swift */,
 			);
 			path = CoreDataModelService;
 			sourceTree = "<group>";
@@ -208,6 +216,7 @@
 		B2AF38712B72266600D1ECD5 = {
 			isa = PBXGroup;
 			children = (
+				B2C065862B96074A004182DB /* GeoLocationModel.xcdatamodeld */,
 				B27B55F92B7E0662009CF6B4 /* ForecastsModels.xcdatamodeld */,
 				B2AF387C2B72266600D1ECD5 /* WeatherApp */,
 				B2AF387B2B72266600D1ECD5 /* Products */,
@@ -399,13 +408,15 @@
 				B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */,
 				B26A56F62B75FCAB00FC7255 /* DetailTwentyFourView.swift in Sources */,
 				B2AF38AE2B723D6400D1ECD5 /* MainScreenView.swift in Sources */,
+				B2C065882B96074A004182DB /* GeoLocationModel.xcdatamodeld in Sources */,
 				B27B56022B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift in Sources */,
 				B29AE9F22B8B57F80007ED1D /* GeoLocationModel.swift in Sources */,
-				B27B55EE2B7B6D3F009CF6B4 /* CoreDataService.swift in Sources */,
+				B27B55EE2B7B6D3F009CF6B4 /* ForecastDataService.swift in Sources */,
 				B29AE9F52B8B59A70007ED1D /* GeoLocationViewController.swift in Sources */,
 				B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */,
+				B2C0658A2B9607E8004182DB /* GeoDataService.swift in Sources */,
 				B2AF38B02B7377AF00D1ECD5 /* WeatherView.swift in Sources */,
-				B27B55F02B7B78A8009CF6B4 /* CoreDataModelService.swift in Sources */,
+				B27B55F02B7B78A8009CF6B4 /* MainForecastModelService.swift in Sources */,
 				B2B945892B7A219D00713164 /* NetworkService.swift in Sources */,
 				B2AF38A72B72380900D1ECD5 /* SettingsView.swift in Sources */,
 				B2B9458B2B7A21E800713164 /* NetworkServiceModel.swift in Sources */,
@@ -414,6 +425,7 @@
 				B29AE9F72B8B59B00007ED1D /* GeoLocationView.swift in Sources */,
 				B27B56042B809304009CF6B4 /* ForecastModelService.swift in Sources */,
 				B28737452B9303AE0027CAA9 /* ValueConverter.swift in Sources */,
+				B2C0658C2B96085E004182DB /* GeoDataModelService.swift in Sources */,
 				B2AF38B32B74CAD100D1ECD5 /* WeatherCollectionViewCell.swift in Sources */,
 				B29AE9FC2B8C96360007ED1D /* PageViewController.swift in Sources */,
 				B2AF38AC2B723D5C00D1ECD5 /* MainScreenViewController.swift in Sources */,
@@ -681,6 +693,16 @@
 			);
 			currentVersion = B27B55FA2B7E0662009CF6B4 /* ForecastsModels.xcdatamodel */;
 			path = ForecastsModels.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		B2C065862B96074A004182DB /* GeoLocationModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B2C065872B96074A004182DB /* GeoLocationModel.xcdatamodel */,
+			);
+			currentVersion = B2C065872B96074A004182DB /* GeoLocationModel.xcdatamodel */;
+			path = GeoLocationModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

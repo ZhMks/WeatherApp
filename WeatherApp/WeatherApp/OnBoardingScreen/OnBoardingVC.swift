@@ -9,16 +9,15 @@ protocol IOnBoardingVC: AnyObject {
 
 class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
-    private let coreDataService: CoreDataService = CoreDataService.shared
+    private let coreDataService: ForecastDataService = ForecastDataService.shared
 
     private let networkService: NetworkService
 
-    private let coredataModelService: CoreDataModelService
+    private let mainForecastModelService: MainForecastModelService
 
     private let mainView: OnboardingView
 
-    private var lat: String?
-    private var lon: String?
+    private let geoDataService: GeoDataModelService
 
 
     private lazy var locationManager: CLLocationManager = {
@@ -28,10 +27,11 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     }()
 
 
-    init(mainView: OnboardingView, networkService: NetworkService, coreDataModelService: CoreDataModelService) {
+    init(mainView: OnboardingView, networkService: NetworkService, coreDataModelService: MainForecastModelService, geoDataService: GeoDataModelService) {
         self.mainView = mainView
         self.networkService = networkService
-        self.coredataModelService = coreDataModelService
+        self.mainForecastModelService = coreDataModelService
+        self.geoDataService = geoDataService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -43,10 +43,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
-        guard let array = coredataModelService.modelArray else  { return }
-        if !array.isEmpty {
-            checkModelsArray()
-        }
+        checkModelsArray()
     }
 
     private func layout() {
@@ -60,16 +57,16 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         locationManager.startUpdatingLocation()
     }
 
-    private func fetchData(with lat: String, lon: String) {
+    private func initialFetchData(with lat: String, lon: String) {
 
         networkService.fetchData(lat: lat, lon: lon) { [weak self] result in
             guard let self else { return }
 
             switch result {
-                
+
             case .success(let fetchedData):
 
-                coredataModelService.saveModelToCoreData(networkModel: fetchedData) { [weak self]  result in
+                mainForecastModelService.saveModelToCoreData(networkModel: fetchedData) { [weak self]  result in
 
                     guard let self else { return }
 
@@ -80,7 +77,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
                             guard let self else { return }
 
-                            let pageViewController = PageViewController(coreDataModelService: coredataModelService)
+                            let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
 
                             pageViewController.createViewControllerWithModel(model: success)
 
@@ -103,21 +100,61 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         }
     }
 
+    private func fetchData(with lat: String, lon: String) {
+
+        networkService.fetchData(lat: lat, lon: lon) { [weak self] result in
+            guard let self else { return }
+
+            switch result {
+
+            case .success(let fetchedData):
+
+                mainForecastModelService.saveModelToCoreData(networkModel: fetchedData) { [weak self]  result in
+
+                    guard let self else { return }
+
+                    switch result {
+                    case .success(let success):
+                        print(success.locality)
+                        return
+                    case .failure(_):
+                        let uiAlert = UIAlertController(title: "Ошибка", message: "Невозможно определить локацию", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
+                            if action.isEnabled {
+                                self.navigationController?.dismiss(animated: true)
+                            }
+                        }
+                        uiAlert.addAction(action)
+                        navigationController?.present(uiAlert, animated: true)
+                    }
+                }
+            case .failure(let failure):
+                print(failure.description)
+            }
+        }
+    }
+
     func pushGeoVC() {
         let networkService = NetworkService()
         let geoLoactionService = GeoLocationService()
         let geoView = GeoLocationView()
-        let geoVC = GeoLocationViewController(geoView: geoView, geoLocationService: geoLoactionService, networkService: networkService, coredataModelService: coredataModelService)
+        let geoVC = GeoLocationViewController(geoView: geoView, geoLocationService: geoLoactionService, networkService: networkService, coredataModelService: mainForecastModelService, geoDataService: geoDataService)
         navigationController?.pushViewController(geoVC, animated: true)
     }
 
     private func checkModelsArray() {
-        if locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse {
-            coredataModelService.removeAllData()
-            if let latValue = UserDefaults.standard.value(forKey: "latitude") as? String, let lonValue = UserDefaults.standard.value(forKey: "longitude") as? String {
-                print(latValue)
-                print(lonValue)
-                self.fetchData(with: latValue, lon: lonValue)
+        mainForecastModelService.removeAllData()
+        let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
+        if let modelArray = geoDataService.modelArray {
+            if !modelArray.isEmpty {
+                print(modelArray.count)
+                for model in modelArray {
+                    self.fetchData(with: model.lat!, lon: model.lon!)
+                }
+                pageViewController.initialFetch()
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
+            } else {
+                return
             }
         }
     }
@@ -130,17 +167,17 @@ extension OnboardingViewController: CLLocationManagerDelegate {
 
         guard let location = locations.first?.coordinate else { return }
 
-        self.lat = String(location.latitude)
-        self.lon = String(location.longitude)
+        let lat = String(location.latitude)
+        let lon = String(location.longitude)
 
-        UserDefaults.standard.setValue(lat, forKey: "latitude")
-        UserDefaults.standard.setValue(lon, forKey: "longitude")
-        UserDefaults.standard.synchronize()
+        geoDataService.saveModelToCoreData(lat: lat, lon: lon)
 
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            if let lat = self.lat, let lon = self.lon {
-                fetchData(with: lat, lon: lon)
+            if let modelArray = geoDataService.modelArray {
+                for model in modelArray {
+                    self.initialFetchData(with: model.lat!, lon: model.lon!)
+                }
             }
         case .denied:
             manager.stopUpdatingLocation()

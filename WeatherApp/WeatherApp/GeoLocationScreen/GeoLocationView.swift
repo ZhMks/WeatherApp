@@ -11,7 +11,8 @@ import SnapKit
 final class GeoLocationView: UIView {
     
     var geoVC: IGeoLocationVC?
-    
+    var coreDataModelService: MainForecastModelService?
+
     private var textFieldtext = ""
     
     private lazy var plusImage: UIButton = {
@@ -87,7 +88,11 @@ final class GeoLocationView: UIView {
             make.height.width.equalTo(90)
         }
     }
-    
+
+    func updateData(coreData: MainForecastModelService) {
+        self.coreDataModelService = coreData
+    }
+
     @objc private func setGeoView(_ sender: UIImageView) {
         addSubview(getLocationView)
         getLocationView.addSubview(notificationLabel)
@@ -124,9 +129,7 @@ final class GeoLocationView: UIView {
     
     
     @objc private func getGeoData(_ sender: UIButton) {
-        print(self.textFieldtext)
-        geoVC?.startFetchingGeo(string: self.textFieldtext)
-        getLocationView.removeFromSuperview()
+        geoVC?.checkModelsArray(string: self.textFieldtext)
     }
 }
 

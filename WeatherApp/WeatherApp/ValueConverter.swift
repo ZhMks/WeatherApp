@@ -10,8 +10,8 @@ import Foundation
 
 final class ValueConverter {
     static let shared = ValueConverter()
-    let coreDataService = CoreDataService.shared
-    let coreDataModelService = CoreDataModelService()
+    let coreDataService = ForecastDataService.shared
+    let coreDataModelService = MainForecastModelService()
     private init() {}
 
     func convertSpeedValues() {

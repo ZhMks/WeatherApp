@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol iPageViewController: AnyObject {
-    var coreDataModelService: CoreDataModelService {get set}
+    var coreDataModelService: MainForecastModelService {get set}
     func createViewControllerWithModel(model: MainForecastsModels)
     func initialFetch()
     func updateViewControllers()
@@ -18,13 +18,15 @@ protocol iPageViewController: AnyObject {
 
 final class PageViewController: UIPageViewController, iPageViewController {
 
-    var coreDataModelService: CoreDataModelService
+    var coreDataModelService: MainForecastModelService
 
     private(set) var viewControllersArray: [MainScreenViewController]?
+    private let geoDataService: GeoDataModelService
 
 
-    init(coreDataModelService: CoreDataModelService) {
+    init(coreDataModelService: MainForecastModelService, geoDataService: GeoDataModelService) {
         self.coreDataModelService = coreDataModelService
+        self.geoDataService = geoDataService
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         view.backgroundColor = .systemBackground
         viewControllersArray = []
@@ -53,7 +55,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
     func createViewControllerWithModel(model: MainForecastsModels) {
 
         let forecastModelService = ForecastModelService(coreDataModel: model)
-       // forecastModelService.updateCurrentForecastByDate()
+
         guard let forecastArray = forecastModelService.forecastModel else { return }
         if let forecast = forecastArray.first {
             let hourModelService = HoursModelService(coreDataModel: forecast)
@@ -64,7 +66,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
             tableViewDataSource.updateData(data: forecastArray)
             collectionViewDataSource.updateData(data: hoursArray)
 
-            let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource)
+            let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource, geoDataService: geoDataService)
             mainScreenVC.updateNavigationItems(model: model)
             self.viewControllersArray?.append(mainScreenVC)
             self.navigationItem.title = mainScreenVC.navigationItem.title
@@ -76,11 +78,13 @@ final class PageViewController: UIPageViewController, iPageViewController {
 
     func initialFetch() {
 
+
         guard let modelArray = coreDataModelService.modelArray else { return }
+
 
         for model in modelArray {
             let forecastModelService = ForecastModelService(coreDataModel: model)
-        //    forecastModelService.updateCurrentForecastByDate()
+            
             guard let forecastArray = forecastModelService.forecastModel else { return }
             if let forecast = forecastArray.first {
                 let hourModelService = HoursModelService(coreDataModel: forecast)
@@ -91,10 +95,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
                 tableViewDataSource.updateData(data: forecastArray)
                 collectionViewDataSource.updateData(data: hoursArray)
 
-                print(tableViewDataSource.dataSource.count)
-                print(collectionViewDataSource.dataSource.count)
-
-                let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource)
+                let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource, geoDataService: geoDataService)
                 
                 self.viewControllersArray?.append(mainScreenVC)
                 guard let model = coreDataModelService.modelArray?.first else { return  }

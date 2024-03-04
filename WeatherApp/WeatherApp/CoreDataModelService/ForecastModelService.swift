@@ -10,7 +10,7 @@ import Foundation
 
 final class ForecastModelService {
 
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService = ForecastDataService.shared
 
     private(set) var forecastModel: [ForecastModel]?
 

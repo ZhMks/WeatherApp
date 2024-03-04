@@ -9,7 +9,7 @@ import Foundation
 
 final class HoursModelService {
     private(set) var hoursArray = [HourModel]()
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService = ForecastDataService.shared
 
     private let coreDataModel: ForecastModel
 

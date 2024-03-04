@@ -15,7 +15,7 @@ protocol IMainScreenController: AnyObject {
 
 class MainScreenViewController: UIViewController, IMainScreenController {
 
-    private let coreDataModelService: CoreDataModelService
+    private let coreDataModelService: MainForecastModelService
 
     var mainModel: MainForecastsModels?
     private var forecastsModel: ForecastModel
@@ -23,13 +23,14 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     private let hoursModels: [HourModel]
     private let tableViewDataSource: DataSourceForMainScreen
     private let collectionViewDataSource: DataSourceForMainCollectionCell
+    private let geoDataService: GeoDataModelService
 
     weak var mainPageViewController: iPageViewController?
 
     private let mainScreenView = MainScreenView(frame: .zero)
 
-    init(coreDataModelService: CoreDataModelService, forecastsModel: ForecastModel, hoursModels: [HourModel],
-         forecastModelsArray: [ForecastModel], mainModel: MainForecastsModels, tableViewDataSource: DataSourceForMainScreen, collectionViewDataSource: DataSourceForMainCollectionCell) {
+    init(coreDataModelService: MainForecastModelService, forecastsModel: ForecastModel, hoursModels: [HourModel],
+         forecastModelsArray: [ForecastModel], mainModel: MainForecastsModels, tableViewDataSource: DataSourceForMainScreen, collectionViewDataSource: DataSourceForMainCollectionCell, geoDataService: GeoDataModelService) {
         self.forecastsModel = forecastsModel
         self.forecastModeslArray = forecastModelsArray
         self.hoursModels = hoursModels
@@ -37,6 +38,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         self.coreDataModelService = coreDataModelService
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
+        self.geoDataService = geoDataService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -108,7 +110,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         let geoView = GeoLocationView()
         let geoLocationService = GeoLocationService()
         let networkService = NetworkService()
-        let geoLocationViewController = GeoLocationViewController(geoView: geoView, geoLocationService: geoLocationService, networkService: networkService, coredataModelService: coreDataModelService)
+        let geoLocationViewController = GeoLocationViewController(geoView: geoView, geoLocationService: geoLocationService, networkService: networkService, coredataModelService: coreDataModelService, geoDataService: geoDataService)
         geoLocationViewController.mainPageViewController = self.mainPageViewController
         navigationController?.pushViewController(geoLocationViewController, animated: true)
     }

@@ -13,10 +13,10 @@ enum ErrorsInSaving: Error {
 
 
 
-final class CoreDataModelService {
+final class MainForecastModelService {
 
     private(set) var modelArray: [MainForecastsModels]?
-    let coreDataService = CoreDataService.shared
+    let coreDataService = ForecastDataService.shared
 
 
 
@@ -28,8 +28,6 @@ final class CoreDataModelService {
     func saveModelToCoreData(networkModel: NetworkServiceModel, completion: @escaping (Result<MainForecastsModels, ErrorsInSaving>) -> Void) {
 
         guard let modelArray = modelArray else { return }
-
-        print(modelArray.count)
 
                 if modelArray.isEmpty {
                 let modelToSave = MainForecastsModels(context: coreDataService.managedContext)
@@ -193,7 +191,7 @@ final class CoreDataModelService {
     }
 }
 
-extension CoreDataModelService {
+extension MainForecastModelService {
     private  func convertString(string: String) -> String {
         var stringToSwitch = string
         switch stringToSwitch {
@@ -253,11 +251,10 @@ extension CoreDataModelService {
     func removeAllData() {
         if let modelsArray = modelArray {
             for model in modelsArray {
-            
-                print(modelsArray.count)
+                coreDataService.deleteObject(object: model)
                 coreDataService.saveContext()
             }
         }
-        
+        fetchFromCoreData()
     }
 }

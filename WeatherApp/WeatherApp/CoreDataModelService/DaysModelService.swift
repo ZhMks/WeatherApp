@@ -9,7 +9,7 @@ import Foundation
 
 final class DaysModelService {
 
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService = ForecastDataService.shared
 
     private(set) var dayModel: DayModel?
     private(set) var dayShortModel: DayShort?

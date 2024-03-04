@@ -9,9 +9,9 @@ import Foundation
 import CoreData
 
 
-final class CoreDataService {
+final class ForecastDataService {
     
-    static let shared = CoreDataService()
+    static let shared = ForecastDataService()
     private init() {}
 
     private let persistantContainer: NSPersistentContainer = {
@@ -36,6 +36,10 @@ final class CoreDataService {
                 print(error.localizedDescription)
             }
         }
+    }
+
+    func deleteObject(object: MainForecastsModels) {
+        managedContext.delete(object)
     }
 
 }

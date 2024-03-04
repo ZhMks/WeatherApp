@@ -16,9 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         let networkService = NetworkService()
-        let coreDataModelService = CoreDataModelService()
+        let geoDataService = GeoDataModelService()
+        let coreDataModelService = MainForecastModelService()
         let onboardingView = OnboardingView()
-        let controller = OnboardingViewController(mainView: onboardingView, networkService: networkService, coreDataModelService: coreDataModelService)
+        let controller = OnboardingViewController(mainView: onboardingView, networkService: networkService, coreDataModelService: coreDataModelService, geoDataService: geoDataService)
         let navigationControoler = UINavigationController(rootViewController: controller)
         window.rootViewController = navigationControoler
         window.makeKeyAndVisible()
