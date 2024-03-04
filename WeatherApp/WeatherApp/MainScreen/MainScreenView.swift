@@ -13,8 +13,8 @@ class MainScreenView: UIView {
     private var forecastModelArray: [ForecastModel]?
     private var hoursModelArray: [HourModel]?
 
-    var tableViewDataSource: DataSourceForMainScreen = DataSourceForMainScreen()
-    var collectionViewDataSource: DataSourceForMainCollectionCell = DataSourceForMainCollectionCell()
+    var tableViewDataSource: DataSourceForMainScreen?
+    var collectionViewDataSource: DataSourceForMainCollectionCell?
 
     weak var mainScreenVC: IMainScreenController?
 
@@ -48,7 +48,6 @@ class MainScreenView: UIView {
         let weatherCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
         weatherCollectionView.delegate = self
-        weatherCollectionView.dataSource = self
         weatherCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.id)
         return weatherCollectionView
     }()
@@ -57,7 +56,6 @@ class MainScreenView: UIView {
         let everydayTableView = UITableView(frame: .zero, style: .insetGrouped)
         everydayTableView.translatesAutoresizingMaskIntoConstraints = false
         everydayTableView.delegate = self
-         everydayTableView.dataSource = self
         everydayTableView.register(EverydayForecastTableViewCell.self,
                                    forCellReuseIdentifier: EverydayForecastTableViewCell.id)
         everydayTableView.backgroundColor = .clear
@@ -120,29 +118,55 @@ class MainScreenView: UIView {
         mainScreenVC?.pushTwentyFourVc()
     }
 
-//    func configureTableView(dataSource: UITableViewDataSource) {
-//        self.everydayForecastTableView.dataSource = dataSource
-//    }
-//
-//    func configureCollectionView(dataSource: UICollectionViewDataSource) {
-//        self.weatherByTimeCollectionView.dataSource = dataSource
-//    }
+    func configureTableView(dataSource: UITableViewDataSource) {
+        self.everydayForecastTableView.dataSource = dataSource
+        self.everydayForecastTableView.reloadData()
+    }
+
+    func configureCollectionView(dataSource: UICollectionViewDataSource) {
+        self.weatherByTimeCollectionView.dataSource = dataSource
+        self.weatherByTimeCollectionView.reloadData()
+    }
 
     func updateViewWith(tbDataSource: UITableViewDataSource, collectionDataSource: UICollectionViewDataSource, forecastModels: [ForecastModel], hourModels: [HourModel], factModel: ForecastModel) {
 
-//        
-//        configureTableView(dataSource: tableViewDataSource)
-//        configureCollectionView(dataSource: collectionViewDataSource)
+        configureTableView(dataSource: tbDataSource)
+        configureCollectionView(dataSource: collectionDataSource)
         
         self.forecastModelArray = forecastModels
         self.hoursModelArray = hourModels
 
         mainWeatherView.updateView(fact: factModel, hourModel: hourModels)
+    }
 
-        everydayForecastTableView.reloadData()
-        weatherByTimeCollectionView.reloadData()
+   func scrollToCurrentHour() {
+
+        let currentTime = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.string(from: currentTime)
+        let components = timeString.components(separatedBy: ":")
+
+        guard let currentHour = components.first else { return }
+
+        if let hoursModelArray = hoursModelArray {
+            for (index, value) in hoursModelArray.enumerated() {
+                if value.hour!.contains(currentHour) {
+                    guard let cell = weatherByTimeCollectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: IndexPath(item: index, section: 0)) as? WeatherCollectionViewCell else { return }
+                    let indexPath = IndexPath(item: index, section: 0)
+                    weatherByTimeCollectionView.performBatchUpdates({
+                        weatherByTimeCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                                    }, completion: nil)
+                }
+            }
+        }
     }
 }
+
+// MARK: -COLLECTIONDELEGATE
 
 extension MainScreenView: UICollectionViewDelegateFlowLayout {
 
@@ -153,58 +177,10 @@ extension MainScreenView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         16.0
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? WeatherCollectionViewCell else { return }
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn) {
-            cell.weatherImage.transform = CGAffineTransform(scaleX: 2, y: 2)
-            cell.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
-            cell.temperatureLabel.textColor = .white
-            cell.timeLabel.textColor = .white
-        }
-        UIView.animate(withDuration: 0.7, delay: 0.6) {
-            cell.weatherImage.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }
-    }
 }
 
-extension MainScreenView: UICollectionViewDataSource {
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let number = forecastModelArray?[section].hoursArray?.count else { return 0 }
-        return number
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: indexPath) as? WeatherCollectionViewCell else { return UICollectionViewCell() }
-        guard let hoursModelArray = hoursModelArray else { return UICollectionViewCell() }
-        let hourModel = hoursModelArray[indexPath.row]
-        cell.updateCell(hour: hourModel )
-        return cell
-    }
-}
-
-extension MainScreenView: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let uiView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
-        return uiView
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let number = forecastModelArray?.count else { return 0 }
-        return number
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: EverydayForecastTableViewCell.id, for: indexPath) as? EverydayForecastTableViewCell else { return UITableViewCell() }
-        cell.accessoryType = .disclosureIndicator
-        guard let forecastModelArray = forecastModelArray else { return UITableViewCell() }
-        let forecastModel = forecastModelArray[indexPath.row]
-        cell.updateCellWith(model: forecastModel)
-        return cell
-    }
-}
+// MARK: -TABLEVIEWDELEGATE
 
 extension MainScreenView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -17,6 +17,9 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
     private let mainView: OnboardingView
 
+    private var lat: String?
+    private var lon: String?
+
 
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
@@ -109,9 +112,14 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     }
 
     private func checkModelsArray() {
-        let pageViewController = PageViewController(coreDataModelService: coredataModelService)
-        pageViewController.initialFetch()
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
+        if locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse {
+            coredataModelService.removeAllData()
+            if let latValue = UserDefaults.standard.value(forKey: "latitude") as? String, let lonValue = UserDefaults.standard.value(forKey: "longitude") as? String {
+                print(latValue)
+                print(lonValue)
+                self.fetchData(with: latValue, lon: lonValue)
+            }
+        }
     }
 }
 
@@ -122,12 +130,18 @@ extension OnboardingViewController: CLLocationManagerDelegate {
 
         guard let location = locations.first?.coordinate else { return }
 
-        let lat = String(location.latitude)
-        let lon = String(location.longitude)
+        self.lat = String(location.latitude)
+        self.lon = String(location.longitude)
+
+        UserDefaults.standard.setValue(lat, forKey: "latitude")
+        UserDefaults.standard.setValue(lon, forKey: "longitude")
+        UserDefaults.standard.synchronize()
 
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            fetchData(with: lat, lon: lon)
+            if let lat = self.lat, let lon = self.lon {
+                fetchData(with: lat, lon: lon)
+            }
         case .denied:
             manager.stopUpdatingLocation()
         case .notDetermined:

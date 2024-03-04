@@ -48,21 +48,24 @@ final class PageViewController: UIPageViewController, iPageViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.delegate = self
         self.dataSource = self
-        let pageControle = UIPageControl.appearance(whenContainedInInstancesOf: [PageViewController.self])
-        pageControle.currentPageIndicatorTintColor = .black
-        pageControle.pageIndicatorTintColor = .gray
     }
 
     func createViewControllerWithModel(model: MainForecastsModels) {
 
         let forecastModelService = ForecastModelService(coreDataModel: model)
-        forecastModelService.updateCurrentForecastByDate()
+       // forecastModelService.updateCurrentForecastByDate()
         guard let forecastArray = forecastModelService.forecastModel else { return }
         if let forecast = forecastArray.first {
             let hourModelService = HoursModelService(coreDataModel: forecast)
             let hoursArray = hourModelService.hoursArray
 
-            let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model)
+            let tableViewDataSource = DataSourceForMainScreen()
+            let collectionViewDataSource = DataSourceForMainCollectionCell()
+            tableViewDataSource.updateData(data: forecastArray)
+            collectionViewDataSource.updateData(data: hoursArray)
+
+            let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource)
+            mainScreenVC.updateNavigationItems(model: model)
             self.viewControllersArray?.append(mainScreenVC)
             self.navigationItem.title = mainScreenVC.navigationItem.title
             self.navigationItem.leftBarButtonItem = mainScreenVC.navigationItem.leftBarButtonItem
@@ -77,13 +80,22 @@ final class PageViewController: UIPageViewController, iPageViewController {
 
         for model in modelArray {
             let forecastModelService = ForecastModelService(coreDataModel: model)
-            forecastModelService.updateCurrentForecastByDate()
+        //    forecastModelService.updateCurrentForecastByDate()
             guard let forecastArray = forecastModelService.forecastModel else { return }
             if let forecast = forecastArray.first {
                 let hourModelService = HoursModelService(coreDataModel: forecast)
                 let hoursArray = hourModelService.hoursArray
 
-                let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model)
+                let tableViewDataSource = DataSourceForMainScreen()
+                let collectionViewDataSource = DataSourceForMainCollectionCell()
+                tableViewDataSource.updateData(data: forecastArray)
+                collectionViewDataSource.updateData(data: hoursArray)
+
+                print(tableViewDataSource.dataSource.count)
+                print(collectionViewDataSource.dataSource.count)
+
+                let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource)
+                
                 self.viewControllersArray?.append(mainScreenVC)
                 guard let model = coreDataModelService.modelArray?.first else { return  }
                 mainScreenVC.updateNavigationItems(model: model)
@@ -129,6 +141,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
             guard let viewController = viewController as? MainScreenViewController else { return nil }
             if let index = viewControllersArray?.firstIndex(of: viewController) {
                 if index < viewControllersArray!.count - 1 {
+
                     guard let model = coreDataModelService.modelArray?[index] else { return UIViewController() }
                     viewController.updateNavigationItems(model: model)
                     self.navigationItem.title = viewController.navigationItem.title

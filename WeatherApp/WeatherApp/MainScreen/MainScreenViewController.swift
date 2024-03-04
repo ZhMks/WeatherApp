@@ -21,18 +21,22 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     private var forecastsModel: ForecastModel
     private var forecastModeslArray: [ForecastModel]
     private let hoursModels: [HourModel]
+    private let tableViewDataSource: DataSourceForMainScreen
+    private let collectionViewDataSource: DataSourceForMainCollectionCell
 
     weak var mainPageViewController: iPageViewController?
 
     private let mainScreenView = MainScreenView(frame: .zero)
 
     init(coreDataModelService: CoreDataModelService, forecastsModel: ForecastModel, hoursModels: [HourModel],
-         forecastModelsArray: [ForecastModel], mainModel: MainForecastsModels) {
+         forecastModelsArray: [ForecastModel], mainModel: MainForecastsModels, tableViewDataSource: DataSourceForMainScreen, collectionViewDataSource: DataSourceForMainCollectionCell) {
         self.forecastsModel = forecastsModel
         self.forecastModeslArray = forecastModelsArray
         self.hoursModels = hoursModels
         self.mainModel = mainModel
         self.coreDataModelService = coreDataModelService
+        self.tableViewDataSource = tableViewDataSource
+        self.collectionViewDataSource = collectionViewDataSource
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -44,6 +48,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidAppear(animated)
         //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
         updateDataSource()
+        mainScreenView.scrollToCurrentHour()
     }
 
 
@@ -74,14 +79,8 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     private func updateDataSource() {
         mainScreenView.mainScreenVC = self
 
-        let mainTableViewDataSource = DataSourceForMainScreen()
-        let mainCollectionDataSource = DataSourceForMainCollectionCell()
-
-//        mainCollectionDataSource.updateData(data: hoursModels)
-//        mainTableViewDataSource.updateData(data: forecas)
-
-        mainScreenView.updateViewWith(tbDataSource: mainTableViewDataSource,
-                                      collectionDataSource: mainCollectionDataSource,
+        mainScreenView.updateViewWith(tbDataSource: tableViewDataSource,
+                                      collectionDataSource: collectionViewDataSource,
                                       forecastModels: forecastModeslArray, hourModels: hoursModels, factModel: forecastsModel)
 
     }

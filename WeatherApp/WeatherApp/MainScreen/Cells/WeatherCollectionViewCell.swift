@@ -42,6 +42,7 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
         layer.borderColor = UIColor(red: 171/255, green: 188/255, blue: 234/1, alpha: 1).cgColor
         layer.borderWidth = 1.0
         layout()
+        isUserInteractionEnabled = false
     }
     
     required init?(coder: NSCoder) {
@@ -111,6 +112,12 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
             weatherImage.image = UIImage(named: "PercitipationImage")
         default: break
         }
+    }
+
+    func performCellViewUpdate() {
+            backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
+            temperatureLabel.textColor = .white
+            timeLabel.textColor = .white
     }
 
 }

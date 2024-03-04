@@ -29,6 +29,8 @@ final class CoreDataModelService {
 
         guard let modelArray = modelArray else { return }
 
+        print(modelArray.count)
+
                 if modelArray.isEmpty {
                 let modelToSave = MainForecastsModels(context: coreDataService.managedContext)
                 modelToSave.locality = networkModel.geoObject.locality.name
@@ -41,10 +43,6 @@ final class CoreDataModelService {
             }
 
             let locality = networkModel.geoObject.locality.name
-
-        for model in modelArray {
-            print(model.locality!)
-        }
 
             if modelArray.contains(where: { $0.locality! == locality }) {
                 completion(.failure(ErrorsInSaving.alreadyExist))
@@ -196,7 +194,7 @@ final class CoreDataModelService {
 }
 
 extension CoreDataModelService {
-  private  func convertString(string: String) -> String {
+    private  func convertString(string: String) -> String {
         var stringToSwitch = string
         switch stringToSwitch {
         case "clear":
@@ -251,5 +249,15 @@ extension CoreDataModelService {
             return string
         }
     }
-
+    
+    func removeAllData() {
+        if let modelsArray = modelArray {
+            for model in modelsArray {
+            
+                print(modelsArray.count)
+                coreDataService.saveContext()
+            }
+        }
+        
+    }
 }
