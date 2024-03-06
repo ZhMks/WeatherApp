@@ -154,11 +154,11 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     }
 
     private func checkModelsArray() {
+        view.addSubview(activityIndicator)
         mainForecastModelService.removeAllData()
         if let modelArray = geoDataService.modelArray {
             if !modelArray.isEmpty {
                 for model in modelArray {
-                    view.addSubview(activityIndicator)
                     activityIndicator.startAnimating()
                     fetchData(with: model.lat!, lon: model.lon!)
                 }
