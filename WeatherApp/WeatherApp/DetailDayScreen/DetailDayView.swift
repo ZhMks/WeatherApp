@@ -14,6 +14,8 @@ final class DetailDayView: UIView {
     private var hours: [HourModel]?
     private var mainModel: MainForecastsModels?
     private var forecastArray: [ForecastModel]?
+    private var dayNightTableViewSource: UITableViewDataSource?
+    private var dateCollectionSource: UICollectionViewDataSource?
 
     private lazy var mainScrollView: UIScrollView = {
         let mainScrollView = UIScrollView()
@@ -44,7 +46,6 @@ final class DetailDayView: UIView {
         let dateCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         flowLayout.scrollDirection = .horizontal
         dateCollectionView.delegate = self
-        dateCollectionView.dataSource = self
         dateCollectionView.register(DetailDayCollectionViewCell.self, forCellWithReuseIdentifier: DetailDayCollectionViewCell.id)
         return dateCollectionView
     }()
@@ -52,8 +53,6 @@ final class DetailDayView: UIView {
     private lazy var dayNightTableView: UITableView = {
         let dayNightTableView = UITableView(frame: .zero, style: .insetGrouped)
         dayNightTableView.translatesAutoresizingMaskIntoConstraints = false
-        dayNightTableView.delegate = self
-        dayNightTableView.dataSource = self
         dayNightTableView.register(DetailDayTableViewCell.self, forCellReuseIdentifier: DetailDayTableViewCell.id)
         dayNightTableView.backgroundColor = .systemBackground
         return dayNightTableView
@@ -184,6 +183,55 @@ final class DetailDayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func updateView(dataSource: ForecastModel, hours: [HourModel], mainModel: MainForecastsModels, forecastArray: [ForecastModel], dayNightTableViewSource: UITableViewDataSource, dateCollectionSource: UICollectionViewDataSource) {
+        self.forecastModel = dataSource
+        self.hours = hours
+        self.mainModel = mainModel
+        self.forecastArray = forecastArray
+        self.dayNightTableViewSource = dayNightTableViewSource
+        self.dateCollectionSource = dateCollectionSource
+        configureTableView(dataSource: dayNightTableViewSource)
+        configureCollectionView(dataSource: dateCollectionSource)
+        cityLabel.text = "\(mainModel.country!), \(mainModel.locality!)"
+        dayNightTableView.reloadData()
+    }
+
+    func configureTableView(dataSource: UITableViewDataSource) {
+        self.dayNightTableView.dataSource = dataSource
+        self.dayNightTableView.reloadData()
+    }
+
+    func configureCollectionView(dataSource: UICollectionViewDataSource) {
+        self.dateCollectionView.dataSource = dataSource
+        self.dateCollectionView.reloadData()
+    }
+}
+
+extension DetailDayView: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let forecastArray = forecastArray else { return }
+        let forecast = forecastArray[indexPath.row]
+        let hourModelService = HoursModelService(coreDataModel: forecast)
+        let hoursArray = hourModelService.hoursArray
+        (dayNightTableViewSource as? TableDataSourceForDayNightScreen)?.updateData(data: hoursArray, forecastModel: forecast)
+        dayNightTableView.reloadData()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 90, height: 40)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        10.0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+}
+
+extension DetailDayView {
     private func createViews() {
         addSubview(mainScrollView)
         addSubview(dateCollectionView)
@@ -324,88 +372,5 @@ final class DetailDayView: UIView {
             make.height.equalTo(76)
         }
 
-    }
-
-    func updateView(dataSource: ForecastModel, hours: [HourModel], mainModel: MainForecastsModels, forecastArray: [ForecastModel]) {
-        self.forecastModel = dataSource
-        self.hours = hours
-        self.mainModel = mainModel
-        self.forecastArray = forecastArray
-        cityLabel.text = "\(mainModel.country!), \(mainModel.locality!)"
-        dayNightTableView.reloadData()
-    }
-
-}
-
-
-extension DetailDayView: UITableViewDelegate {}
-
-extension DetailDayView: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        341
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailDayTableViewCell.id, for: indexPath) as? DetailDayTableViewCell else { return UITableViewCell() }
-        guard let dataSource = forecastModel else { return UITableViewCell() }
-        guard let hours = hours else { return UITableViewCell() }
-        if indexPath.section == 0 {
-            cell.updateDayCellWith(data: dataSource.dayModel!, hourArray: hours)
-        } else {
-            cell.updateNightCellWith(data: dataSource.nightModel!, hourArray: hours)
-        }
-        return cell
-    }
-
-}
-
-
-extension DetailDayView: UICollectionViewDataSource {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let forecastArray = forecastArray else { return 0 }
-        return forecastArray.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailDayCollectionViewCell.id, for: indexPath) as? DetailDayCollectionViewCell else { return UICollectionViewCell() }
-        guard let forecastArray = forecastArray else { return UICollectionViewCell() }
-        let data = forecastArray[indexPath.row]
-        cell.configureCell(data: data)
-        return cell
-    }
-
-
-
-}
-extension DetailDayView: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let dataSource = forecastArray![indexPath.row]
-        let hoursModelService = HoursModelService(coreDataModel: dataSource)
-        let hoursArray = hoursModelService.hoursArray
-        self.updateView(dataSource: dataSource, hours: hoursArray, mainModel: mainModel!, forecastArray: forecastArray!)
-        collectionView.reloadData()
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 90, height: 40)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        10.0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 }

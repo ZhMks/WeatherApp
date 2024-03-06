@@ -6,11 +6,7 @@ import UIKit
 
 final class DataSourceForMainScreen: NSObject, UITableViewDataSource {
 
-    var dataSource: [ForecastModel] = [] {
-        didSet {
-            print(dataSource.count)
-        }
-    }
+    var dataSource: [ForecastModel] = []
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count

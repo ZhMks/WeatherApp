@@ -155,7 +155,6 @@ class MainScreenView: UIView {
         if let hoursModelArray = hoursModelArray {
             for (index, value) in hoursModelArray.enumerated() {
                 if value.hour!.contains(currentHour) {
-                    guard let cell = weatherByTimeCollectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.id, for: IndexPath(item: index, section: 0)) as? WeatherCollectionViewCell else { return }
                     let indexPath = IndexPath(item: index, section: 0)
                     weatherByTimeCollectionView.performBatchUpdates({
                         weatherByTimeCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -183,8 +182,8 @@ extension MainScreenView: UICollectionViewDelegateFlowLayout {
 // MARK: -TABLEVIEWDELEGATE
 
 extension MainScreenView: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         mainScreenVC?.pushDayNightVc()
         tableView.deselectRow(at: indexPath, animated: true)
     }

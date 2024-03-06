@@ -36,8 +36,8 @@ class DetailDayViewController: UIViewController {
         }
     }
 
-    func updateDataForView(forecastModel: ForecastModel, mainModel: MainForecastsModels, hoursArray: [HourModel], forecastArray: [ForecastModel]) {
-        detailDayView.updateView(dataSource: forecastModel, hours: hoursArray, mainModel: mainModel, forecastArray: forecastArray)
+    func updateDataForView(forecastModel: ForecastModel, mainModel: MainForecastsModels, hoursArray: [HourModel], forecastArray: [ForecastModel], tableSource: UITableViewDataSource, collectionSource: UICollectionViewDataSource) {
+        detailDayView.updateView(dataSource: forecastModel, hours: hoursArray, mainModel: mainModel, forecastArray: forecastArray, dayNightTableViewSource: tableSource, dateCollectionSource: collectionSource )
     }
 
 }

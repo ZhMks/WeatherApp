@@ -159,6 +159,13 @@ final class PageViewController: UIPageViewController, iPageViewController {
             return nil
         }
 
+        func presentationCount(for pageViewController: UIPageViewController) -> Int {
+            if let viewControllersArray = viewControllersArray {
+                return viewControllersArray.count
+            }
+            return 0
+        }
+
     }
 
 extension PageViewController: UIPageViewControllerDelegate {

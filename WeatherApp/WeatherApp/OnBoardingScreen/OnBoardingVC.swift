@@ -26,6 +26,12 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         return locationManager
     }()
 
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = view.center
+        return activityIndicator
+    }()
+
 
     init(mainView: OnboardingView, networkService: NetworkService, coreDataModelService: MainForecastModelService, geoDataService: GeoDataModelService) {
         self.mainView = mainView
@@ -44,6 +50,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
         checkModelsArray()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCoreDataSaveCompleted), name: NSNotification.Name("CoreDataSaveCompleted"), object: nil)
     }
 
     private func layout() {
@@ -71,6 +78,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
                     guard let self else { return }
 
                     switch result {
+
                     case .success(let success):
 
                         DispatchQueue.main.async { [weak self] in
@@ -103,6 +111,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     private func fetchData(with lat: String, lon: String) {
 
         networkService.fetchData(lat: lat, lon: lon) { [weak self] result in
+
             guard let self else { return }
 
             switch result {
@@ -114,9 +123,11 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
                     guard let self else { return }
 
                     switch result {
-                    case .success(let success):
-                        print(success.locality)
-                        return
+                    case .success(_):
+                        print("success")
+                        DispatchQueue.main.async { [weak self] in
+                            self?.activityIndicator.stopAnimating()
+                        }
                     case .failure(_):
                         let uiAlert = UIAlertController(title: "Ошибка", message: "Невозможно определить локацию", preferredStyle: .alert)
                         let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
@@ -144,18 +155,28 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
     private func checkModelsArray() {
         mainForecastModelService.removeAllData()
-        let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
         if let modelArray = geoDataService.modelArray {
             if !modelArray.isEmpty {
-                print(modelArray.count)
                 for model in modelArray {
-                    self.fetchData(with: model.lat!, lon: model.lon!)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.fetchData(with: model.lat!, lon: model.lon!)
+                        self?.view.addSubview(self!.activityIndicator)
+                        self?.activityIndicator.startAnimating()
+                    }
                 }
-                pageViewController.initialFetch()
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
-            } else {
-                return
+                NotificationCenter.default.post(name: Notification.Name("coredataSaveCompleted"), object: nil)
             }
+        } else {
+            return
+        }
+    }
+
+    @objc private func handleCoreDataSaveCompleted() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
+            pageViewController.initialFetch()
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
         }
     }
 }

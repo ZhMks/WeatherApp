@@ -102,7 +102,11 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     func pushDayNightVc() {
         let detailDayVC = DetailDayViewController()
-        detailDayVC.updateDataForView(forecastModel: forecastsModel, mainModel: mainModel!, hoursArray: hoursModels, forecastArray: forecastModeslArray)
+        let tableViewDataSource = TableDataSourceForDayNightScreen()
+        let collectionViewDataSource = CollectionDataSourceFordayNightScreen()
+        tableViewDataSource.updateData(data: hoursModels, forecastModel: forecastsModel)
+        collectionViewDataSource.updateData(data: forecastModeslArray)
+        detailDayVC.updateDataForView(forecastModel: forecastsModel, mainModel: mainModel!, hoursArray: hoursModels, forecastArray: forecastModeslArray, tableSource: tableViewDataSource, collectionSource: collectionViewDataSource)
         navigationController?.pushViewController(detailDayVC, animated: true)
     }
 

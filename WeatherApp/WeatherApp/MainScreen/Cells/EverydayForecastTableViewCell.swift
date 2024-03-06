@@ -88,7 +88,7 @@ final class EverydayForecastTableViewCell: UITableViewCell {
             make.trailing.equalTo(percentage.snp.leading).offset(-5)
             make.bottom.equalTo(contentView.snp.bottom).offset(-5)
             make.height.equalTo(17)
-            make.width.equalTo(15)
+            make.width.equalTo(17)
         }
 
         percentage.snp.makeConstraints { make in
