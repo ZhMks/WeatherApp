@@ -158,11 +158,9 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         if let modelArray = geoDataService.modelArray {
             if !modelArray.isEmpty {
                 for model in modelArray {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.fetchData(with: model.lat!, lon: model.lon!)
-                        self?.view.addSubview(self!.activityIndicator)
-                        self?.activityIndicator.startAnimating()
-                    }
+                    view.addSubview(activityIndicator)
+                    activityIndicator.startAnimating()
+                    fetchData(with: model.lat!, lon: model.lon!)
                 }
                 NotificationCenter.default.post(name: Notification.Name("coredataSaveCompleted"), object: nil)
             }
