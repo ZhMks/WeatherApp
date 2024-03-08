@@ -97,34 +97,34 @@ final class ValueConverter {
                     var convertedUnit = unitToConvert.converted(to: .celsius).value
 
                     for forecast in array {
-                        unitToConvert.value = (forecast.dayModel?.tempAvg)!
+                        unitToConvert.value = Double((forecast.dayModel?.tempAvg)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.dayModel?.tempAvg = convertedUnit
+                        forecast.dayModel?.tempAvg = Int16(convertedUnit)
 
                         unitToConvert.value = (forecast.dayModel?.feelsLike)!
                         convertedUnit = unitToConvert.converted(to: .celsius).value
                         forecast.dayModel?.feelsLike = convertedUnit
 
-                        unitToConvert.value = (forecast.dayModel?.tempMax)!
+                        unitToConvert.value = Double((forecast.dayModel?.tempMax)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.dayModel?.tempMax = convertedUnit
+                        forecast.dayModel?.tempMax = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.dayModel?.tempMin)!
+                        unitToConvert.value = Double((forecast.dayModel?.tempMin)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.dayModel?.tempMin = convertedUnit
+                        forecast.dayModel?.tempMin = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.nightModel?.tempAvg)!
+                        unitToConvert.value = Double((forecast.nightModel?.tempAvg)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.nightModel?.tempAvg = convertedUnit
+                        forecast.nightModel?.tempAvg = Int16(convertedUnit)
 
 
-                        unitToConvert.value = (forecast.nightModel?.tempMax)!
+                        unitToConvert.value = Double((forecast.nightModel?.tempMax)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.nightModel?.tempMax = convertedUnit
+                        forecast.nightModel?.tempMax = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.nightModel?.tempMin)!
+                        unitToConvert.value = Double((forecast.nightModel?.tempMin)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.nightModel?.tempMin = convertedUnit
+                        forecast.nightModel?.tempMin = Int16(convertedUnit)
 
                         unitToConvert.value = (forecast.nightModel?.feelsLike)!
                         convertedUnit = unitToConvert.converted(to: .celsius).value
@@ -132,9 +132,9 @@ final class ValueConverter {
                     }
 
                     for hour in hoursArray {
-                        unitToConvert.value = hour.temp
+                        unitToConvert.value = Double(hour.temp)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        hour.temp = convertedUnit
+                        hour.temp = Int16(convertedUnit)
 
 
                         unitToConvert.value = hour.feelsLike
@@ -154,34 +154,34 @@ final class ValueConverter {
 
                     for forecast in array {
 
-                        unitToConvert.value = (forecast.dayModel?.tempAvg)!
+                        unitToConvert.value = Double((forecast.dayModel?.tempAvg)!)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        forecast.dayModel?.tempAvg = convertedUnit
+                        forecast.dayModel?.tempAvg = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.dayModel?.tempMax)!
+                        unitToConvert.value = Double((forecast.dayModel?.tempMax)!)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        forecast.dayModel?.tempMax = convertedUnit
+                        forecast.dayModel?.tempMax = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.dayModel?.tempMin)!
+                        unitToConvert.value = Double((forecast.dayModel?.tempMin)!)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        forecast.dayModel?.tempMin = convertedUnit
+                        forecast.dayModel?.tempMin = Int16(convertedUnit)
 
                         unitToConvert.value = (forecast.dayModel?.feelsLike)!
                         convertedUnit = unitToConvert.converted(to: .celsius).value
                         forecast.dayModel?.feelsLike = convertedUnit
 
-                        unitToConvert.value = (forecast.nightModel?.tempAvg)!
+                        unitToConvert.value = Double((forecast.nightModel?.tempAvg)!)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        forecast.nightModel?.tempAvg = convertedUnit
+                        forecast.nightModel?.tempAvg = Int16(convertedUnit)
 
 
-                        unitToConvert.value = (forecast.nightModel?.tempMax)!
+                        unitToConvert.value = Double((forecast.nightModel?.tempMax)!)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        forecast.nightModel?.tempMax = convertedUnit
+                        forecast.nightModel?.tempMax = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.nightModel?.tempMin)!
+                        unitToConvert.value = Double((forecast.nightModel?.tempMin)!)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        forecast.nightModel?.tempMin = convertedUnit
+                        forecast.nightModel?.tempMin = Int16(convertedUnit)
 
                         unitToConvert.value = (forecast.nightModel?.feelsLike)!
                         convertedUnit = unitToConvert.converted(to: .celsius).value
@@ -189,9 +189,9 @@ final class ValueConverter {
                     }
 
                     for hour in hoursArray {
-                        unitToConvert.value = hour.temp
+                        unitToConvert.value = Double(hour.temp)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        hour.temp = convertedUnit
+                        hour.temp = Int16(convertedUnit)
 
                         unitToConvert.value = hour.feelsLike
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value

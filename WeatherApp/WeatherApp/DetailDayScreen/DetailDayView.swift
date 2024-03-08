@@ -239,19 +239,19 @@ extension DetailDayView {
         addSubview(contentView)
         mainScrollView.addSubview(contentView)
         contentView.addSubview(dayNightTableView)
-        contentView.addSubview(sunAndMoonLabel)
-        contentView.addSubview(sunImage)
-        contentView.addSubview(moonImage)
-        contentView.addSubview(moonStatusLabel)
-        contentView.addSubview(sunriseLabel)
-        contentView.addSubview(sunriseTime)
-        contentView.addSubview(sunsetLabel)
-        contentView.addSubview(sunsetTime)
-        contentView.addSubview(lightDayTimeLabel)
-        contentView.addSubview(airConditionLabel)
-        contentView.addSubview(airConditionNumber)
-        contentView.addSubview(airConditionButton)
-        contentView.addSubview(airConditionText)
+//        contentView.addSubview(sunAndMoonLabel)
+//        contentView.addSubview(sunImage)
+//        contentView.addSubview(moonImage)
+//        contentView.addSubview(moonStatusLabel)
+//        contentView.addSubview(sunriseLabel)
+//        contentView.addSubview(sunriseTime)
+//        contentView.addSubview(sunsetLabel)
+//        contentView.addSubview(sunsetTime)
+//        contentView.addSubview(lightDayTimeLabel)
+//        contentView.addSubview(airConditionLabel)
+//        contentView.addSubview(airConditionNumber)
+//        contentView.addSubview(airConditionButton)
+//        contentView.addSubview(airConditionText)
     }
 
     private func layout() {
@@ -289,88 +289,89 @@ extension DetailDayView {
             make.top.equalTo(contentView.snp.top)
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
+            make.bottom.equalTo(contentView.snp.bottom)
         }
 
-        sunAndMoonLabel.snp.makeConstraints { make in
-            make.top.equalTo(dayNightTableView.snp.bottom).offset(20)
-            make.leading.equalTo(contentView.snp.leading).offset(16)
-            make.height.equalTo(22)
-        }
-
-        moonStatusLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(sunAndMoonLabel.snp.centerY)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-15)
-            make.height.equalTo(19)
-        }
-
-        sunImage.snp.makeConstraints { make in
-            make.top.equalTo(sunAndMoonLabel.snp.bottom).offset(17)
-            make.leading.equalTo(contentView.snp.leading).offset(34)
-            make.height.equalTo(23)
-            make.width.equalTo(20)
-        }
-
-        moonImage.snp.makeConstraints { make in
-            make.centerY.equalTo(sunImage.snp.centerY)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-120)
-            make.height.equalTo(23)
-            make.width.equalTo(20)
-        }
-
-        lightDayTimeLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(sunImage.snp.centerY)
-            make.leading.equalTo(sunImage.snp.trailing).offset(60)
-            make.height.equalTo(20)
-        }
-
-        sunriseLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunImage.snp.bottom).offset(18)
-            make.leading.equalTo(contentView.snp.leading).offset(34)
-            make.height.equalTo(19)
-        }
-        sunriseTime.snp.makeConstraints { make in
-            make.centerY.equalTo(sunriseLabel.snp.centerY)
-            make.leading.equalTo(sunriseLabel.snp.trailing).offset(46)
-            make.height.equalTo(20)
-        }
-
-        sunsetLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunriseLabel.snp.bottom).offset(18)
-            make.leading.equalTo(contentView.snp.leading).offset(34)
-            make.height.equalTo(19)
-        }
-
-        sunsetTime.snp.makeConstraints { make in
-            make.centerY.equalTo(sunsetLabel.snp.centerY)
-            make.leading.equalTo(sunsetLabel.snp.trailing).offset(46)
-            make.height.equalTo(20)
-        }
-
-        airConditionLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunsetLabel.snp.bottom).offset(25)
-            make.leading.equalTo(contentView.snp.leading).offset(16)
-            make.height.equalTo(22)
-        }
-
-        airConditionNumber.snp.makeConstraints { make in
-            make.top.equalTo(airConditionLabel.snp.bottom).offset(10)
-            make.leading.equalTo(contentView.snp.leading).offset(17)
-            make.width.height.equalTo(40)
-        }
-
-        airConditionButton.snp.makeConstraints { make in
-            make.centerY.equalTo(airConditionNumber.snp.centerY)
-            make.leading.equalTo(airConditionNumber.snp.trailing).offset(15)
-            make.height.equalTo(26)
-            make.width.equalTo(95)
-        }
-
-        airConditionText.snp.makeConstraints { make in
-            make.top.equalTo(airConditionNumber.snp.bottom).offset(10)
-            make.leading.equalTo(contentView.snp.leading).offset(5)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-15)
-            make.height.equalTo(76)
-        }
+//        sunAndMoonLabel.snp.makeConstraints { make in
+//            make.top.equalTo(dayNightTableView.snp.bottom).offset(20)
+//            make.leading.equalTo(contentView.snp.leading).offset(16)
+//            make.height.equalTo(22)
+//        }
+//
+//        moonStatusLabel.snp.makeConstraints { make in
+//            make.centerY.equalTo(sunAndMoonLabel.snp.centerY)
+//            make.trailing.equalTo(contentView.snp.trailing).offset(-15)
+//            make.height.equalTo(19)
+//        }
+//
+//        sunImage.snp.makeConstraints { make in
+//            make.top.equalTo(sunAndMoonLabel.snp.bottom).offset(17)
+//            make.leading.equalTo(contentView.snp.leading).offset(34)
+//            make.height.equalTo(23)
+//            make.width.equalTo(20)
+//        }
+//
+//        moonImage.snp.makeConstraints { make in
+//            make.centerY.equalTo(sunImage.snp.centerY)
+//            make.trailing.equalTo(contentView.snp.trailing).offset(-120)
+//            make.height.equalTo(23)
+//            make.width.equalTo(20)
+//        }
+//
+//        lightDayTimeLabel.snp.makeConstraints { make in
+//            make.centerY.equalTo(sunImage.snp.centerY)
+//            make.leading.equalTo(sunImage.snp.trailing).offset(60)
+//            make.height.equalTo(20)
+//        }
+//
+//        sunriseLabel.snp.makeConstraints { make in
+//            make.top.equalTo(sunImage.snp.bottom).offset(18)
+//            make.leading.equalTo(contentView.snp.leading).offset(34)
+//            make.height.equalTo(19)
+//        }
+//        sunriseTime.snp.makeConstraints { make in
+//            make.centerY.equalTo(sunriseLabel.snp.centerY)
+//            make.leading.equalTo(sunriseLabel.snp.trailing).offset(46)
+//            make.height.equalTo(20)
+//        }
+//
+//        sunsetLabel.snp.makeConstraints { make in
+//            make.top.equalTo(sunriseLabel.snp.bottom).offset(18)
+//            make.leading.equalTo(contentView.snp.leading).offset(34)
+//            make.height.equalTo(19)
+//        }
+//
+//        sunsetTime.snp.makeConstraints { make in
+//            make.centerY.equalTo(sunsetLabel.snp.centerY)
+//            make.leading.equalTo(sunsetLabel.snp.trailing).offset(46)
+//            make.height.equalTo(20)
+//        }
+//
+//        airConditionLabel.snp.makeConstraints { make in
+//            make.top.equalTo(sunsetLabel.snp.bottom).offset(25)
+//            make.leading.equalTo(contentView.snp.leading).offset(16)
+//            make.height.equalTo(22)
+//        }
+//
+//        airConditionNumber.snp.makeConstraints { make in
+//            make.top.equalTo(airConditionLabel.snp.bottom).offset(10)
+//            make.leading.equalTo(contentView.snp.leading).offset(17)
+//            make.width.height.equalTo(40)
+//        }
+//
+//        airConditionButton.snp.makeConstraints { make in
+//            make.centerY.equalTo(airConditionNumber.snp.centerY)
+//            make.leading.equalTo(airConditionNumber.snp.trailing).offset(15)
+//            make.height.equalTo(26)
+//            make.width.equalTo(95)
+//        }
+//
+//        airConditionText.snp.makeConstraints { make in
+//            make.top.equalTo(airConditionNumber.snp.bottom).offset(10)
+//            make.leading.equalTo(contentView.snp.leading).offset(5)
+//            make.trailing.equalTo(contentView.snp.trailing).offset(-15)
+//            make.height.equalTo(76)
+//        }
 
     }
 }

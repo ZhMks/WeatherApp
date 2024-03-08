@@ -34,22 +34,5 @@ final class ForecastModelService {
         coreDataService.saveContext()
         fetchData()
     }
-
-//    func updateCurrentForecastByDate() {
-//
-//        let currentDate = Date()
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        let stringDate = dateFormatter.string(from: currentDate)
-//
-//        if let forecastModelArray = forecastModel {
-//            guard let firstForecast = forecastModelArray.first else { return }
-//            if stringDate != firstForecast.date! {
-//                let firstElement = forecastModelArray.first { $0.date! != stringDate }
-//                delete(item: firstElement!)
-//                fetchData()
-//            }
-//        }
-//    }
 }
 

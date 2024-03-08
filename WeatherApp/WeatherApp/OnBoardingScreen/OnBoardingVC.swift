@@ -29,6 +29,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.center = view.center
+        activityIndicator.color = .white
         return activityIndicator
     }()
 
@@ -47,10 +48,14 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleCoreDataSaveCompleted),
+                                               name: NSNotification.Name("coreDataSaved"),
+                                               object: nil)
         view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         layout()
+        mainForecastModelService.removeAllData()
         checkModelsArray()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleCoreDataSaveCompleted), name: NSNotification.Name("CoreDataSaveCompleted"), object: nil)
     }
 
     private func layout() {
@@ -88,6 +93,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
                             let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
 
                             pageViewController.createViewControllerWithModel(model: success)
+                            print(pageViewController.viewControllersArray?.count)
 
                             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
                         }
@@ -118,27 +124,20 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
             case .success(let fetchedData):
 
-                mainForecastModelService.saveModelToCoreData(networkModel: fetchedData) { [weak self]  result in
+                DispatchQueue.main.async { [weak self] in
 
                     guard let self else { return }
 
-                    switch result {
-                    case .success(_):
-                        print("success")
-                        DispatchQueue.main.async { [weak self] in
-                            self?.activityIndicator.stopAnimating()
+                    mainForecastModelService.saveModelToCoreData(networkModel: fetchedData) { _ in
+
+                        switch result {
+                        case .success(_):
+                           break
+                        case .failure(let failure):
+                            print("\(failure.description)")
                         }
-                    case .failure(_):
-                        let uiAlert = UIAlertController(title: "Ошибка", message: "Невозможно определить локацию", preferredStyle: .alert)
-                        let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
-                            if action.isEnabled {
-                                self.navigationController?.dismiss(animated: true)
-                            }
-                        }
-                        uiAlert.addAction(action)
-                        navigationController?.present(uiAlert, animated: true)
                     }
-                }
+            }
             case .failure(let failure):
                 print(failure.description)
             }
@@ -155,25 +154,25 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
     private func checkModelsArray() {
         view.addSubview(activityIndicator)
-        mainForecastModelService.removeAllData()
-        if let modelArray = geoDataService.modelArray {
-            if !modelArray.isEmpty {
-                for model in modelArray {
-                    activityIndicator.startAnimating()
-                    fetchData(with: model.lat!, lon: model.lon!)
-                }
-                NotificationCenter.default.post(name: Notification.Name("coredataSaveCompleted"), object: nil)
+        guard let geoModels = geoDataService.modelArray else { return }
+        if !geoModels.isEmpty {
+            for model in geoModels {
+                activityIndicator.startAnimating()
+                fetchData(with: model.lat!, lon: model.lon!)
             }
-        } else {
-            return
+            NotificationCenter.default.post(name: NSNotification.Name("coreDataSaved"), object: nil)
         }
     }
 
     @objc private func handleCoreDataSaveCompleted() {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self else { return }
+            activityIndicator.stopAnimating()
             let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
             pageViewController.initialFetch()
+            print(pageViewController.viewControllersArray?.count)
+
+            NotificationCenter.default.removeObserver(self)
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
         }
     }

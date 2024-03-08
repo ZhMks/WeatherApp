@@ -48,8 +48,10 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //    NotificationCenter.default.addObserver(self, selector: #selector(startUpdate(_:)), name: "sceneDidBecomeActive", object: nil)
-        updateDataSource()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(startUpdate),
+                                               name: NSNotification.Name("sceneDidBecomeActive"),
+                                               object: nil)
         mainScreenView.scrollToCurrentHour()
     }
 
@@ -58,6 +60,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
+        updateDataSource()
     }
 
     func updateNavigationItems(model: MainForecastsModels) {
@@ -83,8 +86,9 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
         mainScreenView.updateViewWith(tbDataSource: tableViewDataSource,
                                       collectionDataSource: collectionViewDataSource,
-                                      forecastModels: forecastModeslArray, hourModels: hoursModels, factModel: forecastsModel)
-
+                                      forecastModels: forecastModeslArray,
+                                      hourModels: hoursModels,
+                                      factModel: forecastsModel)
     }
 
     func pushTwentyFourVc() {
@@ -119,7 +123,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         navigationController?.pushViewController(geoLocationViewController, animated: true)
     }
 
-    @objc private func startUpdate(_ notification: NotificationCenter) {
+    @objc private func startUpdate() {
         updateDataSource()
     }
 }

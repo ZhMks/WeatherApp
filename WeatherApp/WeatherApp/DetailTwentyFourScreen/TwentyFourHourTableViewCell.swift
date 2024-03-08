@@ -199,7 +199,7 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
 
         windSpeedNumber.snp.makeConstraints { make in
             make.centerY.equalTo(windSpeedLabel.snp.centerY)
-            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(30)
+            make.leading.equalTo(windSpeedLabel.snp.trailing).offset(20)
             make.trailing.equalTo(contentView.snp.trailing).offset(-5)
         }
 
@@ -272,9 +272,9 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         let stringFromDate = dateFormatter.string(from: currentTime)
 
         timeLabel.text = model.hour
-        temperatureLabel.text = "\(model.temp.rounded(.towardZero))°"
-        feelingTempNumber.text = "\(model.feelsLike.rounded(.towardZero))°"
-        windSpeedNumber.text = "\(model.windSpeed.rounded(.towardZero))"
+        temperatureLabel.text = "\(model.temp)°"
+        feelingTempNumber.text = "\(model.feelsLike)°"
+        windSpeedNumber.text = "\(model.windSpeed.rounded(.towardZero)) \(model.windDir!)"
         percitipationNumber.text = "\(model.precStr)"
         cloudyNumber.text = "\(model.cloudness)"
         dateLabel.text = "\(stringFromDate)"

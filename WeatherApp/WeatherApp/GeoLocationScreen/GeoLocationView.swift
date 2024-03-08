@@ -87,6 +87,8 @@ final class GeoLocationView: UIView {
             make.centerX.equalTo(safeAreaLayoutGuide.snp.centerX)
             make.height.width.equalTo(90)
         }
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGesture(_:)))
+        addGestureRecognizer(gestureRecognizer)
     }
 
     func updateData(coreData: MainForecastModelService) {
@@ -127,8 +129,14 @@ final class GeoLocationView: UIView {
         }
     }
     
-    
+
+    @objc func tapGesture(_ sender: UITapGestureRecognizer) {
+        sender.numberOfTapsRequired = 1
+        locationTextField.resignFirstResponder()
+    }
+
     @objc private func getGeoData(_ sender: UIButton) {
+        print(self.textFieldtext)
         geoVC?.checkModelsArray(string: self.textFieldtext)
     }
 }
@@ -140,5 +148,10 @@ extension GeoLocationView: UITextFieldDelegate {
         textFieldtext = textField.text!
         return true
     }
-    
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        textFieldtext = textField.text!
+        print(textFieldtext)
+    }
+
 }

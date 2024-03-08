@@ -14,13 +14,24 @@ protocol iPageViewController: AnyObject {
     func createViewControllerWithModel(model: MainForecastsModels)
     func initialFetch()
     func updateViewControllers()
+    var viewControllersArray: [MainScreenViewController]? { get set }
 }
 
 final class PageViewController: UIPageViewController, iPageViewController {
 
     var coreDataModelService: MainForecastModelService
 
-    private(set) var viewControllersArray: [MainScreenViewController]?
+    private lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl(frame: CGRect(x: 0,y: 75,width: UIScreen.main.bounds.width, height: 50))
+        pageControl.currentPage = 0
+        pageControl.tintColor = .lightGray
+        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.pageIndicatorTintColor = .lightGray
+        pageControl.backgroundColor = .clear
+        return pageControl
+    }()
+
+    var viewControllersArray: [MainScreenViewController]?
     private let geoDataService: GeoDataModelService
 
 
@@ -36,20 +47,12 @@ final class PageViewController: UIPageViewController, iPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if let scrollView = view.subviews.filter({ $0 is UIScrollView }).first,
-           let pageControl = view.subviews.filter({ $0 is UIPageControl }).first {
-            scrollView.frame = view.bounds
-            view.bringSubviewToFront(pageControl)
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.delegate = self
         self.dataSource = self
+        view.addSubview(pageControl)
     }
 
     func createViewControllerWithModel(model: MainForecastsModels) {
@@ -57,6 +60,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
         let forecastModelService = ForecastModelService(coreDataModel: model)
 
         guard let forecastArray = forecastModelService.forecastModel else { return }
+
         if let forecast = forecastArray.first {
             let hourModelService = HoursModelService(coreDataModel: forecast)
             let hoursArray = hourModelService.hoursArray
@@ -68,7 +72,10 @@ final class PageViewController: UIPageViewController, iPageViewController {
 
             let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource, geoDataService: geoDataService)
             mainScreenVC.updateNavigationItems(model: model)
+            mainScreenVC.mainPageViewController = self
+            print("BEFORE: \(viewControllersArray?.count)")
             self.viewControllersArray?.append(mainScreenVC)
+            print("AFTER: \(viewControllersArray?.count)")
             self.navigationItem.title = mainScreenVC.navigationItem.title
             self.navigationItem.leftBarButtonItem = mainScreenVC.navigationItem.leftBarButtonItem
             self.navigationItem.rightBarButtonItem = mainScreenVC.navigationItem.rightBarButtonItem
@@ -77,14 +84,12 @@ final class PageViewController: UIPageViewController, iPageViewController {
     }
 
     func initialFetch() {
-
-
         guard let modelArray = coreDataModelService.modelArray else { return }
 
-
         for model in modelArray {
+
             let forecastModelService = ForecastModelService(coreDataModel: model)
-            
+
             guard let forecastArray = forecastModelService.forecastModel else { return }
             if let forecast = forecastArray.first {
                 let hourModelService = HoursModelService(coreDataModel: forecast)
@@ -96,21 +101,28 @@ final class PageViewController: UIPageViewController, iPageViewController {
                 collectionViewDataSource.updateData(data: hoursArray)
 
                 let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource, geoDataService: geoDataService)
-                
+
                 self.viewControllersArray?.append(mainScreenVC)
+                mainScreenVC.mainPageViewController = self
                 guard let model = coreDataModelService.modelArray?.first else { return  }
                 mainScreenVC.updateNavigationItems(model: model)
                 self.navigationItem.title = mainScreenVC.navigationItem.title
                 self.navigationItem.rightBarButtonItem = mainScreenVC.navigationItem.rightBarButtonItem
                 self.navigationItem.leftBarButtonItem = mainScreenVC.navigationItem.leftBarButtonItem
+                if let viewControllersArray = viewControllersArray {
+                    setViewControllers([viewControllersArray.first!], direction: .forward, animated: true)
+                    pageControl.numberOfPages = viewControllersArray.count
+                }
             }
         }
-        updateViewControllers()
     }
 
     func updateViewControllers() {
+        self.dataSource = nil
+        self.dataSource = self
         if let viewControllersArray = viewControllersArray {
-            setViewControllers([viewControllersArray.first!], direction: .forward, animated: true)
+            setViewControllers([viewControllersArray.last!], direction: .forward, animated: true)
+            pageControl.numberOfPages = viewControllersArray.count
         }
     }
 }
@@ -127,6 +139,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
                     self.navigationItem.title = viewController.navigationItem.title
                     self.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
                     self.navigationItem.leftBarButtonItem = viewController.navigationItem.leftBarButtonItem
+                    pageControl.currentPage = index
                     return viewControllersArray![index - 1]
                 }
             }
@@ -148,6 +161,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
                     self.navigationItem.title = viewController.navigationItem.title
                     self.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
                     self.navigationItem.leftBarButtonItem = viewController.navigationItem.leftBarButtonItem
+                    pageControl.currentPage = index
                     return viewControllersArray![index + 1]
                 }
             }

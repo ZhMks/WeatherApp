@@ -202,12 +202,15 @@ final class DetailDayTableViewCell: UITableViewCell {
         dayNightLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(21)
             make.leading.equalTo(contentView.snp.leading).offset(15)
+            make.height.equalTo(22)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-286)
         }
 
         weatherImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(20)
             make.leading.equalTo(contentView.snp.leading).offset(125)
             make.height.width.equalTo(32)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-184)
         }
 
         temperatureLabel.snp.makeConstraints { make in
@@ -221,6 +224,7 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
             make.leading.equalTo(contentView.snp.leading).offset(130)
             make.trailing.equalTo(contentView.snp.trailing).offset(-50)
+            make.height.equalTo(22)
         }
 
 
@@ -235,12 +239,14 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.centerY.equalTo(feelingsTempImageView.snp.centerY)
             make.leading.equalTo(feelingsTempImageView.snp.trailing).offset(15)
             make.trailing.equalTo(contentView.snp.trailing).offset(-130)
+            make.height.equalTo(19)
         }
 
         feelingTempNumber.snp.makeConstraints { make in
             make.centerY.equalTo(feelingsTempLabel.snp.centerY)
             make.leading.equalTo(feelingsTempLabel.snp.trailing).offset(60)
             make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.height.equalTo(22)
         }
 
         windSpeedImageView.snp.makeConstraints { make in
@@ -254,12 +260,14 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.centerY.equalTo(windSpeedImageView.snp.centerY)
             make.leading.equalTo(windSpeedImageView.snp.trailing).offset(15)
             make.trailing.equalTo(contentView.snp.trailing).offset(-130)
+            make.height.equalTo(19)
         }
 
         windSpeedNumber.snp.makeConstraints { make in
             make.centerY.equalTo(windSpeedLabel.snp.centerY)
             make.leading.equalTo(windSpeedLabel.snp.trailing).offset(50)
             make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.height.equalTo(22)
         }
 
         ufLightImageView.snp.makeConstraints { make in
@@ -273,12 +281,14 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.centerY.equalTo(ufLightImageView.snp.centerY)
             make.leading.equalTo(ufLightImageView.snp.trailing).offset(15)
             make.trailing.equalTo(contentView.snp.trailing).offset(-130)
+            make.height.equalTo(19)
         }
 
         ufLightNumber.snp.makeConstraints { make in
             make.centerY.equalTo(ufLightLabel.snp.centerY)
             make.leading.equalTo(ufLightLabel.snp.trailing).offset(85)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+            make.height.equalTo(22)
         }
 
         percitipationImageView.snp.makeConstraints { make in
@@ -292,12 +302,14 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.centerY.equalTo(percitipationImageView.snp.centerY)
             make.leading.equalTo(percitipationImageView.snp.trailing).offset(15)
             make.trailing.equalTo(contentView.snp.trailing).offset(-130)
+            make.height.equalTo(19)
         }
 
         percitipationNumber.snp.makeConstraints { make in
             make.centerY.equalTo(percitipationLabel.snp.centerY)
             make.leading.equalTo(percitipationLabel.snp.trailing).offset(85)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+            make.height.equalTo(22)
         }
 
         cloudyImageView.snp.makeConstraints { make in
@@ -311,12 +323,14 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.centerY.equalTo(cloudyImageView.snp.centerY)
             make.leading.equalTo(cloudyImageView.snp.trailing).offset(15)
             make.trailing.equalTo(contentView.snp.trailing).offset(-130)
+            make.height.equalTo(19)
         }
 
         cloudyNumber.snp.makeConstraints { make in
             make.centerY.equalTo(cloudyLabel.snp.centerY)
             make.leading.equalTo(cloudyLabel.snp.trailing).offset(85)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+            make.height.equalTo(22)
         }
     }
 
@@ -344,7 +358,7 @@ final class DetailDayTableViewCell: UITableViewCell {
         percitipationNumber.text = "\(data.precProb)"
         cloudyNumber.text = "\(data.cloudness)"
         mainWeatherLabel.text = "\((data.condition)!)"
-        temperatureLabel.text = "\(data.tempAvg.rounded(.towardZero))"
+        temperatureLabel.text = "\(data.tempAvg)"
     }
 
     func updateNightCellWith(data: NightModel, hourArray: [HourModel]) {
@@ -365,13 +379,13 @@ final class DetailDayTableViewCell: UITableViewCell {
             }
         }
 
-        feelingTempNumber.text = "\(data.feelsLike.rounded(.towardZero))°"
+        feelingTempNumber.text = "\(data.feelsLike)°"
         windSpeedNumber.text = "\(data.windSpeed.rounded(.towardZero)) \((data.windDir)!)"
         percitipationNumber.text = "\(data.precProb)"
-        cloudyNumber.text = "\(data.cloudness.rounded(.towardZero))"
+        cloudyNumber.text = "\(data.cloudness)"
         mainWeatherLabel.text = "\((data.condition)!)"
         dayNightLabel.text = "Ночь"
-        temperatureLabel.text = "\(data.tempAvg.rounded(.towardZero))"
+        temperatureLabel.text = "\(data.tempAvg)"
     }
 
 }

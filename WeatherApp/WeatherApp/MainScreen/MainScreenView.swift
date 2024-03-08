@@ -157,8 +157,10 @@ class MainScreenView: UIView {
                 if value.hour!.contains(currentHour) {
                     let indexPath = IndexPath(item: index, section: 0)
                     weatherByTimeCollectionView.performBatchUpdates({
-                        weatherByTimeCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                                    }, completion: nil)
+                        weatherByTimeCollectionView.scrollToItem(at: indexPath,
+                                                                 at: .centeredHorizontally,
+                                                                 animated: true) },
+                                                                    completion: nil)
                 }
             }
         }

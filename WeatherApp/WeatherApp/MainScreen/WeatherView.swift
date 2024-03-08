@@ -177,10 +177,10 @@ final class WeatherView: UIView {
 
         cloudyImageView.snp.makeConstraints { make in
             make.top.equalTo(mainWeatherLabel.snp.bottom).offset(30)
-            make.leading.equalTo(safeArea.snp.leading).offset(95)
+            make.leading.equalTo(safeArea.snp.leading).offset(90)
             make.trailing.equalTo(cloudyLabel.snp.leading).offset(-5)
             make.height.equalTo(18)
-            make.width.equalTo(21)
+            make.width.equalTo(25)
         }
 
         cloudyLabel.snp.makeConstraints { make in
@@ -268,11 +268,11 @@ final class WeatherView: UIView {
         guard let currentHour = components.first else { return }
 
         if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
-            devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact.dayModel?.tempMin)!.rounded(.towardZero))°"
+            devidedTemperature.text = "\(selectedHour.temp)°/ \((fact.dayModel?.tempMin)!)°"
             mainWeatherLabel.text = "\(selectedHour.condition!)"
             cloudyLabel.text = "\(selectedHour.cloudness)"
             percitipationLabel.text = "\(selectedHour.precStr)"
-            windSpeedLabel.text = "\(selectedHour.windSpeed.rounded(.towardZero))"
+            windSpeedLabel.text = "\(selectedHour.windSpeed.rounded(.towardZero)) m/c"
             updateImageWith(hour: selectedHour)
         } else {
             dateFormatter.locale = Locale(identifier: "en_GB")
@@ -283,16 +283,16 @@ final class WeatherView: UIView {
             guard let currentHour = components.first else { return }
             
             if let selectedHour = hourModel.first(where: { $0.hour?.contains(currentHour) ?? false }) {
-                devidedTemperature.text = "\(selectedHour.temp.rounded(.towardZero))°/ \((fact.dayModel?.tempMin)!.rounded(.towardZero))°"
+                devidedTemperature.text = "\(selectedHour.temp)°/ \((fact.dayModel?.tempMin)!)°"
                 mainWeatherLabel.text = "\(selectedHour.condition!)"
                 cloudyLabel.text = "\(selectedHour.cloudness)"
                 percitipationLabel.text = "\(selectedHour.precStr)"
-                windSpeedLabel.text = "\(selectedHour.windSpeed.rounded(.towardZero))"
+                windSpeedLabel.text = "\(selectedHour.windSpeed.rounded(.towardZero)) m/c"
                 updateImageWith(hour: selectedHour)
             }
         }
 
-            mainTemperatureLabel.text = "\((fact.dayModel?.tempMin)!.rounded(.towardZero))°"
+            mainTemperatureLabel.text = "\((fact.dayModel?.tempMin)!)°"
 
             sunsetTimeLabel.text = "\(fact.sunset ?? "")"
             dawnTimeLabel.text = "\(fact.sunrise ?? "")"
@@ -306,9 +306,9 @@ final class WeatherView: UIView {
         case "Ясно":
             cloudyImageView.image = UIImage(named: "UfLight")
         case "Малооблачно":
-            cloudyImageView.image = UIImage(named: "ParticallyCloud")
+            cloudyImageView.image = UIImage(named: "CloudyImage")
         case "Облачно с прояснениями":
-            cloudyImageView.image = UIImage(named: "ParticallyCloud")
+            cloudyImageView.image = UIImage(named: "CloudyImage")
         case "Пасмурно":
             cloudyImageView.image = UIImage(named: "HeavyClouds")
         case "Небольшой дождь":

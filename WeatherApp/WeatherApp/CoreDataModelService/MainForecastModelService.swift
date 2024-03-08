@@ -83,7 +83,7 @@ final class MainForecastModelService {
         let newForecastModel = ForecastModel(context: context)
 
         newForecastModel.date = network.date
-        newForecastModel.moonCode = Int64(network.moonCode)
+        newForecastModel.moonCode = Int16(network.moonCode)
         newForecastModel.moonText = network.moonText
         newForecastModel.sunset = network.sunset
         newForecastModel.sunrise = network.sunrise
@@ -113,15 +113,15 @@ final class MainForecastModelService {
 
             hourModel.hour = localDate
 
-            hourModel.temp = Double(hour.temp)
+            hourModel.temp = Int16(hour.temp)
             hourModel.cloudness = hour.cloudness
             hourModel.feelsLike = Double(hour.feelsLike)
             hourModel.precStr = hour.precStr
             hourModel.windSpeed = hour.windSpeed * 3.6
             hourModel.windDir = hour.windDir
             hourModel.condition = convertString(string: hour.condition)
-            hourModel.uvIndex = Int64(hour.uvIndex)
-            hourModel.humidity = Int64(hour.humidity)
+            hourModel.uvIndex = Int16(hour.uvIndex)
+            hourModel.humidity = Int16(hour.humidity)
 
             mainModelToSave.addToHoursArray(hourModel)
         }
@@ -140,11 +140,11 @@ final class MainForecastModelService {
         newDayModel.condition = convertString(string: day.condition)
         newDayModel.dayTime = day.daytime
         newDayModel.feelsLike = Double(day.feelsLike)
-        newDayModel.humidity = Int64(day.humidity)
-        newDayModel.precProb = Int64(day.precProb)
-        newDayModel.tempAvg = Double(day.tempAvg)
-        newDayModel.tempMax = Double(day.tempMax)
-        newDayModel.tempMin = Double(day.tempMin)
+        newDayModel.humidity = Int16(day.humidity)
+        newDayModel.precProb = Int16(day.precProb)
+        newDayModel.tempAvg = Int16(day.tempAvg)
+        newDayModel.tempMax = Int16(day.tempMax)
+        newDayModel.tempMin = Int16(day.tempMin)
         newDayModel.windDir = day.windDir
         newDayModel.windSpeed = day.windSpeed.rounded(.towardZero)
         newDayModel.cloudness = day.cloudness
@@ -155,11 +155,11 @@ final class MainForecastModelService {
         newNightModel.condition = convertString(string: night.condition)
         newNightModel.dayTime = night.daytime
         newNightModel.feelsLike = Double(night.feelsLike)
-        newNightModel.humidity = Int64(night.humidity)
-        newNightModel.precProb = Int64(night.precProb)
-        newNightModel.tempAvg = Double(night.tempAvg)
-        newNightModel.tempMax = Double(night.tempMax)
-        newNightModel.tempMin = Double(night.tempMin)
+        newNightModel.humidity = Int16(night.humidity)
+        newNightModel.precProb = Int16(night.precProb)
+        newNightModel.tempAvg = Int16(night.tempAvg)
+        newNightModel.tempMax = Int16(night.tempMax)
+        newNightModel.tempMin = Int16(night.tempMin)
         newNightModel.windDir = night.windDir
         newNightModel.windSpeed = night.windSpeed.rounded(.towardZero)
         newNightModel.cloudness = night.cloudness
@@ -169,9 +169,9 @@ final class MainForecastModelService {
         newDayShortModel.condition = convertString(string: dayShort.condition)
         newDayShortModel.dayTime = dayShort.daytime
         newDayShortModel.feelsLike = Double(dayShort.feelsLike)
-        newDayShortModel.humidity = Int64(dayShort.humidity)
-        newDayShortModel.precProb = Int64(dayShort.precProb)
-        newDayShortModel.temp = Double(dayShort.temp)
+        newDayShortModel.humidity = Int16(dayShort.humidity)
+        newDayShortModel.precProb = Int16(dayShort.precProb)
+        newDayShortModel.temp = Int16(dayShort.temp)
         newDayShortModel.windDir = dayShort.windDir
         newDayShortModel.windSpeed = dayShort.windSpeed.rounded(.towardZero)
 
@@ -179,10 +179,10 @@ final class MainForecastModelService {
 
         newNightShortModel.condition = convertString(string: nightShort.condition)
         newNightShortModel.dayTime = nightShort.daytime
-        newNightShortModel.feelsLike = Int64(nightShort.feelsLike)
-        newNightShortModel.humidity = Int64(nightShort.humidity)
-        newNightShortModel.precProb = Int64(nightShort.precProb)
-        newNightShortModel.temp = Double(nightShort.temp)
+        newNightShortModel.feelsLike = Int16(nightShort.feelsLike)
+        newNightShortModel.humidity = Int16(nightShort.humidity)
+        newNightShortModel.precProb = Int16(nightShort.precProb)
+        newNightShortModel.temp = Int16(nightShort.temp)
         newNightShortModel.windDir = nightShort.windDir
         newNightShortModel.windSpeed = nightShort.windSpeed.rounded(.towardZero)
 

@@ -74,7 +74,7 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
     }
 
     func updateCell(hour: HourModel) {
-        temperatureLabel.text = "\(hour.temp.rounded(.towardZero))°"
+        temperatureLabel.text = "\(hour.temp)°"
         timeLabel.text = "\((hour.hour)!)"
 
         switch hour.condition {

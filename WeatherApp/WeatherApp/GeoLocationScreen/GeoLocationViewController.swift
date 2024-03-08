@@ -45,6 +45,12 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
+        NotificationCenter.default.addObserver(self, selector: #selector(finishSavingHandler), name: NSNotification.Name("finishFetching"), object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        NotificationCenter.default.removeObserver(self)
     }
 
 
@@ -73,28 +79,28 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
                     guard self != nil else { return }
 
                     switch result {
-                    case .success(let success):
 
-                        self?.coreDataModelService.saveModelToCoreData(networkModel: success) { [weak self] result in
-                            guard let self else { return }
-                            switch result {
-                            case .success(let success):
-                                mainPageViewController?.createViewControllerWithModel(model: success)
-                                DispatchQueue.main.async { [weak self] in
-                                    self?.navigationController?.popViewController(animated: true)
-                                }
-                            case .failure(let failure):
-                                let uiAlert = UIAlertController(title: "Ошибка", message: "\(failure.description)", preferredStyle: .alert)
-                                let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
-                                    if action.isEnabled {
-                                        DispatchQueue.main.async { [weak self] in
-                                            self?.navigationController?.popViewController(animated: true)
+                    case .success(let success):
+                        DispatchQueue.main.async {
+                            self?.coreDataModelService.saveModelToCoreData(networkModel: success) { [weak self] result in
+                                guard let self else { return }
+                                switch result {
+                                case .success(let success):
+                                    mainPageViewController?.createViewControllerWithModel(model: success)
+                                    NotificationCenter.default.post(name: NSNotification.Name("finishFetching"), object: nil)
+                                case .failure(let failure):
+                                    let uiAlert = UIAlertController(title: "Ошибка", message: "\(failure.description)", preferredStyle: .alert)
+                                    let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
+                                        if action.isEnabled {
+                                            DispatchQueue.main.async { [weak self] in
+                                                self?.navigationController?.popViewController(animated: true)
+                                            }
                                         }
                                     }
-                                }
-                                uiAlert.addAction(action)
-                                DispatchQueue.main.async {
-                                    self.navigationController?.present(uiAlert, animated: true)
+                                    uiAlert.addAction(action)
+                                    DispatchQueue.main.async {
+                                        self.navigationController?.present(uiAlert, animated: true)
+                                    }
                                 }
                             }
                         }
@@ -119,27 +125,25 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
 
                     switch result {
                     case .success(let success):
-
-                        self?.coreDataModelService.saveModelToCoreData(networkModel: success) { [weak self] result in
-                            guard let self else { return }
-                            switch result {
-                            case .success(_):
-                                DispatchQueue.main.async { [weak self] in
+                        DispatchQueue.main.async {
+                            self?.coreDataModelService.saveModelToCoreData(networkModel: success) { [weak self] result in
+                                guard let self else { return }
+                                switch result {
+                                case .success(_):
                                     controller.initialFetch()
-                                    self?.navigationController?.popViewController(animated: true)
-                                }
-                            case .failure(let failure):
-                                let uiAlert = UIAlertController(title: "Ошибка", message: "\(failure.description)", preferredStyle: .alert)
-                                let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
-                                    if action.isEnabled {
-                                        DispatchQueue.main.async { [weak self] in
-                                            self?.navigationController?.popViewController(animated: true)
+                                case .failure(let failure):
+                                    let uiAlert = UIAlertController(title: "Ошибка", message: "\(failure.description)", preferredStyle: .alert)
+                                    let action = UIAlertAction(title: "Отмена", style: .cancel) { action in
+                                        if action.isEnabled {
+                                            DispatchQueue.main.async { [weak self] in
+                                                self?.navigationController?.popViewController(animated: true)
+                                            }
                                         }
                                     }
-                                }
-                                uiAlert.addAction(action)
-                                DispatchQueue.main.async {
-                                    self.navigationController?.present(uiAlert, animated: true)
+                                    uiAlert.addAction(action)
+                                    DispatchQueue.main.async {
+                                        self.navigationController?.present(uiAlert, animated: true)
+                                    }
                                 }
                             }
                         }
@@ -158,13 +162,19 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
             if modelsArray.isEmpty {
                 let pageViewController = PageViewController(coreDataModelService: coreDataModelService, geoDataService: geoDataService)
                 initialFetchWith(string: string, controller: pageViewController)
-                DispatchQueue.main.async {
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
-                }
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
             } else {
                 startFetchingGeo(string: string)
+                NotificationCenter.default.post(name: NSNotification.Name("finishFetching"), object: nil)
             }
         }
+    }
 
+    @objc func finishSavingHandler() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
+            mainPageViewController?.updateViewControllers()
+            navigationController?.popViewController(animated: true)
+        }
     }
 }

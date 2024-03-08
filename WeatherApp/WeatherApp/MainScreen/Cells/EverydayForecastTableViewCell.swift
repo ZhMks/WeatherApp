@@ -107,7 +107,7 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(17)
             make.trailing.equalTo(contentView.snp.trailing).offset(-5)
-            make.leading.equalTo(mainLabelText.snp.trailing).offset(5)
+            make.leading.equalTo(mainLabelText.snp.trailing).offset(15)
         }
     }
 
@@ -125,7 +125,7 @@ final class EverydayForecastTableViewCell: UITableViewCell {
         dateLabel.text = "\(updatedString)"
         percentage.text = "\(day.precProb)"
         mainLabelText.text = "\((day.condition)!)"
-        temperatureLabel.text = "\(day.tempMin.rounded(.towardZero))° - \(day.tempMax.rounded(.towardZero))°"
+        temperatureLabel.text = "\(day.tempMin)° - \(day.tempMax)°"
 
         switch day.condition {
         case "Ясно":
