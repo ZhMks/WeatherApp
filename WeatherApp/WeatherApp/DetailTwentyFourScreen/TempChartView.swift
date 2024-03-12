@@ -7,31 +7,45 @@
 
 import Foundation
 import UIKit
+import Charts
+import DGCharts
 
-final class TempChartView: UIView {
+final class TempChartView: UIView, ChartViewDelegate {
+
+    let lineChartView = LineChartView()
+
     private var hoursArray: [HourModel]?
+    private var entries = [ChartDataEntry]()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        createDottedBorder()
+    private func setupChart() {
+        addSubview(lineChartView)
+        lineChartView.delegate = self
+        lineChartView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func updateDataSource(hours: [HourModel]) {
+        self.hoursArray = hours
+        createDataForEntries()
+        setupChart()
     }
 
-    func createDottedBorder() {
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 5, y: 20))
-        path.addLine(to: CGPoint(x: 5 , y: 150))
 
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.strokeColor = UIColor.blue.cgColor
-        shapeLayer.lineWidth = 1
-        shapeLayer.lineDashPattern = [4, 8]
-        shapeLayer.path = path.cgPath
+    private func createDataForEntries() {
 
-        layer.addSublayer(shapeLayer)
+        
+
+        if let hoursArray = hoursArray {
+            for hour in hoursArray {
+                entries.append(ChartDataEntry(x: Double(hour.hour!)!, y: Double(hour.temp)))
+                print(entries.count)
+            }
+        }
+        let set = LineChartDataSet(entries: entries)
+        set.colors = [UIColor.blue]
+        let data = LineChartData(dataSet: set)
+        lineChartView.data = data
     }
+
+
 
 }

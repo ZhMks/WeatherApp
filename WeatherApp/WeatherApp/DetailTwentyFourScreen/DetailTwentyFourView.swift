@@ -86,12 +86,8 @@ final class DetailTwentyFourView: UIView {
     }
 
     func updateChart() {
-        var xValues = [HourModel]()
-               for index in stride(from: 0, to: dataArray!.count, by: 3) {
-                   let valueToAppend = dataArray![index]
-                   xValues.append(valueToAppend)
-               }
         let chartView = TempChartView()
+        chartView.updateDataSource(hours: self.dataArray!)
         chartUIKitView.addSubview(chartView)
         chartView.translatesAutoresizingMaskIntoConstraints = false
         chartView.snp.makeConstraints { make in

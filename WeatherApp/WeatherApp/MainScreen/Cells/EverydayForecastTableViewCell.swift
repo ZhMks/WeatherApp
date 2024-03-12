@@ -79,7 +79,6 @@ final class EverydayForecastTableViewCell: UITableViewCell {
             make.leading.equalTo(contentView.snp.leading).offset(5)
             make.trailing.equalTo(contentView.snp.trailing).offset(-240)
             make.bottom.equalTo(contentView.snp.bottom).offset(-31)
-            make.width.equalTo(53)
         }
 
         weatherImage.snp.makeConstraints { make in
@@ -87,7 +86,6 @@ final class EverydayForecastTableViewCell: UITableViewCell {
             make.leading.equalTo(contentView.snp.leading).offset(5)
             make.trailing.equalTo(percentage.snp.leading).offset(-5)
             make.bottom.equalTo(contentView.snp.bottom).offset(-5)
-            make.height.equalTo(17)
             make.width.equalTo(17)
         }
 

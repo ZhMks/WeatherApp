@@ -28,6 +28,11 @@
 		B29AE9F52B8B59A70007ED1D /* GeoLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29AE9F42B8B59A70007ED1D /* GeoLocationViewController.swift */; };
 		B29AE9F72B8B59B00007ED1D /* GeoLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29AE9F62B8B59B00007ED1D /* GeoLocationView.swift */; };
 		B29AE9FC2B8C96360007ED1D /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29AE9FB2B8C96360007ED1D /* PageViewController.swift */; };
+		B2ABBBFB2B9EE589007C266A /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABBBFA2B9EE589007C266A /* FooterView.swift */; };
+		B2ABBBFD2B9F3981007C266A /* AirConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABBBFC2B9F3981007C266A /* AirConditionView.swift */; };
+		B2ABBBFF2BA0516E007C266A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABBBFE2BA0516E007C266A /* ContentView.swift */; };
+		B2ABBC022BA06F41007C266A /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = B2ABBC012BA06F41007C266A /* DGCharts */; };
+		B2ABBC042BA06F41007C266A /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B2ABBC032BA06F41007C266A /* DGChartsDynamic */; };
 		B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */; };
 		B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */; };
 		B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38812B72266600D1ECD5 /* OnBoardingVC.swift */; };
@@ -79,6 +84,9 @@
 		B29AE9F42B8B59A70007ED1D /* GeoLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewController.swift; sourceTree = "<group>"; };
 		B29AE9F62B8B59B00007ED1D /* GeoLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationView.swift; sourceTree = "<group>"; };
 		B29AE9FB2B8C96360007ED1D /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		B2ABBBFA2B9EE589007C266A /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		B2ABBBFC2B9F3981007C266A /* AirConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirConditionView.swift; sourceTree = "<group>"; };
+		B2ABBBFE2BA0516E007C266A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B2AF387A2B72266600D1ECD5 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,7 +121,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2ABBC042BA06F41007C266A /* DGChartsDynamic in Frameworks */,
 				B2AF38962B722EDA00D1ECD5 /* SnapKit in Frameworks */,
+				B2ABBC022BA06F41007C266A /* DGCharts in Frameworks */,
 				B2AF38982B722EDA00D1ECD5 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,6 +158,9 @@
 				B22173A22B7A705E002C1C78 /* Cells */,
 				B26A57022B76543B00FC7255 /* DetailDayViewController.swift */,
 				B26A56FC2B7645A700FC7255 /* DetailDayView.swift */,
+				B2ABBBFA2B9EE589007C266A /* FooterView.swift */,
+				B2ABBBFC2B9F3981007C266A /* AirConditionView.swift */,
+				B2ABBBFE2BA0516E007C266A /* ContentView.swift */,
 			);
 			path = DetailDayScreen;
 			sourceTree = "<group>";
@@ -338,6 +351,8 @@
 			packageProductDependencies = (
 				B2AF38952B722EDA00D1ECD5 /* SnapKit */,
 				B2AF38972B722EDA00D1ECD5 /* SnapKit-Dynamic */,
+				B2ABBC012BA06F41007C266A /* DGCharts */,
+				B2ABBC032BA06F41007C266A /* DGChartsDynamic */,
 			);
 			productName = WeatherApp;
 			productReference = B2AF387A2B72266600D1ECD5 /* WeatherApp.app */;
@@ -369,6 +384,7 @@
 			mainGroup = B2AF38712B72266600D1ECD5;
 			packageReferences = (
 				B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B2ABBC002BA06F41007C266A /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = B2AF387B2B72266600D1ECD5 /* Products */;
 			projectDirPath = "";
@@ -403,6 +419,8 @@
 			files = (
 				B27B56182B88B5D8009CF6B4 /* TempChartView.swift in Sources */,
 				B26A56F82B75FEB800FC7255 /* DetailTwentyFourViewController.swift in Sources */,
+				B2ABBBFF2BA0516E007C266A /* ContentView.swift in Sources */,
+				B2ABBBFD2B9F3981007C266A /* AirConditionView.swift in Sources */,
 				B2AF38B52B74DDD100D1ECD5 /* EverydayForecastTableViewCell.swift in Sources */,
 				B27B56072B81ED24009CF6B4 /* GeoLocationService.swift in Sources */,
 				B27B55FB2B7E0662009CF6B4 /* ForecastsModels.xcdatamodeld in Sources */,
@@ -414,6 +432,7 @@
 				B2C065882B96074A004182DB /* GeoLocationModel.xcdatamodeld in Sources */,
 				B27B56022B7F9D2B009CF6B4 /* DataSourceForMainScreen.swift in Sources */,
 				B29AE9F22B8B57F80007ED1D /* GeoLocationModel.swift in Sources */,
+				B2ABBBFB2B9EE589007C266A /* FooterView.swift in Sources */,
 				B27B55EE2B7B6D3F009CF6B4 /* ForecastDataService.swift in Sources */,
 				B29AE9F52B8B59A70007ED1D /* GeoLocationViewController.swift in Sources */,
 				B26A57032B76543B00FC7255 /* DetailDayViewController.swift in Sources */,
@@ -666,6 +685,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B2ABBC002BA06F41007C266A /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -677,6 +704,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B2ABBC012BA06F41007C266A /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2ABBC002BA06F41007C266A /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		B2ABBC032BA06F41007C266A /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2ABBC002BA06F41007C266A /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
 		B2AF38952B722EDA00D1ECD5 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */;

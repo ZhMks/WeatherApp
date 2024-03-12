@@ -101,9 +101,9 @@ final class ValueConverter {
                         convertedUnit = unitToConvert.converted(to: .celsius).value
                         forecast.dayModel?.tempAvg = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.dayModel?.feelsLike)!
+                        unitToConvert.value = Double((forecast.dayModel?.feelsLike)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.dayModel?.feelsLike = convertedUnit
+                        forecast.dayModel?.feelsLike = Int16(convertedUnit)
 
                         unitToConvert.value = Double((forecast.dayModel?.tempMax)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
@@ -126,9 +126,9 @@ final class ValueConverter {
                         convertedUnit = unitToConvert.converted(to: .celsius).value
                         forecast.nightModel?.tempMin = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.nightModel?.feelsLike)!
+                        unitToConvert.value = Double((forecast.nightModel?.feelsLike)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.nightModel?.feelsLike = convertedUnit
+                        forecast.nightModel?.feelsLike = Int16(convertedUnit)
                     }
 
                     for hour in hoursArray {
@@ -137,9 +137,9 @@ final class ValueConverter {
                         hour.temp = Int16(convertedUnit)
 
 
-                        unitToConvert.value = hour.feelsLike
+                        unitToConvert.value = Double(hour.feelsLike)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        hour.feelsLike = convertedUnit
+                        hour.feelsLike = Int16(convertedUnit)
 
                         do {
                             try hour.managedObjectContext?.save()
@@ -166,9 +166,9 @@ final class ValueConverter {
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
                         forecast.dayModel?.tempMin = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.dayModel?.feelsLike)!
+                        unitToConvert.value = Double((forecast.dayModel?.feelsLike)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.dayModel?.feelsLike = convertedUnit
+                        forecast.dayModel?.feelsLike = Int16(convertedUnit)
 
                         unitToConvert.value = Double((forecast.nightModel?.tempAvg)!)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
@@ -183,9 +183,9 @@ final class ValueConverter {
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
                         forecast.nightModel?.tempMin = Int16(convertedUnit)
 
-                        unitToConvert.value = (forecast.nightModel?.feelsLike)!
+                        unitToConvert.value = Double((forecast.nightModel?.feelsLike)!)
                         convertedUnit = unitToConvert.converted(to: .celsius).value
-                        forecast.nightModel?.feelsLike = convertedUnit
+                        forecast.nightModel?.feelsLike = Int16(convertedUnit)
                     }
 
                     for hour in hoursArray {
@@ -193,9 +193,9 @@ final class ValueConverter {
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
                         hour.temp = Int16(convertedUnit)
 
-                        unitToConvert.value = hour.feelsLike
+                        unitToConvert.value = Double(hour.feelsLike)
                         convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                        hour.feelsLike = convertedUnit
+                        hour.feelsLike = Int16(convertedUnit)
                         do {
                             try hour.managedObjectContext?.save()
                         } catch {

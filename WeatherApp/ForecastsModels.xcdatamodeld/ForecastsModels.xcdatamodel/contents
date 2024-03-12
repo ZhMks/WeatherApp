@@ -4,7 +4,7 @@
         <attribute name="cloudness" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="dayTime" optional="YES" attributeType="String"/>
-        <attribute name="feelsLike" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="feelsLike" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="humidity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="precProb" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="tempAvg" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -14,17 +14,6 @@
         <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="forecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ForecastModel" inverseName="dayModel" inverseEntity="ForecastModel"/>
     </entity>
-    <entity name="DayShort" representedClassName="DayShort" syncable="YES" codeGenerationType="class">
-        <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="dayTime" optional="YES" attributeType="String"/>
-        <attribute name="feelsLike" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="humidity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="precProb" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="temp" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="windDir" optional="YES" attributeType="String"/>
-        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="forecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ForecastModel" inverseName="dayShort" inverseEntity="ForecastModel"/>
-    </entity>
     <entity name="ForecastModel" representedClassName="ForecastModel" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="moonCode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -32,16 +21,14 @@
         <attribute name="sunrise" optional="YES" attributeType="String"/>
         <attribute name="sunset" optional="YES" attributeType="String"/>
         <relationship name="dayModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayModel" inverseName="forecastModel" inverseEntity="DayModel"/>
-        <relationship name="dayShort" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayShort" inverseName="forecastModel" inverseEntity="DayShort"/>
         <relationship name="hoursArray" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HourModel" inverseName="forecastModel" inverseEntity="HourModel"/>
         <relationship name="mainForecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainForecastsModels" inverseName="forecastArray" inverseEntity="MainForecastsModels"/>
         <relationship name="nightModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NightModel" inverseName="forecastModel" inverseEntity="NightModel"/>
-        <relationship name="nightShort" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NightShort" inverseName="forecastModel" inverseEntity="NightShort"/>
     </entity>
     <entity name="HourModel" representedClassName="HourModel" syncable="YES" codeGenerationType="class">
         <attribute name="cloudness" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="feelsLike" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="feelsLike" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="hour" optional="YES" attributeType="String"/>
         <attribute name="humidity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="precStr" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -60,7 +47,7 @@
         <attribute name="cloudness" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="dayTime" optional="YES" attributeType="String"/>
-        <attribute name="feelsLike" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="feelsLike" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="humidity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="precProb" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="tempAvg" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -69,16 +56,5 @@
         <attribute name="windDir" optional="YES" attributeType="String"/>
         <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="forecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ForecastModel" inverseName="nightModel" inverseEntity="ForecastModel"/>
-    </entity>
-    <entity name="NightShort" representedClassName="NightShort" syncable="YES" codeGenerationType="class">
-        <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="dayTime" optional="YES" attributeType="String"/>
-        <attribute name="feelsLike" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="humidity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="precProb" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="temp" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="windDir" optional="YES" attributeType="String"/>
-        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="forecastModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ForecastModel" inverseName="nightShort" inverseEntity="ForecastModel"/>
     </entity>
 </model>
