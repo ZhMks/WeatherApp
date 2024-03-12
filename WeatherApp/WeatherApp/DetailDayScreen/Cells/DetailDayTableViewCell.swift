@@ -170,7 +170,7 @@ final class DetailDayTableViewCell: UITableViewCell {
     }
     
 
-    private func createViews() {
+    private func addViews() {
         contentView.addSubview(dayNightLabel)
         contentView.addSubview(weatherImageView)
         contentView.addSubview(temperatureLabel)
@@ -194,7 +194,7 @@ final class DetailDayTableViewCell: UITableViewCell {
     }
 
     private func layout() {
-        createViews()
+        addViews()
         makeConstraints()
     }
 
@@ -332,6 +332,8 @@ final class DetailDayTableViewCell: UITableViewCell {
             make.trailing.equalTo(contentView.snp.trailing).offset(-27)
             make.bottom.equalTo(contentView.snp.bottom).offset(-27)
         }
+
+        createLineView()
     }
 
     func updateDayCellWith(data: DayModel, hourArray: [HourModel]) {
@@ -386,6 +388,72 @@ final class DetailDayTableViewCell: UITableViewCell {
         mainWeatherLabel.text = "\((data.condition)!)"
         dayNightLabel.text = "Ночь"
         temperatureLabel.text = "\(data.tempAvg)°"
+    }
+
+    private func createLineView() {
+        let color = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
+
+        let firstLineView = UIView()
+        firstLineView.translatesAutoresizingMaskIntoConstraints = false
+        firstLineView.backgroundColor = color
+
+        let secondLineView = UIView()
+        secondLineView.translatesAutoresizingMaskIntoConstraints = false
+        secondLineView.backgroundColor = color
+
+        let thirdLineView = UIView()
+        thirdLineView.translatesAutoresizingMaskIntoConstraints = false
+        thirdLineView.backgroundColor = color
+
+        let fourthLineView = UIView()
+        fourthLineView.translatesAutoresizingMaskIntoConstraints = false
+        fourthLineView.backgroundColor = color
+
+        let fifthLineView = UIView()
+        fifthLineView.translatesAutoresizingMaskIntoConstraints = false
+        fifthLineView.backgroundColor = color
+
+        addSubview(firstLineView)
+        addSubview(secondLineView)
+        addSubview(thirdLineView)
+        addSubview(fourthLineView)
+        addSubview(fifthLineView)
+
+        firstLineView.snp.makeConstraints { make in
+            make.top.equalTo(feelingsTempLabel.snp.bottom).offset(14)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.height.equalTo(1)
+        }
+
+        secondLineView.snp.makeConstraints { make in
+            make.top.equalTo(firstLineView.snp.bottom).offset(46)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.height.equalTo(1)
+        }
+
+        thirdLineView.snp.makeConstraints { make in
+            make.top.equalTo(secondLineView.snp.bottom).offset(46)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.height.equalTo(1)
+        }
+
+        fourthLineView.snp.makeConstraints { make in
+            make.top.equalTo(thirdLineView.snp.bottom).offset(46)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.height.equalTo(1)
+        }
+
+        fifthLineView.snp.makeConstraints { make in
+            make.top.equalTo(fourthLineView.snp.bottom).offset(46)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.height.equalTo(1)
+        }
+
     }
 
 }
