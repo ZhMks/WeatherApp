@@ -92,8 +92,20 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     }
 
     func pushTwentyFourVc() {
-        let twentyFourVC = DetailTwentyFourViewController()
-        twentyFourVC.updateView(with: forecastsModel, mainModel: mainModel!)
+        let tableViewDataSource = TableDataSourceForTwentyFour()
+        let collectionSource = DataSourceForHumidityCollection()
+        tableViewDataSource.updateData(data: hoursModels)
+
+        var xValues = [HourModel]()
+
+        for index in stride(from: 0, to: hoursModels.count, by: 3) {
+            let valueToAppend = hoursModels[index]
+            xValues.append(valueToAppend)
+        }
+        collectionSource.updateData(data: xValues)
+        
+        let twentyFourVC = DetailTwentyFourViewController(tbDataSource: tableViewDataSource, collectionSource: collectionSource)
+        twentyFourVC.updateView(with: forecastsModel, mainModel: mainModel!, hours: hoursModels)
         navigationController?.pushViewController(twentyFourVC, animated: true)
     }
 

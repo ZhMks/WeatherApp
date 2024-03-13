@@ -12,10 +12,6 @@ class MainScreenView: UIView {
     
     private var forecastModelArray: [ForecastModel]?
     private var hoursModelArray: [HourModel]?
-
-    var tableViewDataSource: DataSourceForMainScreen?
-    var collectionViewDataSource: DataSourceForMainCollectionCell?
-
     weak var mainScreenVC: IMainScreenController?
 
     private let mainWeatherView = WeatherView()
@@ -118,21 +114,14 @@ class MainScreenView: UIView {
         mainScreenVC?.pushTwentyFourVc()
     }
 
-    func configureTableView(dataSource: UITableViewDataSource) {
-        self.everydayForecastTableView.dataSource = dataSource
-        self.everydayForecastTableView.reloadData()
-    }
-
-    func configureCollectionView(dataSource: UICollectionViewDataSource) {
-        self.weatherByTimeCollectionView.dataSource = dataSource
-        self.weatherByTimeCollectionView.reloadData()
-    }
-
     func updateViewWith(tbDataSource: UITableViewDataSource, collectionDataSource: UICollectionViewDataSource, forecastModels: [ForecastModel], hourModels: [HourModel], factModel: ForecastModel) {
 
-        configureTableView(dataSource: tbDataSource)
-        configureCollectionView(dataSource: collectionDataSource)
-        
+        self.weatherByTimeCollectionView.dataSource = collectionDataSource
+        self.weatherByTimeCollectionView.reloadData()
+
+        self.everydayForecastTableView.dataSource = tbDataSource
+        self.everydayForecastTableView.reloadData()
+
         self.forecastModelArray = forecastModels
         self.hoursModelArray = hourModels
 

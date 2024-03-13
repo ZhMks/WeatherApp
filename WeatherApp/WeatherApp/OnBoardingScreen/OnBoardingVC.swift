@@ -93,7 +93,6 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
                             let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
 
                             pageViewController.createViewControllerWithModel(model: success)
-                            print(pageViewController.viewControllersArray?.count)
 
                             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
                         }

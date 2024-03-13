@@ -14,6 +14,8 @@ final class DetailTwentyFourView: UIView {
 
     var dataArray: [HourModel]?
     var mainModel: MainForecastsModels?
+    let tempChartView = TempChartView()
+
 
     private lazy var cityLabel: UILabel = {
         let cityLabel = UILabel()
@@ -24,7 +26,7 @@ final class DetailTwentyFourView: UIView {
         return cityLabel
     }()
 
-    private lazy var chartUIKitView: UIView = {
+   private lazy var chartUIKitView: UIView = {
         let chartUIKitView = UIView()
         chartUIKitView.translatesAutoresizingMaskIntoConstraints = false
         chartUIKitView.backgroundColor = UIColor(red: 233/255, green: 258/255, blue: 250/255, alpha: 1)
@@ -35,11 +37,19 @@ final class DetailTwentyFourView: UIView {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(TwentyFourHourTableViewCell.self, forCellReuseIdentifier: TwentyFourHourTableViewCell.id)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.separatorColor = .blue
+        tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 10, right: 15)
         return tableView
+    }()
+
+    private lazy var humidityCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let humidityCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        humidityCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        humidityCollectionView.register(HumidityCollectionCell.self, forCellWithReuseIdentifier: HumidityCollectionCell.id)
+        humidityCollectionView.backgroundColor = .clear
+        return humidityCollectionView
     }()
 
     override init(frame: CGRect) {
@@ -56,7 +66,11 @@ final class DetailTwentyFourView: UIView {
         addSubview(cityLabel)
         addSubview(chartUIKitView)
         addSubview(twentyFourOurTableView)
+        chartUIKitView.addSubview(tempChartView)
+        chartUIKitView.addSubview(humidityCollectionView)
 
+        tempChartView.translatesAutoresizingMaskIntoConstraints = false
+        humidityCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
         cityLabel.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(15)
@@ -75,54 +89,46 @@ final class DetailTwentyFourView: UIView {
             make.top.equalTo(chartUIKitView.snp.bottom).offset(20)
             make.leading.trailing.bottom.equalTo(safeArea)
         }
-    }
 
-    func updateView(with model: [HourModel], mainModel: MainForecastsModels) {
-        self.dataArray = model
-        self.mainModel = mainModel
-        cityLabel.text = "\((mainModel.locality)!), \((mainModel.country)!)"
-        twentyFourOurTableView.reloadData()
-        updateChart()
-    }
+        tempChartView.snp.makeConstraints { make in
+            make.top.equalTo(chartUIKitView.snp.top).offset(5)
+            make.leading.equalTo(chartUIKitView.snp.leading).offset(17)
+            make.trailing.equalTo(chartUIKitView.snp.trailing).offset(-26)
+            make.bottom.equalTo(chartUIKitView.snp.bottom).offset(-80)
+        }
 
-    func updateChart() {
-        let chartView = TempChartView()
-        chartView.updateDataSource(hours: self.dataArray!)
-        chartUIKitView.addSubview(chartView)
-        chartView.translatesAutoresizingMaskIntoConstraints = false
-        chartView.snp.makeConstraints { make in
-            make.top.equalTo(chartUIKitView.snp.top)
-            make.leading.equalTo(chartUIKitView.snp.leading)
+        humidityCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(tempChartView.snp.bottom).offset(10)
+            make.leading.equalTo(chartUIKitView.snp.leading).offset(17)
             make.trailing.equalTo(chartUIKitView.snp.trailing)
             make.bottom.equalTo(chartUIKitView.snp.bottom)
         }
-
     }
 
-}
-
-
-extension DetailTwentyFourView: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        135
+    func updateView(with model: [HourModel], mainModel: MainForecastsModels, dataSource: UITableViewDataSource, collectionSource: UICollectionViewDataSource) {
+        self.dataArray = model
+        self.mainModel = mainModel
+        cityLabel.text = "\((mainModel.locality)!), \((mainModel.country)!)"
+        twentyFourOurTableView.dataSource = dataSource
+        humidityCollectionView.dataSource = collectionSource
+        tempChartView.updateView(data: model)
+        twentyFourOurTableView.reloadData()
+        humidityCollectionView.reloadData()
     }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let number = dataArray?.count else { return 0 }
-        return number
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TwentyFourHourTableViewCell.id, for: indexPath) as? TwentyFourHourTableViewCell else { return UITableViewCell()}
-        guard let data = dataArray?[indexPath.row] else { return UITableViewCell() }
-        cell.updateCellWithData(model: data )
-        return cell
-    }
-    
-
 }
 
 extension DetailTwentyFourView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        150
+    }
+}
 
+extension DetailTwentyFourView: UICollectionViewDelegateFlowLayout {
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            CGSize(width: 48, height: 84)
+        }
+
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+            16.0
+        }
 }
