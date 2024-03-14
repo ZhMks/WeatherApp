@@ -17,6 +17,7 @@ final class DetailDayView: UIView {
     private var dayNightTableViewSource: UITableViewDataSource?
     private var dateCollectionSource: UICollectionViewDataSource?
     private let contentView = ContentView(frame: .zero)
+    private var index: Int = 0
 
 
     private lazy var mainScrollView: UIScrollView = {
@@ -55,8 +56,9 @@ final class DetailDayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func updateView(dataSource: ForecastModel, hours: [HourModel], mainModel: MainForecastsModels, forecastArray: [ForecastModel], dayNightTableViewSource: UITableViewDataSource, dateCollectionSource: UICollectionViewDataSource) {
+    func updateView(dataSource: ForecastModel, hours: [HourModel], mainModel: MainForecastsModels, forecastArray: [ForecastModel], dayNightTableViewSource: UITableViewDataSource, dateCollectionSource: UICollectionViewDataSource, index: Int) {
         self.forecastModel = dataSource
+        self.index = index
         self.hours = hours
         self.mainModel = mainModel
         self.forecastArray = forecastArray

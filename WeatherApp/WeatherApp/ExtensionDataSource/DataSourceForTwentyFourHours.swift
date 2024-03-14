@@ -48,7 +48,7 @@ final class DataSourceForHumidityCollection: NSObject, UICollectionViewDataSourc
         return cell
     }
 
-    func updateData(data: [HourModel] ) {
+    func updateData(data: [HourModel]) {
         self.dataSource = data
     }
 }

@@ -169,7 +169,6 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
             activityIndicator.stopAnimating()
             let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
             pageViewController.initialFetch()
-
             NotificationCenter.default.removeObserver(self)
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)
         }

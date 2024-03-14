@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
 
-        let name = Notification.Name("sceneDidBecomeActive")
+        let name = Notification.Name("performUpdate")
 
         NotificationCenter.default.post(name: name, object: nil)
     }

@@ -10,7 +10,7 @@ import SnapKit
 
 protocol IMainScreenController: AnyObject {
     func pushTwentyFourVc()
-    func pushDayNightVc()
+    func pushDayNightVc(forecast: ForecastModel, hoursArray: [HourModel], index: Int)
 }
 
 class MainScreenViewController: UIViewController, IMainScreenController {
@@ -50,7 +50,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidAppear(animated)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(startUpdate),
-                                               name: NSNotification.Name("sceneDidBecomeActive"),
+                                               name: NSNotification.Name("performUpdate"),
                                                object: nil)
         mainScreenView.scrollToCurrentHour()
         updateDataSource()
@@ -116,13 +116,13 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         navigationController?.present(settingsVC, animated: true)
     }
 
-    func pushDayNightVc() {
+    func pushDayNightVc(forecast: ForecastModel, hoursArray: [HourModel], index: Int) {
         let detailDayVC = DetailDayViewController()
         let tableViewDataSource = TableDataSourceForDayNightScreen()
         let collectionViewDataSource = CollectionDataSourceFordayNightScreen()
-        tableViewDataSource.updateData(data: hoursModels, forecastModel: forecastsModel)
-        collectionViewDataSource.updateData(data: forecastModeslArray)
-        detailDayVC.updateDataForView(forecastModel: forecastsModel, mainModel: mainModel!, hoursArray: hoursModels, forecastArray: forecastModeslArray, tableSource: tableViewDataSource, collectionSource: collectionViewDataSource)
+        tableViewDataSource.updateData(data: hoursArray, forecastModel: forecast)
+        collectionViewDataSource.updateData(data: forecastModeslArray, index: index)
+        detailDayVC.updateDataForView(forecastModel: forecast, mainModel: mainModel!, hoursArray: hoursArray, forecastArray: forecastModeslArray, tableSource: tableViewDataSource, collectionSource: collectionViewDataSource, index: index)
         navigationController?.pushViewController(detailDayVC, animated: true)
     }
 

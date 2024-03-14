@@ -146,10 +146,10 @@ class MainScreenView: UIView {
                 if value.hour!.contains(currentHour) {
                     let indexPath = IndexPath(item: index, section: 0)
                     weatherByTimeCollectionView.performBatchUpdates({
+                        weatherByTimeCollectionView.cellForItem(at: indexPath)?.isSelected = true
                         weatherByTimeCollectionView.scrollToItem(at: indexPath,
                                                                  at: .centeredHorizontally,
-                                                                 animated: true) },
-                                                                    completion: nil)
+                                                                 animated: true) })
                 }
             }
         }
@@ -175,7 +175,12 @@ extension MainScreenView: UICollectionViewDelegateFlowLayout {
 extension MainScreenView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        mainScreenVC?.pushDayNightVc()
+        guard let forecastArray = forecastModelArray else { return }
+        let forecast = forecastArray[indexPath.row]
+        let hourModelService = HoursModelService(coreDataModel: forecast)
+        let hoursArray = hourModelService.hoursArray
+        let index = indexPath.row
+        mainScreenVC?.pushDayNightVc(forecast: forecast, hoursArray: hoursArray, index: index)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

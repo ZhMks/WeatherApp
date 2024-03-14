@@ -46,6 +46,7 @@ final class TableDataSourceForDayNightScreen: NSObject, UITableViewDataSource {
 final class CollectionDataSourceFordayNightScreen: NSObject, UICollectionViewDataSource {
 
     var dataSource: [ForecastModel] = []
+    var index: Int = 0
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         dataSource.count
@@ -54,11 +55,16 @@ final class CollectionDataSourceFordayNightScreen: NSObject, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailDayCollectionViewCell.id, for: indexPath) as? DetailDayCollectionViewCell else { return UICollectionViewCell() }
         let data = dataSource[indexPath.row]
+        if indexPath.row == index {
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            cell.isSelected = true
+        }
         cell.configureCell(data: data)
         return cell
     }
 
-    func updateData(data: [ForecastModel] ) {
+    func updateData(data: [ForecastModel], index: Int) {
         self.dataSource = data
+        self.index = index
     }
 }

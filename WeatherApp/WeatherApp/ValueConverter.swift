@@ -49,6 +49,7 @@ final class ValueConverter {
                         }
                     }
                     coreDataService.saveContext()
+                    NotificationCenter.default.post(name: NSNotification.Name("performUpdate"), object: nil)
 
                 } else {
                     var unitToConvert = Measurement(value: 0, unit: UnitSpeed.metersPerSecond)
@@ -72,6 +73,7 @@ final class ValueConverter {
                         }
                     }
                     coreDataService.saveContext()
+                    NotificationCenter.default.post(name: NSNotification.Name("performUpdate"), object: nil)
                 }
             }
         }
@@ -204,6 +206,7 @@ final class ValueConverter {
                     }
                 }
                 coreDataService.saveContext()
+                NotificationCenter.default.post(name: NSNotification.Name("performUpdate"), object: nil)
 
             }
         }
@@ -249,6 +252,7 @@ final class ValueConverter {
                     }
                 }
                 coreDataService.saveContext()
+                NotificationCenter.default.post(name: NSNotification.Name("performUpdate"), object: nil)
             }
         }
     }

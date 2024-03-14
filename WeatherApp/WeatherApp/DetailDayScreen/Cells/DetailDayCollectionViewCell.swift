@@ -58,8 +58,7 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
         let dateStrin = secondFormatter.string(from: (timeString)!)
         dateLabel.text = "\(dateStrin)"
         
-        if forecastDateString == currentDateString {
-            isSelected = true
+        if isSelected {
             backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
             dateLabel.textColor = .white
         }
