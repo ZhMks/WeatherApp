@@ -57,11 +57,15 @@ final class DetailDayCollectionViewCell: UICollectionViewCell {
         secondFormatter.locale = Locale(identifier: "ru_RU")
         let dateStrin = secondFormatter.string(from: (timeString)!)
         dateLabel.text = "\(dateStrin)"
-        
+    }
+
+    func performUpdate() {
         if isSelected {
             backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
             dateLabel.textColor = .white
+        } else {
+            backgroundColor = .clear
+            dateLabel.textColor = .black
         }
     }
-
 }

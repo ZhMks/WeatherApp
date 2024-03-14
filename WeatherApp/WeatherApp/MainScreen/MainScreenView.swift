@@ -146,10 +146,9 @@ class MainScreenView: UIView {
                 if value.hour!.contains(currentHour) {
                     let indexPath = IndexPath(item: index, section: 0)
                     weatherByTimeCollectionView.performBatchUpdates({
-                        weatherByTimeCollectionView.cellForItem(at: indexPath)?.isSelected = true
-                        weatherByTimeCollectionView.scrollToItem(at: indexPath,
+                    weatherByTimeCollectionView.scrollToItem(at: indexPath,
                                                                  at: .centeredHorizontally,
-                                                                 animated: true) })
+                                                                 animated: true)})
                 }
             }
         }
@@ -159,6 +158,11 @@ class MainScreenView: UIView {
 // MARK: -COLLECTIONDELEGATE
 
 extension MainScreenView: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let selectedCell = weatherByTimeCollectionView.cellForItem(at: indexPath)! as? DetailDayCollectionViewCell
+        selectedCell?.performUpdate()
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: 48, height: 84)

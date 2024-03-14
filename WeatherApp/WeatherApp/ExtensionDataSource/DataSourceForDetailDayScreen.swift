@@ -58,6 +58,7 @@ final class CollectionDataSourceFordayNightScreen: NSObject, UICollectionViewDat
         if indexPath.row == index {
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             cell.isSelected = true
+            cell.performUpdate()
         }
         cell.configureCell(data: data)
         return cell

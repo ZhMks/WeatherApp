@@ -17,7 +17,6 @@ final class DetailDayView: UIView {
     private var dayNightTableViewSource: UITableViewDataSource?
     private var dateCollectionSource: UICollectionViewDataSource?
     private let contentView = ContentView(frame: .zero)
-    private var index: Int = 0
 
 
     private lazy var mainScrollView: UIScrollView = {
@@ -56,9 +55,8 @@ final class DetailDayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func updateView(dataSource: ForecastModel, hours: [HourModel], mainModel: MainForecastsModels, forecastArray: [ForecastModel], dayNightTableViewSource: UITableViewDataSource, dateCollectionSource: UICollectionViewDataSource, index: Int) {
+    func updateView(dataSource: ForecastModel, hours: [HourModel], mainModel: MainForecastsModels, forecastArray: [ForecastModel], dayNightTableViewSource: UITableViewDataSource, dateCollectionSource: UICollectionViewDataSource) {
         self.forecastModel = dataSource
-        self.index = index
         self.hours = hours
         self.mainModel = mainModel
         self.forecastArray = forecastArray
@@ -83,7 +81,14 @@ extension DetailDayView: UICollectionViewDelegateFlowLayout {
         let hourModelService = HoursModelService(coreDataModel: forecast)
         let hoursArray = hourModelService.hoursArray
         (dayNightTableViewSource as? TableDataSourceForDayNightScreen)?.updateData(data: hoursArray, forecastModel: forecast)
+        let selectedCell = dateCollectionView.cellForItem(at: indexPath)! as? DetailDayCollectionViewCell
+        selectedCell!.performUpdate()
         contentView.reloadData()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let selectedCell = dateCollectionView.cellForItem(at: indexPath)! as? DetailDayCollectionViewCell
+        selectedCell!.performUpdate()
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -139,7 +144,6 @@ extension DetailDayView {
             make.leading.equalTo(mainScrollView.snp.leading)
             make.trailing.equalTo(mainScrollView.snp.trailing)
             make.width.equalTo(mainScrollView.snp.width)
-            make.height.equalTo(mainScrollView.snp.height)
         }
     }
 }

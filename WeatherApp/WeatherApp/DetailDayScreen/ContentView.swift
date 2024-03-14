@@ -21,6 +21,7 @@ final class ContentView: UIView {
         dayNightTableView.register(DetailDayTableViewCell.self, forCellReuseIdentifier: DetailDayTableViewCell.id)
         dayNightTableView.backgroundColor = .clear
         dayNightTableView.isUserInteractionEnabled = false
+        dayNightTableView.isScrollEnabled = false
         return dayNightTableView
     }()
 
@@ -43,10 +44,10 @@ final class ContentView: UIView {
     }
 
     private func addViews() {
+        addSubview(dayNightTableView)
         addSubview(leftFooterView)
         addSubview(rightFooterView)
         addSubview(blueView)
-        addSubview(dayNightTableView)
         addSubview(airConditionView)
     }
 
@@ -65,23 +66,23 @@ final class ContentView: UIView {
 
 
         dayNightTableView.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top)
-            make.leading.equalTo(self.snp.leading)
-            make.trailing.equalTo(self.snp.trailing)
-            make.height.equalTo(694)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.height.equalTo(760)
         }
 
         leftFooterView.snp.makeConstraints { make in
             make.top.equalTo(dayNightTableView.snp.bottom).offset(5)
-            make.leading.equalTo(self.snp.leading)
-            make.trailing.equalTo(self.snp.trailing).offset(-190)
-            make.height.equalTo(220)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(blueView.snp.leading)
         }
 
         rightFooterView.snp.makeConstraints { make in
             make.top.equalTo(dayNightTableView.snp.bottom).offset(5)
-            make.trailing.equalTo(self.snp.trailing)
-            make.height.equalTo(220)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.leading.equalTo(blueView.snp.trailing)
         }
 
         blueView.snp.makeConstraints { make in
@@ -94,8 +95,8 @@ final class ContentView: UIView {
 
         airConditionView.snp.makeConstraints { make in
             make.top.equalTo(leftFooterView.snp.bottom)
-            make.leading.equalTo(self.snp.leading)
-            make.trailing.equalTo(self.snp.trailing)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
             make.height.equalTo(90)
         }
     }

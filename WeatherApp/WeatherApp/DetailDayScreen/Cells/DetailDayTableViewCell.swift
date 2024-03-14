@@ -200,137 +200,136 @@ final class DetailDayTableViewCell: UITableViewCell {
 
     private func makeConstraints() {
         dayNightLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(21)
-            make.leading.equalTo(contentView.snp.leading).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-286)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-298 )
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(21)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(15)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-286)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-298 )
         }
 
         weatherImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(20)
-            make.leading.equalTo(contentView.snp.leading).offset(134)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-184)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-289)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(20)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(134)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-184)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-289)
         }
 
         temperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(15)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(15)
             make.leading.equalTo(weatherImageView.snp.trailing).offset(10)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-125)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-290)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-125)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-290)
         }
 
         mainWeatherLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(62)
-            make.leading.equalTo(contentView.snp.leading).offset(145)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-110)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-257)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(62)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(145)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-110)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-257)
         }
 
-
         feelingsTempImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(109)
-            make.leading.equalTo(contentView.snp.leading).offset(15)
-            make.height.equalTo(26)
-            make.width.equalTo(26)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(109)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(15)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-305)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-206)
         }
 
         feelingsTempLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(112)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(112)
             make.leading.equalTo(feelingsTempImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-186)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-210)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-186)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-210)
             }
 
         feelingTempNumber.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(109)
-            make.leading.equalTo(contentView.snp.leading).offset(308)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-210)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(109)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(308)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-210)
         }
 
         windSpeedImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(161)
-            make.leading.equalTo(contentView.snp.leading).offset(15)
-            make.height.equalTo(26)
-            make.width.equalTo(26)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(161)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(15)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-305)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-166)
         }
 
         windSpeedLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(158)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(158)
             make.leading.equalTo(windSpeedImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-248)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-164)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-248)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-164)
         }
 
         windSpeedNumber.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(155)
-            make.leading.equalTo(contentView.snp.leading).offset(237)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-164)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(155)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(237)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-164)
         }
 
         ufLightImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(200)
-            make.leading.equalTo(contentView.snp.leading).offset(15)
-            make.width.equalTo(26)
-            make.height.equalTo(26)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(200)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(15)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-305)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-114)
         }
 
         ufLightLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(204)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(204)
             make.leading.equalTo(ufLightImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-210)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-118)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-210)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-118)
         }
 
         ufLightNumber.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(201)
-            make.leading.equalTo(contentView.snp.leading).offset(233)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-118)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(201)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(233)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-118)
         }
 
         percitipationImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(245)
-            make.leading.equalTo(contentView.snp.leading).offset(15)
-            make.width.equalTo(26)
-            make.height.equalTo(26)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(245)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(15)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-305)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-66)
         }
 
         percitipationLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(247)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(247)
             make.leading.equalTo(percitipationImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-244)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-75)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-244)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-75)
         }
 
         percitipationNumber.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(247)
-            make.leading.equalTo(contentView.snp.leading).offset(293)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-72)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(247)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(293)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-72)
         }
 
         cloudyImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(297)
-            make.leading.equalTo(contentView.snp.leading).offset(15)
-            make.width.equalTo(26)
-            make.height.equalTo(26)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(297)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(15)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-305)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-27)
         }
 
         cloudyLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(293)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(293)
             make.leading.equalTo(cloudyImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-209)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-29)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-209)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-29)
         }
 
         cloudyNumber.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(292)
-            make.leading.equalTo(contentView.snp.leading).offset(294)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-27)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-27)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(292)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(294)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-27)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-27)
         }
 
         createLineView()
@@ -413,47 +412,50 @@ final class DetailDayTableViewCell: UITableViewCell {
         fifthLineView.translatesAutoresizingMaskIntoConstraints = false
         fifthLineView.backgroundColor = color
 
-        addSubview(firstLineView)
-        addSubview(secondLineView)
-        addSubview(thirdLineView)
-        addSubview(fourthLineView)
-        addSubview(fifthLineView)
+        contentView.addSubview(firstLineView)
+        contentView.addSubview(secondLineView)
+        contentView.addSubview(thirdLineView)
+        contentView.addSubview(fourthLineView)
+        contentView.addSubview(fifthLineView)
 
         firstLineView.snp.makeConstraints { make in
-            make.top.equalTo(feelingsTempLabel.snp.bottom).offset(14)
-            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(145)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
             make.height.equalTo(1)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-196)
         }
 
         secondLineView.snp.makeConstraints { make in
-            make.top.equalTo(firstLineView.snp.bottom).offset(46)
-            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(191)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
             make.height.equalTo(1)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-150)
         }
 
         thirdLineView.snp.makeConstraints { make in
-            make.top.equalTo(secondLineView.snp.bottom).offset(46)
-            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(237)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
             make.height.equalTo(1)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-104)
         }
 
         fourthLineView.snp.makeConstraints { make in
-            make.top.equalTo(thirdLineView.snp.bottom).offset(46)
-            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(283)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
             make.height.equalTo(1)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-58)
         }
 
         fifthLineView.snp.makeConstraints { make in
-            make.top.equalTo(fourthLineView.snp.bottom).offset(46)
-            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(329)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
             make.height.equalTo(1)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-12)
         }
-
     }
-
 }

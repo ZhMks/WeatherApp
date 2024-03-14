@@ -122,7 +122,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         let collectionViewDataSource = CollectionDataSourceFordayNightScreen()
         tableViewDataSource.updateData(data: hoursArray, forecastModel: forecast)
         collectionViewDataSource.updateData(data: forecastModeslArray, index: index)
-        detailDayVC.updateDataForView(forecastModel: forecast, mainModel: mainModel!, hoursArray: hoursArray, forecastArray: forecastModeslArray, tableSource: tableViewDataSource, collectionSource: collectionViewDataSource, index: index)
+        detailDayVC.updateDataForView(forecastModel: forecast, mainModel: mainModel!, hoursArray: hoursArray, forecastArray: forecastModeslArray, tableSource: tableViewDataSource, collectionSource: collectionViewDataSource)
         navigationController?.pushViewController(detailDayVC, animated: true)
     }
 

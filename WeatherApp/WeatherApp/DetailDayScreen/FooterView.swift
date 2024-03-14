@@ -108,14 +108,14 @@ final class FooterView: UIView {
         addViews()
 
         sunAndMoonLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top)
-            make.leading.equalTo(self.snp.leading)
-            make.trailing.equalTo(self.snp.trailing).offset(-50)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-50)
         }
 
         sunImage.snp.makeConstraints { make in
             make.top.equalTo(sunAndMoonLabel.snp.bottom).offset(20)
-            make.leading.equalTo(self.snp.leading).offset(15)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(15)
             make.height.width.equalTo(23)
 
         }
@@ -123,31 +123,31 @@ final class FooterView: UIView {
         lightDayTimeLabel.snp.makeConstraints { make in
             make.top.equalTo(sunAndMoonLabel.snp.bottom).offset(20)
             make.leading.equalTo(sunImage.snp.trailing).offset(70)
-            make.trailing.equalTo(self.snp.trailing)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
 
         sunriseLabel.snp.makeConstraints { make in
             make.top.equalTo(sunImage.snp.bottom).offset(18)
-            make.leading.equalTo(self.snp.leading).offset(10)
-            make.trailing.equalTo(self.snp.trailing).offset(-100)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(10)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-100)
         }
 
         sunriseTime.snp.makeConstraints { make in
             make.leading.equalTo(sunriseLabel.snp.trailing).offset(46)
             make.top.equalTo(sunImage.snp.bottom).offset(18)
-            make.trailing.equalTo(self.snp.trailing)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
 
         sunsetLabel.snp.makeConstraints { make in
             make.top.equalTo(sunriseLabel.snp.bottom).offset(18)
-            make.leading.equalTo(self.snp.leading).offset(10)
-            make.trailing.equalTo(self.snp.trailing).offset(-100)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(10)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-100)
         }
 
         sunsetTime.snp.makeConstraints { make in
             make.leading.equalTo(sunsetLabel.snp.trailing).offset(46)
             make.top.equalTo(sunriseTime.snp.bottom).offset(16)
-            make.trailing.equalTo(self.snp.trailing)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
     }
 
@@ -158,8 +158,8 @@ final class FooterView: UIView {
         addSubview(moonStatusLabel)
 
         ellipseImage.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top)
-            make.leading.equalTo(self.snp.leading).offset(57)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(57)
             make.height.width.equalTo(15)
         }
 
@@ -167,20 +167,20 @@ final class FooterView: UIView {
         moonStatusLabel.font = UIFont(name: "Rubik-Regular", size: 14)
 
         moonStatusLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(ellipseImage.snp.leading).offset(20)
-            make.trailing.equalTo(self.snp.trailing)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
 
         sunImage.snp.makeConstraints { make in
             make.top.equalTo(ellipseImage.snp.bottom).offset(27)
-            make.leading.equalTo(self.snp.leading).offset(15)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(15)
             make.height.width.equalTo(23)
         }
 
         sunriseLabel.snp.makeConstraints { make in
-            make.leading.equalTo(self.snp.leading).offset(10)
-            make.trailing.equalTo(self.snp.trailing).offset(-100)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(10)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-100)
         }
     }
 

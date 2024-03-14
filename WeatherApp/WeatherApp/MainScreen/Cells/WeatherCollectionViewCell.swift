@@ -112,11 +112,17 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
             weatherImage.image = UIImage(named: "PercitipationImage")
         default: break
         }
+    }
 
+    func performUpdate() {
         if isSelected {
             backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
             temperatureLabel.textColor = .white
             timeLabel.textColor = .white
+        } else {
+            backgroundColor = .clear
+            temperatureLabel.textColor = .black
+            timeLabel.textColor = .black
         }
     }
 
