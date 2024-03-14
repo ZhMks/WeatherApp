@@ -69,20 +69,18 @@ final class ContentView: UIView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
             make.height.equalTo(760)
         }
-
         leftFooterView.snp.makeConstraints { make in
             make.top.equalTo(dayNightTableView.snp.bottom).offset(5)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(blueView.snp.leading)
+            make.height.equalTo(150)
         }
 
         rightFooterView.snp.makeConstraints { make in
             make.top.equalTo(dayNightTableView.snp.bottom).offset(5)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
-            make.leading.equalTo(blueView.snp.trailing)
+            make.height.equalTo(150)
         }
 
         blueView.snp.makeConstraints { make in
@@ -94,10 +92,10 @@ final class ContentView: UIView {
         }
 
         airConditionView.snp.makeConstraints { make in
-            make.top.equalTo(leftFooterView.snp.bottom)
+            make.top.equalTo(leftFooterView.snp.bottom).offset(10)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
-            make.height.equalTo(90)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 }

@@ -75,24 +75,28 @@ final class AirConditionView: UIView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(10)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-40)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-110)
         }
 
         airConditionNumber.snp.makeConstraints { make in
             make.top.equalTo(airConditionLabel.snp.bottom).offset(10)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(10)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-330)
+            make.height.equalTo(36)
         }
 
         airConditionButton.snp.makeConstraints { make in
             make.top.equalTo(airConditionLabel.snp.bottom).offset(10)
             make.leading.equalTo(airConditionNumber.snp.trailing).offset(10)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-190)
+            make.height.equalTo(26)
         }
 
         airConditionText.snp.makeConstraints { make in
             make.top.equalTo(airConditionNumber.snp.bottom).offset(10)
             make.leading.equalTo(safeAreaLayoutGuide.snp.leading)
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 }
