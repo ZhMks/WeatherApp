@@ -27,7 +27,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     }()
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.center = view.center
         activityIndicator.color = .white
         return activityIndicator
@@ -131,12 +131,12 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
                         switch result {
                         case .success(_):
-                           break
+                            break
                         case .failure(let failure):
                             print("\(failure.description)")
                         }
                     }
-            }
+                }
             case .failure(let failure):
                 print(failure.description)
             }
@@ -169,7 +169,6 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
             activityIndicator.stopAnimating()
             let pageViewController = PageViewController(coreDataModelService: mainForecastModelService, geoDataService: geoDataService)
             pageViewController.initialFetch()
-            print(pageViewController.viewControllersArray?.count)
 
             NotificationCenter.default.removeObserver(self)
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(pageViewController)

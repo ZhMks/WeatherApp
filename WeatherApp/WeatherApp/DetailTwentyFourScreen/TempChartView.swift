@@ -36,10 +36,9 @@ final class TempChartView: UIView, ChartViewDelegate {
         yAxis.drawGridLinesEnabled = false
         yAxis.drawLabelsEnabled = false
         yAxis.axisLineDashLengths = [CGFloat(6.0)]
-        yAxis.axisLineColor = .black
+        yAxis.axisLineColor = .systemBlue
+        chartView.xAxis.axisLineColor = .systemBlue
 
-
-        chartView.xAxis.axisLineColor = .black
 
 
         return chartView
@@ -54,7 +53,7 @@ final class TempChartView: UIView, ChartViewDelegate {
     private func layout() {
         addSubview(lineChartview)
         lineChartview.snp.makeConstraints { make in
-            make.height.equalTo(self)
+            make.top.equalTo(self.snp.top)
             make.width.equalTo(self)
             make.center.equalTo(self.snp.center)
         }
@@ -62,6 +61,7 @@ final class TempChartView: UIView, ChartViewDelegate {
 
 
     private func setData() {
+
         var xValues = [HourModel]()
 
         for index in stride(from: 0, to: dataSource!.count, by: 3) {
@@ -72,27 +72,34 @@ final class TempChartView: UIView, ChartViewDelegate {
         var dataForYCharts = [ChartDataEntry]()
 
         for hour in xValues {
-            let newChartData = ChartDataEntry(x: Double(hour.hour!.replacingOccurrences(of: ":", with: "."))!, y: Double(hour.temp))
+            let newChartData = ChartDataEntry(x: Double(hour.hour!.replacingOccurrences(of: ":", with: "."))!,
+                                              y: Double(hour.temp))
             dataForYCharts.append(newChartData)
         }
 
         let set1 = LineChartDataSet(entries: dataForYCharts)
         set1.mode = .linear
         set1.circleRadius = CGFloat(3.0)
-        set1.circleColors = [.white]
+        set1.circleColors = [.black]
+        set1.circleHoleRadius = 2.5
+        set1.circleHoleColor = .white
         set1.drawCirclesEnabled = true
-
-        let colorTop =  UIColor(red: 61/255.0, green: 105.0/255.0, blue: 220.0/255.0, alpha: 1).cgColor
-        let middleColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1).cgColor
-        let colorBottom = UIColor(red: 32.0/255.0, green: 78.0/255.0, blue: 199.0/255.0, alpha: 0.3).cgColor
-
-        let gradientColors = [colorTop, middleColor, colorBottom] as CFArray
         set1.drawFilledEnabled = true
 
         let data = LineChartData(dataSet: set1)
+
+        data.setValueFont(.systemFont(ofSize: 8, weight: .light))
+        data.setValueTextColor(.black)
+        data.setValueFormatter(self)
+
         lineChartview.data = data
     }
-
-
 }
 
+
+extension TempChartView: ValueFormatter {
+
+    func stringForValue(_ value: Double, entry: DGCharts.ChartDataEntry, dataSetIndex: Int, viewPortHandler: DGCharts.ViewPortHandler?) -> String {
+        return "\(Int(value))°"
+    }
+}

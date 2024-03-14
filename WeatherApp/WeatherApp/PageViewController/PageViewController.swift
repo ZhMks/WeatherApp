@@ -73,9 +73,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
             let mainScreenVC = MainScreenViewController(coreDataModelService: coreDataModelService, forecastsModel: forecast, hoursModels: hoursArray, forecastModelsArray: forecastArray, mainModel: model, tableViewDataSource: tableViewDataSource, collectionViewDataSource: collectionViewDataSource, geoDataService: geoDataService)
             mainScreenVC.updateNavigationItems(model: model)
             mainScreenVC.mainPageViewController = self
-            print("BEFORE: \(viewControllersArray?.count)")
             self.viewControllersArray?.append(mainScreenVC)
-            print("AFTER: \(viewControllersArray?.count)")
             self.navigationItem.title = mainScreenVC.navigationItem.title
             self.navigationItem.leftBarButtonItem = mainScreenVC.navigationItem.leftBarButtonItem
             self.navigationItem.rightBarButtonItem = mainScreenVC.navigationItem.rightBarButtonItem

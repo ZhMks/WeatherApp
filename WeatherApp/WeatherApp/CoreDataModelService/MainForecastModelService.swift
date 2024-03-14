@@ -92,8 +92,6 @@ final class MainForecastModelService {
         saveHours(networkModel: network.hours, mainModelToSave: newForecastModel)
         save(day: network.partObj.day,
              night: network.partObj.night,
-             dayShort: network.partObj.dayShort,
-             nightShort: network.partObj.nightShort,
              mainModelToSave: newForecastModel)
 
     }
@@ -118,7 +116,7 @@ final class MainForecastModelService {
             hourModel.feelsLike = Int16(hour.feelsLike)
             hourModel.precStr = hour.precStr
             hourModel.windSpeed = hour.windSpeed
-            hourModel.windDir = hour.windDir
+            hourModel.windDir = convertDirection(string: hour.windDir)
             hourModel.condition = convertString(string: hour.condition)
             hourModel.uvIndex = Int16(hour.uvIndex)
             hourModel.humidity = Int16(hour.humidity)
@@ -127,7 +125,7 @@ final class MainForecastModelService {
         }
     }
 
-    func save(day: PartInfoNetworkModel, night: PartInfoNetworkModel, dayShort: ShortNetworkModel, nightShort: ShortNetworkModel, mainModelToSave: ForecastModel) {
+    func save(day: PartInfoNetworkModel, night: PartInfoNetworkModel, mainModelToSave: ForecastModel) {
 
         guard let context = mainModelToSave.managedObjectContext else { return }
 
@@ -142,7 +140,7 @@ final class MainForecastModelService {
         newDayModel.tempAvg = Int16(day.tempAvg)
         newDayModel.tempMax = Int16(day.tempMax)
         newDayModel.tempMin = Int16(day.tempMin)
-        newDayModel.windDir = day.windDir
+        newDayModel.windDir = convertDirection(string: day.windDir)
         newDayModel.windSpeed = day.windSpeed.rounded(.towardZero)
         newDayModel.cloudness = day.cloudness
 
@@ -157,7 +155,7 @@ final class MainForecastModelService {
         newNightModel.tempAvg = Int16(night.tempAvg)
         newNightModel.tempMax = Int16(night.tempMax)
         newNightModel.tempMin = Int16(night.tempMin)
-        newNightModel.windDir = night.windDir
+        newNightModel.windDir = convertDirection(string: night.windDir)
         newNightModel.windSpeed = night.windSpeed.rounded(.towardZero)
         newNightModel.cloudness = night.cloudness
 
@@ -230,5 +228,39 @@ extension MainForecastModelService {
             }
         }
         fetchFromCoreData()
+    }
+
+    private func convertDirection(string: String) -> String {
+        var stringToSwitch = string
+        switch stringToSwitch {
+        case "nw":
+            stringToSwitch = "СЗ"
+            return stringToSwitch
+        case "n":
+            stringToSwitch = "С"
+            return stringToSwitch
+        case "ne":
+            stringToSwitch = "СВ"
+            return stringToSwitch
+        case "e":
+            stringToSwitch = "В"
+            return stringToSwitch
+        case "se":
+            stringToSwitch = "ЮВ"
+            return stringToSwitch
+        case "s":
+            stringToSwitch = "Ю"
+            return stringToSwitch
+        case "sw":
+            stringToSwitch = "ЮЗ"
+            return stringToSwitch
+        case "w":
+            stringToSwitch = "З"
+            return stringToSwitch
+        case "c":
+            stringToSwitch = "Штиль"
+            return stringToSwitch
+        default: return ""
+        }
     }
 }

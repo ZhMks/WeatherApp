@@ -45,10 +45,14 @@ final class DetailTwentyFourView: UIView {
 
     private lazy var humidityCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.scrollDirection = .horizontal
         let humidityCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         humidityCollectionView.translatesAutoresizingMaskIntoConstraints = false
         humidityCollectionView.register(HumidityCollectionCell.self, forCellWithReuseIdentifier: HumidityCollectionCell.id)
         humidityCollectionView.backgroundColor = .clear
+        humidityCollectionView.delegate = self
         return humidityCollectionView
     }()
 
@@ -98,7 +102,7 @@ final class DetailTwentyFourView: UIView {
         }
 
         humidityCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(tempChartView.snp.bottom).offset(10)
+            make.top.equalTo(tempChartView.snp.bottom)
             make.leading.equalTo(chartUIKitView.snp.leading).offset(17)
             make.trailing.equalTo(chartUIKitView.snp.trailing)
             make.bottom.equalTo(chartUIKitView.snp.bottom)
@@ -125,10 +129,6 @@ extension DetailTwentyFourView: UITableViewDelegate {
 
 extension DetailTwentyFourView: UICollectionViewDelegateFlowLayout {
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            CGSize(width: 48, height: 84)
-        }
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            16.0
+            CGSize(width: 48, height: 80)
         }
 }

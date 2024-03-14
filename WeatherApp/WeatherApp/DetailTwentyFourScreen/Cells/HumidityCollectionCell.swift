@@ -24,6 +24,7 @@ final class HumidityCollectionCell: UICollectionViewCell {
     private lazy var humidityPercent: UILabel = {
         let humidityPercent = UILabel()
         humidityPercent.translatesAutoresizingMaskIntoConstraints = false
+        humidityPercent.font = UIFont(name: "Rubik-Regular", size: 10)
         humidityPercent.text = "57%"
         return humidityPercent
     }()
@@ -31,6 +32,7 @@ final class HumidityCollectionCell: UICollectionViewCell {
     private lazy var hourLabel: UILabel = {
         let hourLabel = UILabel()
         hourLabel.translatesAutoresizingMaskIntoConstraints = false
+        hourLabel.font = UIFont(name: "Rubik-Regular", size: 14)
         hourLabel.text = "12:00"
         return hourLabel
     }()
@@ -38,6 +40,7 @@ final class HumidityCollectionCell: UICollectionViewCell {
     private lazy var blueLine: UIView = {
         let blueLine = UIView()
         blueLine.translatesAutoresizingMaskIntoConstraints = false
+        blueLine.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
         return blueLine
     }()
     private lazy var blueRectangle: UIView = {
@@ -66,31 +69,34 @@ final class HumidityCollectionCell: UICollectionViewCell {
 
         humidityImageView.snp.makeConstraints { make in
             make.top.equalTo(self.snp.top)
-            make.centerX.equalTo(self.snp.centerX)
-            make.height.width.equalTo(16)
+            make.leading.equalTo(self.snp.leading).offset(2)
+            make.bottom.equalTo(self.snp.bottom).offset(-60)
+            make.trailing.equalTo(self.snp.trailing).offset(-30)
         }
 
         humidityPercent.snp.makeConstraints { make in
-            make.top.equalTo(humidityImageView.snp.bottom).offset(4)
-            make.centerX.equalTo(self.snp.centerX)
-            make.height.width.equalTo(23)
+            make.top.equalTo(humidityImageView.snp.bottom)
+            make.leading.equalTo(self.snp.leading)
+            make.trailing.equalTo(self.snp.trailing).offset(-20)
+            make.bottom.equalTo(self.snp.bottom).offset(-50)
         }
 
         blueLine.snp.makeConstraints { make in
-            make.top.equalTo(humidityPercent.snp.bottom).offset(9)
+            make.top.equalTo(humidityPercent.snp.bottom).offset(10)
             make.leading.equalTo(self.snp.leading)
             make.trailing.equalTo(self.snp.trailing)
-            make.width.equalTo(2)
+            make.height.equalTo(1)
         }
 
         blueRectangle.snp.makeConstraints { make in
-            make.top.equalTo(blueLine.snp.top)
+            make.top.equalTo(blueLine.snp.top).offset(-4)
             make.leading.equalTo(self.snp.leading)
-            make.width.height.equalTo(8)
+            make.height.equalTo(8)
+            make.width.equalTo(4)
         }
 
         hourLabel.snp.makeConstraints { make in
-            make.top.equalTo(blueLine.snp.bottom).offset(7)
+            make.top.equalTo(blueRectangle.snp.bottom).offset(7)
             make.leading.equalTo(self.snp.leading)
             make.trailing.equalTo(self.snp.trailing)
             make.bottom.equalTo(self.snp.bottom)
@@ -98,7 +104,7 @@ final class HumidityCollectionCell: UICollectionViewCell {
     }
 
     func updateData(data: HourModel) {
-        humidityPercent.text = String(data.humidity)
-        hourLabel.text = data.hour
+        humidityPercent.text = "\(String(data.humidity))%"
+        hourLabel.text = data.hour!
     }
 }

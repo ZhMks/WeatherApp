@@ -32,7 +32,7 @@ protocol INetworkService {
 final class NetworkService: INetworkService {
 
     func fetchData(lat: String, lon: String, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void) {
-        let headers = [ "X-Yandex-API-Key": "4bd7f22d-9199-40cc-ae2a-0bfe13a20973" ]
+        let headers = [ "X-Yandex-API-Key": "a1d9858b-7cab-4c7d-980c-18429d88f1b9" ]
         let baseURL = "https://api.weather.yandex.ru/v2/forecast?lat=\(lat)&lon=\(lon)&lang=&limit=3&hours=true&extra=false"
         guard let fetchURL = URL.init(string: baseURL) else { return }
         var request = URLRequest(url: fetchURL)

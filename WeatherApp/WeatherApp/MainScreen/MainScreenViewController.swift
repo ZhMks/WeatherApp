@@ -53,6 +53,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
                                                name: NSNotification.Name("sceneDidBecomeActive"),
                                                object: nil)
         mainScreenView.scrollToCurrentHour()
+        updateDataSource()
     }
 
 
@@ -60,7 +61,6 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
-        updateDataSource()
     }
 
     func updateNavigationItems(model: MainForecastsModels) {

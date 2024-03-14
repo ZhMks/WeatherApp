@@ -209,4 +209,8 @@ final class FooterView: UIView {
 
         layer.addSublayer(secondShapeLayer)
     }
+
+    func presentData() {
+        
+    }
 }
