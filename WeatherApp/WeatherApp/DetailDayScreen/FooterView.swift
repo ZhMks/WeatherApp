@@ -210,7 +210,9 @@ final class FooterView: UIView {
         layer.addSublayer(secondShapeLayer)
     }
 
-    func presentData() {
-        
+    func presentData(forecast: ForecastModel) {
+        moonStatusLabel.text = forecast.moonText!
+        sunriseTime.text = forecast.sunrise!
+        sunsetTime.text = forecast.sunset!
     }
 }

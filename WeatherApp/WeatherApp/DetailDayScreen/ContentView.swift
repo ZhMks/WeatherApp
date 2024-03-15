@@ -43,6 +43,11 @@ final class ContentView: UIView {
         self.dayNightTableView.reloadData()
     }
 
+    func updateDataForView(forecast: ForecastModel) {
+        rightFooterView.presentData(forecast: forecast)
+        leftFooterView.presentData(forecast: forecast)
+    }
+
     private func addViews() {
         addSubview(dayNightTableView)
         addSubview(leftFooterView)

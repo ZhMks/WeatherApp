@@ -83,8 +83,7 @@ final class MainForecastModelService {
         let newForecastModel = ForecastModel(context: context)
 
         newForecastModel.date = network.date
-        newForecastModel.moonCode = Int16(network.moonCode)
-        newForecastModel.moonText = network.moonText
+        newForecastModel.moonText = convertMoonCode(string: network.moonText)
         newForecastModel.sunset = network.sunset
         newForecastModel.sunrise = network.sunrise
         mainModel.addToForecastArray(newForecastModel)
@@ -260,6 +259,31 @@ extension MainForecastModelService {
         case "c":
             stringToSwitch = "Штиль"
             return stringToSwitch
+        default: return ""
+        }
+    }
+
+    private func convertMoonCode(string: String) -> String {
+        var stringToConvert = string
+        switch stringToConvert {
+        case "moon-code-0":
+            stringToConvert = "Полнолуние"
+            return stringToConvert
+        case "moon-code-1", "moon-code-2", "moon-code-3", "moon-code-5", "moon-code-6", "moon-code-7" :
+            stringToConvert = "Убывающая луна"
+            return stringToConvert
+        case "moon-code-4":
+            stringToConvert = "Последняя четверть"
+            return stringToConvert
+        case "moon-code-8":
+            stringToConvert = "Новолуние"
+            return stringToConvert
+        case "moon-code-9","moon-code-10", "moon-code-11", "moon-code-13", "moon-code-14", "moon-code-15" :
+            stringToConvert = "Растущая луна"
+            return stringToConvert
+        case "moon-code-12":
+            stringToConvert = "Первая четверть"
+            return stringToConvert
         default: return ""
         }
     }

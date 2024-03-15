@@ -132,6 +132,23 @@ final class SettingsView: UIView {
         return segmentedControle
     }()
 
+    private lazy var cloudImageView: UIImageView = {
+        let cloudImageView = UIImageView(image: UIImage(named: "Cloud"))
+        cloudImageView.translatesAutoresizingMaskIntoConstraints = false
+        return cloudImageView
+    }()
+
+    private lazy var leftCloudImageView: UIImageView = {
+        let cloudImageView = UIImageView(image: UIImage(named: "HalfCloud"))
+        cloudImageView.translatesAutoresizingMaskIntoConstraints = false
+        return cloudImageView
+    }()
+    private lazy var bottomCloudImage: UIImageView = {
+        let cloudImageView = UIImageView(image: UIImage(named: "BottomCloud"))
+        cloudImageView.translatesAutoresizingMaskIntoConstraints = false
+        return cloudImageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
@@ -140,86 +157,6 @@ final class SettingsView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func layout() {
-        let safeArea = safeAreaLayoutGuide
-        addSubview(centerView)
-        centerView.addSubview(settingsLabel)
-        centerView.addSubview(temperatureLabel)
-        centerView.addSubview(speedOfWindLabel)
-        centerView.addSubview(timeFormatLabel)
-        centerView.addSubview(notificationLabel)
-        centerView.addSubview(setupButton)
-        centerView.addSubview(temperatureSegmentedControle)
-        centerView.addSubview(windSpeedSegmentedControle)
-        centerView.addSubview(timeSegmentedControle)
-        centerView.addSubview(notificationsSegmentedControle)
-
-        centerView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(241)
-            make.leading.equalTo(safeArea.snp.leading).offset(28)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-27)
-        }
-
-        settingsLabel.snp.makeConstraints { make in
-            make.leading.equalTo(centerView.snp.leading).offset(20)
-            make.top.equalTo(centerView.snp.top).offset(27)
-
-        }
-
-        temperatureLabel.snp.makeConstraints { make in
-            make.leading.equalTo(centerView.snp.leading).offset(20)
-            make.centerY.equalTo(temperatureSegmentedControle.snp.centerY)
-
-        }
-
-        temperatureSegmentedControle.snp.makeConstraints { make in
-            make.top.equalTo(centerView.snp.top).offset(57)
-            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
-        }
-
-        speedOfWindLabel.snp.makeConstraints { make in
-            make.leading.equalTo(centerView.snp.leading).offset(20)
-            make.centerY.equalTo(windSpeedSegmentedControle.snp.centerY)
-
-        }
-
-        windSpeedSegmentedControle.snp.makeConstraints { make in
-            make.top.equalTo(temperatureSegmentedControle.snp.bottom).offset(20)
-            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
-        }
-
-        timeFormatLabel.snp.makeConstraints { make in
-            make.leading.equalTo(centerView.snp.leading).offset(20)
-            make.centerY.equalTo(timeSegmentedControle.snp.centerY)
-
-        }
-
-        timeSegmentedControle.snp.makeConstraints { make in
-            make.top.equalTo(windSpeedSegmentedControle.snp.bottom).offset(20)
-            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
-        }
-
-        notificationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(centerView.snp.leading).offset(20)
-            make.centerY.equalTo(notificationsSegmentedControle.snp.centerY)
-
-        }
-
-        notificationsSegmentedControle.snp.makeConstraints { make in
-            make.top.equalTo(timeSegmentedControle.snp.bottom).offset(20)
-            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
-        }
-
-        setupButton.snp.makeConstraints { make in
-            make.top.equalTo(centerView.snp.top).offset(274)
-            make.leading.equalTo(centerView.snp.leading).offset(35)
-            make.trailing.equalTo(centerView.snp.trailing).offset(-35)
-            make.bottom.equalTo(centerView.snp.bottom).offset(-16)
-
-        }
-
     }
 
     @objc func tapOnSetButton(_: UIButton) {
@@ -315,5 +252,111 @@ final class SettingsView: UIView {
                 settingsVC?.changeToTvelveHourFormat()
             }
         }
+    }
+}
+
+
+extension SettingsView {
+    private func layout() {
+        let safeArea = safeAreaLayoutGuide
+        addSubview(centerView)
+        addSubview(cloudImageView)
+        addSubview(leftCloudImageView)
+        addSubview(bottomCloudImage)
+        centerView.addSubview(settingsLabel)
+        centerView.addSubview(temperatureLabel)
+        centerView.addSubview(speedOfWindLabel)
+        centerView.addSubview(timeFormatLabel)
+        centerView.addSubview(notificationLabel)
+        centerView.addSubview(setupButton)
+        centerView.addSubview(temperatureSegmentedControle)
+        centerView.addSubview(windSpeedSegmentedControle)
+        centerView.addSubview(timeSegmentedControle)
+        centerView.addSubview(notificationsSegmentedControle)
+
+        centerView.snp.makeConstraints { make in
+            make.top.equalTo(safeArea.snp.top).offset(241)
+            make.leading.equalTo(safeArea.snp.leading).offset(28)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-27)
+        }
+
+        settingsLabel.snp.makeConstraints { make in
+            make.leading.equalTo(centerView.snp.leading).offset(20)
+            make.top.equalTo(centerView.snp.top).offset(27)
+
+        }
+
+        temperatureLabel.snp.makeConstraints { make in
+            make.leading.equalTo(centerView.snp.leading).offset(20)
+            make.centerY.equalTo(temperatureSegmentedControle.snp.centerY)
+
+        }
+
+        temperatureSegmentedControle.snp.makeConstraints { make in
+            make.top.equalTo(centerView.snp.top).offset(57)
+            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
+        }
+
+        speedOfWindLabel.snp.makeConstraints { make in
+            make.leading.equalTo(centerView.snp.leading).offset(20)
+            make.centerY.equalTo(windSpeedSegmentedControle.snp.centerY)
+
+        }
+
+        windSpeedSegmentedControle.snp.makeConstraints { make in
+            make.top.equalTo(temperatureSegmentedControle.snp.bottom).offset(20)
+            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
+        }
+
+        timeFormatLabel.snp.makeConstraints { make in
+            make.leading.equalTo(centerView.snp.leading).offset(20)
+            make.centerY.equalTo(timeSegmentedControle.snp.centerY)
+
+        }
+
+        timeSegmentedControle.snp.makeConstraints { make in
+            make.top.equalTo(windSpeedSegmentedControle.snp.bottom).offset(20)
+            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
+        }
+
+        notificationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(centerView.snp.leading).offset(20)
+            make.centerY.equalTo(notificationsSegmentedControle.snp.centerY)
+
+        }
+
+        notificationsSegmentedControle.snp.makeConstraints { make in
+            make.top.equalTo(timeSegmentedControle.snp.bottom).offset(20)
+            make.trailing.equalTo(centerView.snp.trailing).offset(-15)
+        }
+
+        setupButton.snp.makeConstraints { make in
+            make.top.equalTo(centerView.snp.top).offset(274)
+            make.leading.equalTo(centerView.snp.leading).offset(35)
+            make.trailing.equalTo(centerView.snp.trailing).offset(-35)
+            make.bottom.equalTo(centerView.snp.bottom).offset(-16)
+        }
+
+        cloudImageView.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(121)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(195)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-5)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-590)
+        }
+
+        leftCloudImageView.snp.makeConstraints { make in
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(-30)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-129)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-700)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(37)
+        }
+
+        bottomCloudImage.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(610)
+            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(79)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-79)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-94)
+        }
+
     }
 }

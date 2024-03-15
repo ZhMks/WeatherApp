@@ -69,14 +69,11 @@ final class ForecastNetworkModel: Codable {
     let date: String
     let sunrise: String
     let sunset: String
-    let moonCode: Int
     let moonText: String
     let partObj: Parts
     let hours: [HoursNetworkModel]
 
     private enum CodingKeys: String, CodingKey {
-
-        case moonCode = "moon_code"
         case moonText = "moon_text"
         case partObj = "parts"
         case date = "date"
@@ -85,11 +82,10 @@ final class ForecastNetworkModel: Codable {
         case hours = "hours"
     }
 
-    init(date: String, sunrise: String, sunset: String, moonCode: Int, moonText: String,partObj: Parts, hours: [HoursNetworkModel]) {
+    init(date: String, sunrise: String, sunset: String, moonText: String,partObj: Parts, hours: [HoursNetworkModel]) {
         self.date = date
         self.sunrise = sunrise
         self.sunset = sunset
-        self.moonCode = moonCode
         self.moonText = moonText
         self.partObj = partObj
         self.hours = hours

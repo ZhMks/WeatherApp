@@ -138,4 +138,18 @@ class MainScreenViewController: UIViewController, IMainScreenController {
     @objc private func startUpdate() {
         updateDataSource()
     }
+
+    private func checkConvertedValues() {
+        if let tempValue = UserDefaults.standard.value(forKey: "temperature") as? String {
+            ValueConverter.shared.convertTempValues()
+        }
+
+        if let speedValue = UserDefaults.standard.value(forKey: "distance") as? String  {
+            ValueConverter.shared.convertSpeedValues()
+        }
+
+        if let timeValue = UserDefaults.standard.value(forKey: "time") as? String {
+            ValueConverter.shared.convertHourFormat()
+        }
+    }
 }

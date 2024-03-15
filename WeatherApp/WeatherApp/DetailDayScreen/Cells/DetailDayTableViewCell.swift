@@ -40,6 +40,7 @@ final class DetailDayTableViewCell: UITableViewCell {
         mainWeatherLabel.translatesAutoresizingMaskIntoConstraints = false
         mainWeatherLabel.font = UIFont(name: "Rubik-Medium", size: 18)
         mainWeatherLabel.text = "Ливни"
+        mainWeatherLabel.textAlignment = .center
         return mainWeatherLabel
     }()
 
@@ -141,8 +142,6 @@ final class DetailDayTableViewCell: UITableViewCell {
         cloudyImageView.backgroundColor = .clear
         return cloudyImageView
     }()
-
-
     private lazy var cloudyLabel: UILabel = {
         let percitipationLabel = UILabel()
         percitipationLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -169,7 +168,65 @@ final class DetailDayTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateDayCellWith(data: DayModel, hourArray: [HourModel]) {
 
+        let currentTime = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.string(from: currentTime)
+        let components = timeString.components(separatedBy: ":")
+
+        guard let currentHour = components.first else { return }
+
+        for hour in hourArray {
+            if hour.hour! == currentHour {
+                ufLightNumber.text = "\(hour.uvIndex)"
+            }
+        }
+
+        feelingTempNumber.text = "\(data.feelsLike)°"
+        windSpeedNumber.text = "\(data.windSpeed.rounded(.towardZero)) \((data.windDir)!)"
+        percitipationNumber.text = "\(data.precProb)%"
+        cloudyNumber.text = "\(data.cloudness)"
+        mainWeatherLabel.text = "\((data.condition)!)"
+        temperatureLabel.text = "\(data.tempAvg)°"
+        dayNightLabel.text = "День"
+    }
+
+    func updateNightCellWith(data: NightModel, hourArray: [HourModel]) {
+        let currentTime = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+
+        let timeString = dateFormatter.string(from: currentTime)
+        let components = timeString.components(separatedBy: ":")
+
+        guard let currentHour = components.first else { return }
+
+        for hour in hourArray {
+            if hour.hour!.contains(currentHour) {
+                ufLightNumber.text = "\(hour.uvIndex)"
+            }
+        }
+        feelingTempNumber.text = "\(data.feelsLike)°"
+        windSpeedNumber.text = "\(data.windSpeed.rounded(.towardZero)) \((data.windDir)!)"
+        percitipationNumber.text = "\(data.precProb)%"
+        cloudyNumber.text = "\(data.cloudness)"
+        mainWeatherLabel.text = "\((data.condition)!)"
+        dayNightLabel.text = "Ночь"
+        temperatureLabel.text = "\(data.tempAvg)°"
+    }
+}
+
+
+// MARK: -LAYOUT
+
+extension DetailDayTableViewCell {
     private func addViews() {
         contentView.addSubview(dayNightLabel)
         contentView.addSubview(weatherImageView)
@@ -222,8 +279,8 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         mainWeatherLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(62)
-            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(145)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-110)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(105)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-90)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-257)
         }
 
@@ -243,7 +300,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         feelingTempNumber.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(109)
-            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(308)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(300)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-16)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-210)
         }
@@ -264,7 +321,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         windSpeedNumber.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(155)
-            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(237)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(270)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-16)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-164)
         }
@@ -285,7 +342,7 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         ufLightNumber.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(201)
-            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(233)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(300)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-16)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-118)
         }
@@ -300,7 +357,7 @@ final class DetailDayTableViewCell: UITableViewCell {
         percitipationLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(247)
             make.leading.equalTo(percitipationImageView.snp.trailing).offset(15)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-244)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-235)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-75)
         }
 
@@ -327,66 +384,12 @@ final class DetailDayTableViewCell: UITableViewCell {
 
         cloudyNumber.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(292)
-            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(294)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide.snp.leading).offset(280)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).offset(-27)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).offset(-27)
         }
 
         createLineView()
-    }
-
-    func updateDayCellWith(data: DayModel, hourArray: [HourModel]) {
-
-        let currentTime = Date()
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-
-        let timeString = dateFormatter.string(from: currentTime)
-        let components = timeString.components(separatedBy: ":")
-
-        guard let currentHour = components.first else { return }
-
-        for hour in hourArray {
-            if hour.hour! == currentHour {
-                ufLightNumber.text = "\(hour.uvIndex)"
-            }
-        }
-
-        feelingTempNumber.text = "\(data.feelsLike)°"
-        windSpeedNumber.text = "\(data.windSpeed.rounded(.towardZero)) \((data.windDir)!)"
-        percitipationNumber.text = "\(data.precProb)%"
-        cloudyNumber.text = "\(data.cloudness)"
-        mainWeatherLabel.text = "\((data.condition)!)"
-        temperatureLabel.text = "\(data.tempAvg)°"
-    }
-
-    func updateNightCellWith(data: NightModel, hourArray: [HourModel]) {
-        let currentTime = Date()
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-
-        let timeString = dateFormatter.string(from: currentTime)
-        let components = timeString.components(separatedBy: ":")
-
-        guard let currentHour = components.first else { return }
-
-        for hour in hourArray {
-            if hour.hour!.contains(currentHour) {
-                ufLightNumber.text = "\(hour.uvIndex)"
-            }
-        }
-
-        feelingTempNumber.text = "\(data.feelsLike)°"
-        windSpeedNumber.text = "\(data.windSpeed.rounded(.towardZero)) \((data.windDir)!)"
-        percitipationNumber.text = "\(data.precProb)%"
-        cloudyNumber.text = "\(data.cloudness)"
-        mainWeatherLabel.text = "\((data.condition)!)"
-        dayNightLabel.text = "Ночь"
-        temperatureLabel.text = "\(data.tempAvg)°"
     }
 
     private func createLineView() {

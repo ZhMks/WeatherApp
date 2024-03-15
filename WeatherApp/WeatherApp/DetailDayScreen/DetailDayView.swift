@@ -63,6 +63,7 @@ final class DetailDayView: UIView {
         self.dayNightTableViewSource = dayNightTableViewSource
         self.dateCollectionSource = dateCollectionSource
         contentView.configureTableView(dataSource: dayNightTableViewSource)
+        contentView.updateDataForView(forecast: forecastModel!)
         configureCollectionView(dataSource: dateCollectionSource)
         cityLabel.text = "\(mainModel.country!), \(mainModel.locality!)"
     }
@@ -72,6 +73,8 @@ final class DetailDayView: UIView {
         self.dateCollectionView.reloadData()
     }
 }
+
+// MARK: -COLLECTIONDELEGATE
 
 extension DetailDayView: UICollectionViewDelegateFlowLayout {
 
@@ -83,6 +86,7 @@ extension DetailDayView: UICollectionViewDelegateFlowLayout {
         (dayNightTableViewSource as? TableDataSourceForDayNightScreen)?.updateData(data: hoursArray, forecastModel: forecast)
         let selectedCell = dateCollectionView.cellForItem(at: indexPath)! as? DetailDayCollectionViewCell
         selectedCell!.performUpdate()
+        contentView.updateDataForView(forecast: forecast)
         contentView.reloadData()
     }
 
@@ -103,6 +107,8 @@ extension DetailDayView: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 }
+
+// MARK: -LAYOUT
 
 extension DetailDayView {
     private func createViews() {

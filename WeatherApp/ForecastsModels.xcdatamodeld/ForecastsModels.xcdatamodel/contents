@@ -16,7 +16,6 @@
     </entity>
     <entity name="ForecastModel" representedClassName="ForecastModel" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="String"/>
-        <attribute name="moonCode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="moonText" optional="YES" attributeType="String"/>
         <attribute name="sunrise" optional="YES" attributeType="String"/>
         <attribute name="sunset" optional="YES" attributeType="String"/>

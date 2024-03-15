@@ -126,10 +126,10 @@ class MainScreenView: UIView {
         self.hoursModelArray = hourModels
 
         mainWeatherView.updateView(fact: factModel, hourModel: hourModels)
+        scrollToCurrentHour()
     }
 
    func scrollToCurrentHour() {
-
         let currentTime = Date()
 
         let dateFormatter = DateFormatter()
@@ -146,9 +146,12 @@ class MainScreenView: UIView {
                 if value.hour!.contains(currentHour) {
                     let indexPath = IndexPath(item: index, section: 0)
                     weatherByTimeCollectionView.performBatchUpdates({
-                    weatherByTimeCollectionView.scrollToItem(at: indexPath,
-                                                                 at: .centeredHorizontally,
-                                                                 animated: true)})
+                        weatherByTimeCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
+                        let cell = weatherByTimeCollectionView.cellForItem(at: indexPath) as? WeatherCollectionViewCell
+                        cell?.isSelected = true
+                        cell?.performUpdate()
+                    })
                 }
             }
         }
