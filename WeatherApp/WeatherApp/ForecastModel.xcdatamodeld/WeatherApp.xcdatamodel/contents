@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FactModel" representedClassName="FactModel" syncable="YES" codeGenerationType="class">
+        <attribute name="cloudness" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="dayTime" optional="YES" attributeType="String"/>
+        <attribute name="feelsLike" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="humidity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="prectype" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="temp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windDir" optional="YES" attributeType="String"/>
+        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="mainforecastmodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainForecastModel" inverseName="factmodel" inverseEntity="MainForecastModel"/>
+    </entity>
+    <entity name="HoursModel" representedClassName="HoursModel" syncable="YES" codeGenerationType="class">
+        <attribute name="cloudness" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="feelsLike" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hour" optional="YES" attributeType="String"/>
+        <attribute name="humidity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="precStr" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="temp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="uvIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windDir" optional="YES" attributeType="String"/>
+        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="infoforhour" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeeklyForecasts" inverseName="hourmodelinfo" inverseEntity="WeeklyForecasts"/>
+    </entity>
+    <entity name="Info" representedClassName="Info" syncable="YES" codeGenerationType="class">
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="tzInfo" optional="YES" attributeType="String"/>
+        <relationship name="mainforecasmodels" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainForecastModel" inverseName="infomodel" inverseEntity="MainForecastModel"/>
+        <relationship name="tzInformation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TzInform" inverseName="cityName" inverseEntity="TzInform"/>
+    </entity>
+    <entity name="MainForecastModel" representedClassName="MainForecastModel" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="serverTime" optional="YES" attributeType="String"/>
+        <relationship name="factmodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FactModel" inverseName="mainforecastmodel" inverseEntity="FactModel"/>
+        <relationship name="forecastmodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeeklyForecasts" inverseName="mainforecastmodel" inverseEntity="WeeklyForecasts"/>
+        <relationship name="infomodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Info" inverseName="mainforecasmodels" inverseEntity="Info"/>
+    </entity>
+    <entity name="PartModel" representedClassName="PartModel" syncable="YES" codeGenerationType="class">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="daytime" optional="YES" attributeType="String"/>
+        <attribute name="feelsLike" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="humidity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="precProb" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tempMax" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tempMin" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windDir" optional="YES" attributeType="String"/>
+        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="partmodelinfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PartsModel" inverseName="standalonepartmodel" inverseEntity="PartsModel"/>
+    </entity>
+    <entity name="PartsModel" representedClassName="PartsModel" syncable="YES" codeGenerationType="class">
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="night" optional="YES" attributeType="String"/>
+        <relationship name="standalonepartmodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PartModel" inverseName="partmodelinfo" inverseEntity="PartModel"/>
+        <relationship name="weeklyforecastinfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeeklyForecasts" inverseName="partmodelinfo" inverseEntity="WeeklyForecasts"/>
+    </entity>
+    <entity name="TzInform" representedClassName="TzInform" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="cityName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Info" inverseName="tzInformation" inverseEntity="Info"/>
+    </entity>
+    <entity name="WeeklyForecasts" representedClassName="WeeklyForecasts" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="moonCode" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="moonText" optional="YES" attributeType="String"/>
+        <attribute name="sunrise" optional="YES" attributeType="String"/>
+        <attribute name="sunset" optional="YES" attributeType="String"/>
+        <attribute name="week" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="hourmodelinfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HoursModel" inverseName="infoforhour" inverseEntity="HoursModel"/>
+        <relationship name="mainforecastmodel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainForecastModel" inverseName="forecastmodel" inverseEntity="MainForecastModel"/>
+        <relationship name="partmodelinfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PartsModel" inverseName="weeklyforecastinfo" inverseEntity="PartsModel"/>
+    </entity>
+</model>
