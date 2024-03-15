@@ -39,8 +39,6 @@ final class TempChartView: UIView, ChartViewDelegate {
         yAxis.axisLineColor = .systemBlue
         chartView.xAxis.axisLineColor = .systemBlue
 
-
-
         return chartView
     }()
 
@@ -61,20 +59,54 @@ final class TempChartView: UIView, ChartViewDelegate {
 
 
     private func setData() {
+        var dataForYCharts = [ChartDataEntry]()
+        if let value = UserDefaults.standard.value(forKey: "time") as? String {
+            switch value {
+            case "12":
+                for hour in dataSource! {
+                    let components = hour.hour!.components(separatedBy: " ")
+                    if components.contains("pm") && !components[0].contains("12") {
+                        let timeComponents = components[0].components(separatedBy: ":")
+                        let hours = Double(timeComponents[0])! + Double(10)
+                        let timeInDouble = hours
+                        let newchartData = ChartDataEntry(x: timeInDouble, y: Double(hour.temp))
+                        dataForYCharts.append(newchartData)
+                    } else if components.contains("am") && components[0].contains("12") {
+                        let timeComponents = components[0].components(separatedBy: ":")
+                        let hours = Double(timeComponents[0])! - 10
+                        let timeInDouble = hours
+                        let newchartData = ChartDataEntry(x: timeInDouble, y: Double(hour.temp))
+                        dataForYCharts.append(newchartData)
+                    }  else {
+                        let timeComponents = components[0].components(separatedBy: ":")
+                        let hours = Double(timeComponents[0])!
+                        let timeInDouble = hours
+                        let newchartData = ChartDataEntry(x: timeInDouble, y: Double(hour.temp))
+                        dataForYCharts.append(newchartData)
+                    }
+                }
 
-        var xValues = [HourModel]()
-
-        for index in stride(from: 0, to: dataSource!.count, by: 3) {
-            let valueToAppend = dataSource![index]
-            xValues.append(valueToAppend)
+            case "24":
+                for hour in dataSource! {
+                    let xValue = Double(hour.hour!.replacingOccurrences(of: ":", with: "."))
+                    if xValue != nil {
+                        let newChartData = ChartDataEntry(x: xValue!,
+                                                          y: Double(hour.temp))
+                        dataForYCharts.append(newChartData)
+                    }
+                }
+            default: 
+                break
+            }
         }
 
-        var dataForYCharts = [ChartDataEntry]()
-
-        for hour in xValues {
-            let newChartData = ChartDataEntry(x: Double(hour.hour!.replacingOccurrences(of: ":", with: "."))!,
-                                              y: Double(hour.temp))
-            dataForYCharts.append(newChartData)
+        for hour in dataSource! {
+            let xValue = Double(hour.hour!.replacingOccurrences(of: ":", with: "."))
+            if xValue != nil {
+                let newChartData = ChartDataEntry(x: xValue!,
+                                                  y: Double(hour.temp))
+                dataForYCharts.append(newChartData)
+            }
         }
 
         let set1 = LineChartDataSet(entries: dataForYCharts)

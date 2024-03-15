@@ -31,11 +31,7 @@ final class TableDataSourceForTwentyFour: NSObject, UITableViewDataSource {
 
 final class DataSourceForHumidityCollection: NSObject, UICollectionViewDataSource {
 
-    var dataSource: [HourModel] = [] {
-        didSet {
-            print(dataSource.count)
-        }
-    }
+    var dataSource: [HourModel] = [] 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         dataSource.count

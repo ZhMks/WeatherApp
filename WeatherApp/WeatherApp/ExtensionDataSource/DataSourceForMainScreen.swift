@@ -27,11 +27,7 @@ final class DataSourceForMainScreen: NSObject, UITableViewDataSource {
 
 final class DataSourceForMainCollectionCell: NSObject, UICollectionViewDataSource {
 
-    var dataSource: [HourModel] = [] {
-        didSet {
-            print(dataSource.count)
-        }
-    }
+    var dataSource: [HourModel] = [] 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         dataSource.count

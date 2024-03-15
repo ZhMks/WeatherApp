@@ -238,18 +238,21 @@ final class SettingsView: UIView {
             if localTempValue == tempValue {
             } else {
                 settingsVC?.changeToCelsium()
+                NotificationCenter.default.post(name: NSNotification.Name("updateTemp"), object: nil)
             }
         }
         if let speedValue = UserDefaults.standard.value(forKey: "distance") as? String {
             if localSpeedValue == speedValue {
             } else {
                 settingsVC?.changeToKM()
+                NotificationCenter.default.post(name: NSNotification.Name("updateSpeed"), object: nil)
             }
         }
         if let timeValue = UserDefaults.standard.value(forKey: "time") as? String {
             if localTimeValue == timeValue {
             } else {
                 settingsVC?.changeToTvelveHourFormat()
+                NotificationCenter.default.post(name: NSNotification.Name("updateTime"), object: nil)
             }
         }
     }

@@ -64,15 +64,39 @@ class SettingsViewController: UIViewController, ISettingsViewController {
     }
 
     func changeToKM() {
-        ValueConverter.shared.convertSpeedValues()
+        if let speedValue = UserDefaults.standard.value(forKey: "distance") as? String {
+            switch speedValue {
+            case "Km":
+                ValueConverter.shared.convertToKM()
+            case "Mi":
+                ValueConverter.shared.convertToMiles()
+            default: break
+            }
+        }
     }
 
     func changeToCelsium() {
-        ValueConverter.shared.convertTempValues()
+        if let tempValue = UserDefaults.standard.value(forKey: "temperature") as? String {
+            switch tempValue {
+            case "C":
+                ValueConverter.shared.convertToCelsius()
+            case "F":
+                ValueConverter.shared.convertToFahrenheit()
+            default: break
+            }
+        }
     }
 
     func changeToTvelveHourFormat() {
-        ValueConverter.shared.convertHourFormat()
+        if let timeValue = UserDefaults.standard.value(forKey: "time") as? String {
+            switch timeValue {
+            case "24":
+                ValueConverter.shared.convertTwentyFourHour()
+            case "12":
+                ValueConverter.shared.convertTwelveHour()
+            default: break
+            }
+        }
     }
 
 

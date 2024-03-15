@@ -44,9 +44,7 @@ class DetailTwentyFourViewController: UIViewController {
     }
 
     func updateView(with forecast: ForecastModel, mainModel: MainForecastsModels, hours: [HourModel]) {
-        let hourModelService = HoursModelService(coreDataModel: forecast)
-        let hourArray = hourModelService.hoursArray
-        detailView.updateView(with: hourArray, mainModel: mainModel, dataSource: self.tbDataSource, collectionSource: self.collectionDataSource)
+        detailView.updateView(with: hours, mainModel: mainModel, dataSource: self.tbDataSource, collectionSource: self.collectionDataSource)
     }
 
 }

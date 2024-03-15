@@ -44,6 +44,7 @@ class MainScreenView: UIView {
         let weatherCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
         weatherCollectionView.delegate = self
+        weatherCollectionView.allowsSelection = false
         weatherCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.id)
         return weatherCollectionView
     }()
@@ -136,25 +137,54 @@ class MainScreenView: UIView {
         dateFormatter.timeStyle = .short
         dateFormatter.locale = Locale(identifier: "ru_RU")
 
-        let timeString = dateFormatter.string(from: currentTime)
-        let components = timeString.components(separatedBy: ":")
+        var timeString = dateFormatter.string(from: currentTime)
+        var components = timeString.components(separatedBy: ":")
 
         guard let currentHour = components.first else { return }
 
-        if let hoursModelArray = hoursModelArray {
-            for (index, value) in hoursModelArray.enumerated() {
-                if value.hour!.contains(currentHour) {
-                    let indexPath = IndexPath(item: index, section: 0)
-                    weatherByTimeCollectionView.performBatchUpdates({
-                        weatherByTimeCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+       if let value = UserDefaults.standard.value(forKey: "time") as? String {
+           switch value {
+           case "12":
+               dateFormatter.locale = Locale(identifier: "en_GB")
+               dateFormatter.dateFormat = "h:mm a"
+               timeString = dateFormatter.string(from: currentTime)
+               components = timeString.components(separatedBy: ":")
+               guard let currentHour = components.first else { return }
+               if let hoursModelArray = hoursModelArray {
+                   for (index, value) in hoursModelArray.enumerated() {
+                       if value.hour!.contains(currentHour) {
+                           let indexPath = IndexPath(item: index, section: 0)
+                           weatherByTimeCollectionView.performBatchUpdates({
+                               weatherByTimeCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                               let cell = weatherByTimeCollectionView.cellForItem(at: indexPath) as? WeatherCollectionViewCell
+                               cell?.isSelected = true
+                               cell?.performUpdate()
+                           })
+                       }
+                   }
+               }
+           case "24":
+               if let hoursModelArray = hoursModelArray {
+                   for (index, value) in hoursModelArray.enumerated() {
+                       if value.hour!.contains(currentHour) {
+                           let indexPath = IndexPath(item: index, section: 0)
+                           weatherByTimeCollectionView.performBatchUpdates({
+                               weatherByTimeCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 
-                        let cell = weatherByTimeCollectionView.cellForItem(at: indexPath) as? WeatherCollectionViewCell
-                        cell?.isSelected = true
-                        cell?.performUpdate()
-                    })
-                }
-            }
-        }
+                               let cell = weatherByTimeCollectionView.cellForItem(at: indexPath) as? WeatherCollectionViewCell
+                               cell?.isSelected = true
+                               cell?.performUpdate()
+                           })
+                       }
+                   }
+               }
+           default: break
+           }
+       }
+    }
+
+    func reloadData() {
+        everydayForecastTableView.reloadData()
     }
 }
 

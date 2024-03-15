@@ -46,21 +46,28 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(startUpdate),
-                                               name: NSNotification.Name("performUpdate"),
-                                               object: nil)
-        mainScreenView.scrollToCurrentHour()
-        updateDataSource()
-    }
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(scrollToCurrentHour),
+                                               name: NSNotification.Name("performUpdate"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateTime),
+                                               name: NSNotification.Name("updateTime"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateSpeed),
+                                               name: NSNotification.Name("updateSpeed"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateTemp),
+                                               name: NSNotification.Name("updateTemp"),
+                                               object: nil)
+        mainScreenView.scrollToCurrentHour()
+        updateDataSource()
     }
 
     func updateNavigationItems(model: MainForecastsModels) {
@@ -83,7 +90,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
 
     private func updateDataSource() {
         mainScreenView.mainScreenVC = self
-
+ //       checkValues()
         mainScreenView.updateViewWith(tbDataSource: tableViewDataSource,
                                       collectionDataSource: collectionViewDataSource,
                                       forecastModels: forecastModeslArray,
@@ -105,7 +112,7 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         collectionSource.updateData(data: xValues)
         
         let twentyFourVC = DetailTwentyFourViewController(tbDataSource: tableViewDataSource, collectionSource: collectionSource)
-        twentyFourVC.updateView(with: forecastsModel, mainModel: mainModel!, hours: hoursModels)
+        twentyFourVC.updateView(with: forecastsModel, mainModel: mainModel!, hours: xValues)
         navigationController?.pushViewController(twentyFourVC, animated: true)
     }
 
@@ -135,21 +142,73 @@ class MainScreenViewController: UIViewController, IMainScreenController {
         navigationController?.pushViewController(geoLocationViewController, animated: true)
     }
 
-    @objc private func startUpdate() {
-        updateDataSource()
+    @objc private func scrollToCurrentHour() {
+        mainScreenView.scrollToCurrentHour()
     }
 
-    private func checkConvertedValues() {
+    @objc private func updateTime() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            mainScreenView.reloadData()
+            mainScreenView.updateViewWith(tbDataSource: tableViewDataSource,
+                                          collectionDataSource: collectionViewDataSource,
+                                          forecastModels: forecastModeslArray,
+                                          hourModels: hoursModels,
+                                          factModel: forecastsModel)
+        }
+    }
+
+    @objc private func updateSpeed() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            mainScreenView.reloadData()
+            mainScreenView.updateViewWith(tbDataSource: tableViewDataSource,
+                                          collectionDataSource: collectionViewDataSource,
+                                          forecastModels: forecastModeslArray,
+                                          hourModels: hoursModels,
+                                          factModel: forecastsModel)
+        }
+    }
+
+    @objc private func updateTemp() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            mainScreenView.reloadData()
+            mainScreenView.updateViewWith(tbDataSource: tableViewDataSource,
+                                          collectionDataSource: collectionViewDataSource,
+                                          forecastModels: forecastModeslArray,
+                                          hourModels: hoursModels,
+                                          factModel: forecastsModel)
+        }
+    }
+
+    private func checkValues() {
         if let tempValue = UserDefaults.standard.value(forKey: "temperature") as? String {
-            ValueConverter.shared.convertTempValues()
+                switch tempValue {
+                case "C":
+                    ValueConverter.shared.convertToCelsius()
+                case "F":
+                    ValueConverter.shared.convertToFahrenheit()
+                default: break
+                }
         }
-
-        if let speedValue = UserDefaults.standard.value(forKey: "distance") as? String  {
-            ValueConverter.shared.convertSpeedValues()
+        if let speedValue = UserDefaults.standard.value(forKey: "distance") as? String {
+                switch speedValue {
+                case "Km":
+                    ValueConverter.shared.convertToKM()
+                case "Mi":
+                    ValueConverter.shared.convertToMiles()
+                default: break
+            }
         }
-
         if let timeValue = UserDefaults.standard.value(forKey: "time") as? String {
-            ValueConverter.shared.convertHourFormat()
+                switch timeValue {
+                case "24":
+                    ValueConverter.shared.convertTwentyFourHour()
+                case "12":
+                    ValueConverter.shared.convertTwelveHour()
+                default: break
+                }
         }
     }
 }
