@@ -50,6 +50,8 @@ final class HumidityCollectionCell: UICollectionViewCell {
         return blueRectangle
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -59,7 +61,9 @@ final class HumidityCollectionCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: -LAYOUT
+
     private func layout() {
         contentView.addSubview(humidityImageView)
         contentView.addSubview(humidityPercent)
@@ -102,6 +106,8 @@ final class HumidityCollectionCell: UICollectionViewCell {
             make.bottom.equalTo(self.snp.bottom)
         }
     }
+
+    // MARK: -FUNCS
 
     func updateData(data: HourModel) {
         humidityPercent.text = "\(String(data.humidity))%"

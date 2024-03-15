@@ -136,6 +136,8 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
         return cloudyNumber
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         layout()
@@ -145,6 +147,8 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: -LAYOUT
 
     private func createViews() {
         contentView.addSubview(dateLabel)
@@ -270,6 +274,8 @@ final class TwentyFourHourTableViewCell: UITableViewCell {
 
 
     }
+
+    // MARK: -FUNCS
 
     func updateCellWithData(model: HourModel) {
 

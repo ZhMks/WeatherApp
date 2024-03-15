@@ -57,6 +57,7 @@ final class TempChartView: UIView, ChartViewDelegate {
         }
     }
 
+    // MARK: -FUNCS
 
     private func setData() {
         var dataForYCharts = [ChartDataEntry]()
@@ -128,6 +129,7 @@ final class TempChartView: UIView, ChartViewDelegate {
     }
 }
 
+// MARK: -VALUEFORMATTERFORCHART
 
 extension TempChartView: ValueFormatter {
 

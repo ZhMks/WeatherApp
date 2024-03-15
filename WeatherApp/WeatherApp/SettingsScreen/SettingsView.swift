@@ -149,6 +149,8 @@ final class SettingsView: UIView {
         return cloudImageView
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
@@ -158,6 +160,8 @@ final class SettingsView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: -FUNCS
 
     @objc func tapOnSetButton(_: UIButton) {
        checkLocalValues()
@@ -257,6 +261,8 @@ final class SettingsView: UIView {
         }
     }
 }
+
+// MARK: -LAYOUT
 
 
 extension SettingsView {

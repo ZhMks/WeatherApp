@@ -14,6 +14,8 @@ class DetailTwentyFourViewController: UIViewController {
     private let tbDataSource: TableDataSourceForTwentyFour
     private let collectionDataSource: DataSourceForHumidityCollection
 
+    // MARK: -LIFECYCLE
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -29,7 +31,9 @@ class DetailTwentyFourViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: -LAYOUT
+
     private func layout() {
         view.addSubview(detailView)
         let backButton = UIBarButtonItem()
@@ -42,6 +46,8 @@ class DetailTwentyFourViewController: UIViewController {
             make.top.leading.bottom.trailing.equalTo(safeArea)
         }
     }
+    
+    // MARK: -FUNCS
 
     func updateView(with forecast: ForecastModel, mainModel: MainForecastsModels, hours: [HourModel]) {
         detailView.updateView(with: hours, mainModel: mainModel, dataSource: self.tbDataSource, collectionSource: self.collectionDataSource)

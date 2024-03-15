@@ -22,6 +22,8 @@ class SettingsViewController: UIViewController, ISettingsViewController {
     private let settingsView: SettingsView = SettingsView()
     private var forecastModelService: ForecastModelService?
 
+    // MARK: -LIFECYCLE
+
     init( mainModel: MainForecastsModels) {
         self.mainModel = mainModel
         super.init(nibName: nil, bundle: nil)
@@ -44,6 +46,8 @@ class SettingsViewController: UIViewController, ISettingsViewController {
     }
 
 
+    // MARK: -LAYOUT
+
     private func layout() {
         view.addSubview(settingsView)
         settingsView.settingsVC = self
@@ -53,6 +57,8 @@ class SettingsViewController: UIViewController, ISettingsViewController {
             make.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
+
+        // MARK: -FUNCS
 
     func updateModel() {
         let forecastModelService = ForecastModelService(coreDataModel: mainModel)

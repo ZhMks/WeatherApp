@@ -158,6 +158,8 @@ final class DetailDayTableViewCell: UITableViewCell {
         return cloudyNumber
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         layout()
@@ -168,6 +170,7 @@ final class DetailDayTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: -FUNCS
     func updateDayCellWith(data: DayModel, hourArray: [HourModel]) {
 
         let currentTime = Date()

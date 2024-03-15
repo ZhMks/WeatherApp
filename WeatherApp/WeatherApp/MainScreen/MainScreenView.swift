@@ -59,6 +59,8 @@ class MainScreenView: UIView {
         return everydayTableView
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -68,6 +70,8 @@ class MainScreenView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: -LAYOUT
 
     private func layout() {
         addSubview(mainWeatherView)
@@ -111,6 +115,8 @@ class MainScreenView: UIView {
         }
     }
 
+    // MARK: -FUNCS
+    
     @objc private func tapOnTwentyFourButton(_ sender: UIButton) {
         mainScreenVC?.pushTwentyFourVc()
     }
@@ -130,6 +136,7 @@ class MainScreenView: UIView {
         scrollToCurrentHour()
     }
 
+// Функция для скролла ячейки к нужному времени.
    func scrollToCurrentHour() {
         let currentTime = Date()
 

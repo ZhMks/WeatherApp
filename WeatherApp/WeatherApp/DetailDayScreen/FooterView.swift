@@ -84,6 +84,8 @@ final class FooterView: UIView {
         return sunsetTime
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -93,6 +95,7 @@ final class FooterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: -LAYOUT
     private func addViews() {
         addSubview(sunAndMoonLabel)
         addSubview(sunImage)

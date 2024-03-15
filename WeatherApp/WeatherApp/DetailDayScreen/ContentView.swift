@@ -25,6 +25,8 @@ final class ContentView: UIView {
         return dayNightTableView
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -33,6 +35,8 @@ final class ContentView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: -FUNCS
 
     func configureTableView(dataSource: UITableViewDataSource) {
         self.dayNightTableView.dataSource = dataSource
@@ -48,6 +52,8 @@ final class ContentView: UIView {
         leftFooterView.presentData(forecast: forecast)
     }
 
+
+    // MARK: -LAYOUT
     private func addViews() {
         addSubview(dayNightTableView)
         addSubview(leftFooterView)

@@ -52,6 +52,8 @@ final class AirConditionView: UIView {
         return airConditionText
     }()
 
+    // MARK: -LIFECYCLE
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -61,6 +63,8 @@ final class AirConditionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: -LAYOUT
+
     private func addViews() {
         addSubview(airConditionLabel)
         addSubview(airConditionButton)

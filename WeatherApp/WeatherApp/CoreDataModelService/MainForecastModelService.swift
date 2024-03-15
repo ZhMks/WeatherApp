@@ -160,6 +160,16 @@ final class MainForecastModelService {
 
         mainModelToSave.nightModel = newNightModel
     }
+
+    func removeAllData() {
+        if let modelsArray = modelArray {
+            for model in modelsArray {
+                coreDataService.deleteObject(object: model)
+                coreDataService.saveContext()
+            }
+        }
+        fetchFromCoreData()
+    }
 }
 
 extension MainForecastModelService {
@@ -217,16 +227,6 @@ extension MainForecastModelService {
         default:
             return string
         }
-    }
-    
-    func removeAllData() {
-        if let modelsArray = modelArray {
-            for model in modelsArray {
-                coreDataService.deleteObject(object: model)
-                coreDataService.saveContext()
-            }
-        }
-        fetchFromCoreData()
     }
 
     private func convertDirection(string: String) -> String {

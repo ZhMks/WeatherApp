@@ -45,6 +45,7 @@ final class DetailDayView: UIView {
         return dateCollectionView
     }()
   
+    // MARK: -LIFECYCLE
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,6 +56,8 @@ final class DetailDayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: -FUNCS
+    
     func updateView(dataSource: ForecastModel, hours: [HourModel], mainModel: MainForecastsModels, forecastArray: [ForecastModel], dayNightTableViewSource: UITableViewDataSource, dateCollectionSource: UICollectionViewDataSource) {
         self.forecastModel = dataSource
         self.hours = hours

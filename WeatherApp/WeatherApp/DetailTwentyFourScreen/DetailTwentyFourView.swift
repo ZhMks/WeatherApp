@@ -56,6 +56,8 @@ final class DetailTwentyFourView: UIView {
         return humidityCollectionView
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -64,7 +66,9 @@ final class DetailTwentyFourView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: -LAYOUT
+
     private func layout() {
         let safeArea = safeAreaLayoutGuide
         addSubview(cityLabel)
@@ -109,6 +113,8 @@ final class DetailTwentyFourView: UIView {
         }
     }
 
+    // MARK: -FUNCS
+
     func updateView(with model: [HourModel], mainModel: MainForecastsModels, dataSource: UITableViewDataSource, collectionSource: UICollectionViewDataSource) {
         self.dataArray = model
         self.mainModel = mainModel
@@ -121,12 +127,15 @@ final class DetailTwentyFourView: UIView {
     }
 }
 
+// MARK: -TABLEDELEGATE
+
 extension DetailTwentyFourView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         150
     }
 }
 
+// MARK: -COLLECTIONDELEGATE
 extension DetailTwentyFourView: UICollectionViewDelegateFlowLayout {
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             CGSize(width: 48, height: 80)

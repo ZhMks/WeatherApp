@@ -33,6 +33,8 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         return activityIndicator
     }()
 
+    // MARK: -LIFECYCLE
+
 
     init(mainView: OnboardingView, networkService: NetworkService, coreDataModelService: MainForecastModelService, geoDataService: GeoDataModelService) {
         self.mainView = mainView
@@ -58,17 +60,24 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
         checkModelsArray()
     }
 
+    // MARK: -LAYOUT
     private func layout() {
         view.addSubview(mainView)
         mainView.loginVC = self
         mainView.frame = view.frame
     }
 
+    // MARK: -FUNCS
+
     func requestAuthorisation() {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
-
+    
+    /// Функция для создания контроллера, если приложение запущено впервые.
+    /// - Parameters:
+    ///   - lat: широта, которую мы получаем из менеджера
+    ///   - lon: долгота, которую мы получаем из менеджера
     private func initialFetchData(with lat: String, lon: String) {
 
         networkService.fetchData(lat: lat, lon: lon) { [weak self] result in
@@ -112,7 +121,11 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
             }
         }
     }
-
+    
+    /// Функция для создания контроллера, если приложение уже было запущено для этого и контроллер был создан.
+    /// - Parameters:
+    ///   - lat: широта, которую мы получаем из данных менеджера
+    ///   - lon: долгтоа, которую мы получаем из данных менеджера
     private func fetchData(with lat: String, lon: String) {
 
         networkService.fetchData(lat: lat, lon: lon) { [weak self] result in
@@ -175,6 +188,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     }
 }
 
+// MARK: -LOCATIONMAANGER
 
 extension OnboardingViewController: CLLocationManagerDelegate {
 

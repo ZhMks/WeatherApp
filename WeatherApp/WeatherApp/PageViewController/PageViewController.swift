@@ -34,6 +34,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
     var viewControllersArray: [MainScreenViewController]?
     private let geoDataService: GeoDataModelService
 
+    // MARK: -LIFECYCLE
 
     init(coreDataModelService: MainForecastModelService, geoDataService: GeoDataModelService) {
         self.coreDataModelService = coreDataModelService
@@ -55,7 +56,11 @@ final class PageViewController: UIPageViewController, iPageViewController {
         view.addSubview(pageControl)
     }
 
-    func createViewControllerWithModel(model: MainForecastsModels) {
+    // MARK: -FUNCS
+    
+    /// Функция для создания контроллера, если запрещено использовать локацию.
+    /// - Parameter model: Модель, которую мы получаем после сохранения в кордату
+        func createViewControllerWithModel(model: MainForecastsModels) {
 
         let forecastModelService = ForecastModelService(coreDataModel: model)
 
@@ -80,7 +85,8 @@ final class PageViewController: UIPageViewController, iPageViewController {
         }
         updateViewControllers()
     }
-
+    
+    /// Фукнция для создания контроллеров, после перезапуска приложения
     func initialFetch() {
         guard let modelArray = coreDataModelService.modelArray else { return }
 
@@ -114,7 +120,8 @@ final class PageViewController: UIPageViewController, iPageViewController {
             }
         }
     }
-
+    
+    /// Фукнция для добавления контроллеров, после их создания.
     func updateViewControllers() {
         self.dataSource = nil
         self.dataSource = self
@@ -125,6 +132,7 @@ final class PageViewController: UIPageViewController, iPageViewController {
     }
 }
 
+// MARK: -DATASOURCE
 
     extension PageViewController: UIPageViewControllerDataSource {
 
@@ -177,8 +185,9 @@ final class PageViewController: UIPageViewController, iPageViewController {
             }
             return 0
         }
-
     }
+
+// MARK: -DELEGATE
 
 extension PageViewController: UIPageViewControllerDelegate {
 

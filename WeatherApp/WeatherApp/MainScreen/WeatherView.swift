@@ -129,6 +129,8 @@ final class WeatherView: UIView {
         return percitipationImage
     }()
 
+    // MARK: -LIFECYCLE
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
@@ -140,6 +142,7 @@ final class WeatherView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: -LAYOUT
     private func createView() {
         addSubview(devidedTemperature)
         addSubview(mainTemperatureLabel)
@@ -253,6 +256,8 @@ final class WeatherView: UIView {
 
         self.layer.addSublayer(shapeLayer)
     }
+
+    // MARK: -FUNCS
 
     func updateView(fact: ForecastModel, hourModel: [HourModel]) {
 

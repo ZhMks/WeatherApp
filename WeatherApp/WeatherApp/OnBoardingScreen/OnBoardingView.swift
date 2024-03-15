@@ -151,6 +151,8 @@ final class OnboardingView: UIView {
     }
 
 
+    // MARK: -LAYOUT
+
     private func layout() {
 
         createViews()
@@ -291,6 +293,8 @@ final class OnboardingView: UIView {
 
     }
 
+    // MARK: -FUNCS
+    
     @objc private func accessGeoButtonTapped(_ sender: UIButton) {
         loginVC?.requestAuthorisation()
     }

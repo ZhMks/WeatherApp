@@ -28,6 +28,8 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
 
     private let geoDataService: GeoDataModelService
 
+    // MARK: -LIFECYCLE
+
     init(geoView: GeoLocationView, geoLocationService: GeoLocationService, networkService: NetworkService, coredataModelService: MainForecastModelService, geoDataService: GeoDataModelService) {
         self.geoView = geoView
         self.geoLocationService = geoLocationService
@@ -53,7 +55,7 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
         NotificationCenter.default.removeObserver(self)
     }
 
-
+// MARK: -LAYOUT
     private func layout() {
         let backButton = UIBarButtonItem()
         backButton.title = "Назад"
@@ -69,6 +71,10 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
         }
     }
 
+    // MARK: -FUNCS
+    
+    /// Функция для создания дополнительных контроллеров, если уже до этого имеля созданный PageViewController
+    /// - Parameter string: строка с данными для определения Гео
     func startFetchingGeo(string: String) {
         geoLocationService.getLocationWith(string: string) { [weak self] result in
             guard let self else { return }
@@ -113,7 +119,11 @@ class GeoLocationViewController: UIViewController, IGeoLocationVC {
             }
         }
     }
-
+    
+    /// Функция для создаения контроллеров, если мы перешли на этот экран с онбординга.
+    /// - Parameters:
+    ///   - string: строка с координатами
+    ///   - controller: PageViewController, внутри которого будет создавать MainViewController
     func initialFetchWith(string: String, controller: PageViewController) {
         geoLocationService.getLocationWith(string: string) { [weak self] result in
             guard let self else { return }
