@@ -2,7 +2,7 @@
  Приложение для просмотра прогноза погоды. 
 
 Визуальная репрезентация: 
-![](Weather App.gif)
+![Alt Text](https://giphy.com/gifs/NGtdm59qmgcQLDXZbv)
 
 
 
