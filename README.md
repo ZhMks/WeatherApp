@@ -1,10 +1,8 @@
 # WeatherApp
  Приложение для просмотра прогноза погоды. 
 
-Визуальная репрезентация: 
+Экран Онбординга: 
 
-
-<img src="https://giphy.com/gifs/NGtdm59qmgcQLDXZbv/weather.gif" width="200" height="200" />
-
+![Alt Text](https://drive.google.com/file/d/1OyG7bkbf7-HCI_46VnSxh54dL4i_sIs1/view?usp=sharing)
 
 
