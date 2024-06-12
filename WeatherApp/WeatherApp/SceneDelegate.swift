@@ -15,8 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
+        let networkService = NetworkService()
+        let geoDataService = GeoDataModelService()
+        let coreDataModelService = MainForecastModelService()
         let onboardingView = OnboardingView()
-        let controller = OnboardingViewController(mainView: onboardingView)
+        let controller = OnboardingViewController(mainView: onboardingView, networkService: networkService, coreDataModelService: coreDataModelService, geoDataService: geoDataService)
         let navigationControoler = UINavigationController(rootViewController: controller)
         window.rootViewController = navigationControoler
         window.makeKeyAndVisible()
@@ -33,6 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+
+        let name = Notification.Name("performUpdate")
+
+        NotificationCenter.default.post(name: name, object: nil)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -58,7 +65,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let window = self.window else {
             return
         }
-        window.rootViewController = vc
+        let navVC = UINavigationController(rootViewController: vc)
+        window.rootViewController = navVC
     }
 }
 

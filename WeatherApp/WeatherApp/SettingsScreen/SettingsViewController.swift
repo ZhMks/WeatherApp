@@ -6,13 +6,26 @@
 //
 
 import UIKit
+import SnapKit
 
-class SettingsViewController: UIViewController {
+protocol ISettingsViewController: AnyObject {
+    func dismiss()
+    func changeToKM()
+    func changeToCelsium()
+    func changeToTvelveHourFormat()
+}
 
-    private let settingsView: UIView
+class SettingsViewController: UIViewController, ISettingsViewController {
 
-    init(settingsView: UIView) {
-        self.settingsView = settingsView
+    private let mainModel: MainForecastsModels
+
+    private let settingsView: SettingsView = SettingsView()
+    private var forecastModelService: ForecastModelService?
+
+    // MARK: -LIFECYCLE
+
+    init( mainModel: MainForecastsModels) {
+        self.mainModel = mainModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -20,14 +33,77 @@ class SettingsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        layout()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        settingsView.checkSegmentedValue()
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 32/255, green: 78/255, blue: 199/255, alpha: 1)
+        layout()
+        updateModel()
+    }
+
+
+    // MARK: -LAYOUT
 
     private func layout() {
         view.addSubview(settingsView)
-        settingsView.frame = view.frame
+        settingsView.settingsVC = self
+        settingsView.translatesAutoresizingMaskIntoConstraints = false
+
+        settingsView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
+
+        // MARK: -FUNCS
+
+    func updateModel() {
+        let forecastModelService = ForecastModelService(coreDataModel: mainModel)
+        self.forecastModelService = forecastModelService
+    }
+
+    func dismiss() {
+        dismiss(animated: true)
+    }
+
+    func changeToKM() {
+        if let speedValue = UserDefaults.standard.value(forKey: "distance") as? String {
+            switch speedValue {
+            case "Km":
+                ValueConverter.shared.convertToKM()
+            case "Mi":
+                ValueConverter.shared.convertToMiles()
+            default: break
+            }
+        }
+    }
+
+    func changeToCelsium() {
+        if let tempValue = UserDefaults.standard.value(forKey: "temperature") as? String {
+            switch tempValue {
+            case "C":
+                ValueConverter.shared.convertToCelsius()
+            case "F":
+                ValueConverter.shared.convertToFahrenheit()
+            default: break
+            }
+        }
+    }
+
+    func changeToTvelveHourFormat() {
+        if let timeValue = UserDefaults.standard.value(forKey: "time") as? String {
+            switch timeValue {
+            case "24":
+                ValueConverter.shared.convertTwentyFourHour()
+            case "12":
+                ValueConverter.shared.convertTwelveHour()
+            default: break
+            }
+        }
+    }
+
+
 }
