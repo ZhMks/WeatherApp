@@ -136,7 +136,6 @@ final class GeoLocationView: UIView {
     }
 
     @objc private func getGeoData(_ sender: UIButton) {
-        print(self.textFieldtext)
         geoVC?.checkModelsArray(string: self.textFieldtext)
     }
 }
@@ -151,7 +150,6 @@ extension GeoLocationView: UITextFieldDelegate {
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
         textFieldtext = textField.text!
-        print(textFieldtext)
     }
 
 }

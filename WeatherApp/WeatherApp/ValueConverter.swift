@@ -102,66 +102,46 @@ final class ValueConverter {
             for forecast in array {
 
                 unitToConvert.value = Double((forecast.dayModel?.tempAvg)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print(convertedUnit)
                 forecast.dayModel?.tempAvg = Int16(convertedUnit)
 
                 unitToConvert.value = Double((forecast.dayModel?.tempMax)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print(convertedUnit)
                 forecast.dayModel?.tempMax = Int16(convertedUnit)
 
                 unitToConvert.value = Double((forecast.dayModel?.tempMin)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print(convertedUnit)
                 forecast.dayModel?.tempMin = Int16(convertedUnit)
 
                 unitToConvert.value = Double((forecast.dayModel?.feelsLike)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .celsius).value
-                print(convertedUnit)
                 forecast.dayModel?.feelsLike = Int16(convertedUnit)
 
                 unitToConvert.value = Double((forecast.nightModel?.tempAvg)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print(convertedUnit)
                 forecast.nightModel?.tempAvg = Int16(convertedUnit)
 
 
                 unitToConvert.value = Double((forecast.nightModel?.tempMax)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print(convertedUnit)
                 forecast.nightModel?.tempMax = Int16(convertedUnit)
 
                 unitToConvert.value = Double((forecast.nightModel?.tempMin)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print(convertedUnit)
                 forecast.nightModel?.tempMin = Int16(convertedUnit)
 
                 unitToConvert.value = Double((forecast.nightModel?.feelsLike)!)
-                print(unitToConvert)
                 convertedUnit = unitToConvert.converted(to: .celsius).value
-                print(convertedUnit)
                 forecast.nightModel?.feelsLike = Int16(convertedUnit)
             }
 
             for hour in hoursArray {
                 unitToConvert.value = Double(hour.temp)
-                print("HOURUNIT: \(unitToConvert)")
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print("HOURUNITCONVERT: \(convertedUnit)")
                 hour.temp = Int16(convertedUnit)
 
                 unitToConvert.value = Double(hour.feelsLike)
-                print("HOURUNITFEEL: \(unitToConvert)")
                 convertedUnit = unitToConvert.converted(to: .fahrenheit).value
-                print("HOURUNITCONVERTFEEL: \(convertedUnit)")
                 hour.feelsLike = Int16(convertedUnit)
                 do {
                     try hour.managedObjectContext?.save()
