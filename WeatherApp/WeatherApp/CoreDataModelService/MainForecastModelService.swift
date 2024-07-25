@@ -31,8 +31,8 @@ final class MainForecastModelService {
 
                 if modelArray.isEmpty {
                 let modelToSave = MainForecastsModels(context: coreDataService.managedContext)
-                modelToSave.locality = networkModel.geoObject.locality.name
-                modelToSave.country = networkModel.geoObject.country.name
+                    modelToSave.locality = networkModel.geoObject.tzinfo.name
+                    modelToSave.country = networkModel.geoObject.tzinfo.abbr
                 saveForecast(networkModel: networkModel, mainModel: modelToSave)
                 coreDataService.saveContext()
                 fetchFromCoreData()
@@ -40,7 +40,7 @@ final class MainForecastModelService {
                 return
             }
 
-            let locality = networkModel.geoObject.locality.name
+        let locality = networkModel.geoObject.tzinfo.name
 
             if modelArray.contains(where: { $0.locality! == locality }) {
                 completion(.failure(ErrorsInSaving.alreadyExist))
@@ -48,7 +48,7 @@ final class MainForecastModelService {
             } else {
                 let modelToSave = MainForecastsModels(context: coreDataService.managedContext)
                 modelToSave.locality = locality
-                modelToSave.country = networkModel.geoObject.country.name
+                modelToSave.country = networkModel.geoObject.tzinfo.abbr
                 saveForecast(networkModel: networkModel, mainModel: modelToSave)
                 coreDataService.saveContext()
                 fetchFromCoreData()
