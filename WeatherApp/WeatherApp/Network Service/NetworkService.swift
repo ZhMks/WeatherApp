@@ -33,10 +33,10 @@ final class NetworkService: INetworkService {
 
     func fetchData(lat: String, lon: String, completion: @escaping (Result<NetworkServiceModel, NetworkErrors>) -> Void) {
         let headers = [ "X-Yandex-Weather-Key": "e9ecf437-8b44-4eb1-bee0-383ab826f946" ]
-        let baseURL = "https://api.weather.yandex.ru/v2/forecast?lat=\(lat)&lon=\(lon)&lang=&limit=3&hours=true&extra=false"
+        let baseURL = "https://api.weather.yandex.ru/v2/forecast?lat=\(lat)&lon=\(lon)&limit=3&extra=false"
         guard let fetchURL = URL.init(string: baseURL) else { return }
         var request = URLRequest(url: fetchURL)
-       request.allHTTPHeaderFields = headers
+        request.allHTTPHeaderFields = headers
         request.httpMethod = "GET"
 
         let session = URLSession.shared
@@ -46,6 +46,7 @@ final class NetworkService: INetworkService {
             }
 
             if let response = response as? HTTPURLResponse {
+                print(response.statusCode)
                 switch response.statusCode {
                 case 200:
                     if let data = data {
@@ -73,7 +74,7 @@ final class NetworkService: INetworkService {
                     completion(.failure(NetworkErrors.wrongURL))
                 case 502:
                     completion(.failure(NetworkErrors.serverError))
-                default: print("Error")
+                default: print("Error \(response.statusCode)")
                 }
             }
         }

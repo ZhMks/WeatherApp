@@ -26,43 +26,43 @@ final class NetworkServiceModel: Codable {
 }
 
 final class GeoObject: Codable {
-    let locality: Locality
-    let country: Country
+    let tzinfo: TzInfo
 
     private enum CodingKeys: String, CodingKey {
-        case locality = "locality"
-        case country = "country"
+        case tzinfo = "tzinfo"
     }
 
-    init(locality: Locality, country:  Country) {
-        self.locality = locality
-        self.country = country
+    init(tzInfo: TzInfo) {
+        self.tzinfo = tzInfo
     }
 }
 
-final class Locality: Codable {
+final class TzInfo: Codable {
     let name: String
+    let abbr: String
 
     private enum CodingKeys: String, CodingKey {
         case name = "name"
+        case abbr = "abbr"
     }
-    init(name: String) {
+    init(name: String, abbr: String) {
         self.name = name
+        self.abbr = abbr
     }
 }
-
-final class Country: Codable {
-
-    let name: String
-
-    private enum CodingKeys: String, CodingKey {
-        case name = "name"
-    }
-
-    init(name: String) {
-        self.name = name
-    }
-}
+//
+//final class Country: Codable {
+//
+//    let name: String
+//
+//    private enum CodingKeys: String, CodingKey {
+//        case name = "name"
+//    }
+//
+//    init(name: String) {
+//        self.name = name
+//    }
+//}
 
 final class ForecastNetworkModel: Codable {
 
