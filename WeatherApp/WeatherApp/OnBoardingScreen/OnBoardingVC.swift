@@ -144,7 +144,7 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
 
                         switch result {
                         case .success(_):
-                            break
+                            NotificationCenter.default.post(name: NSNotification.Name("coreDataSaved"), object: nil)
                         case .failure(let failure):
                             print("\(failure.description)")
                         }
@@ -167,12 +167,12 @@ class OnboardingViewController: UIViewController, IOnBoardingVC  {
     private func checkModelsArray() {
         view.addSubview(activityIndicator)
         guard let geoModels = geoDataService.modelArray else { return }
+        print(geoModels)
         if !geoModels.isEmpty {
             for model in geoModels {
                 activityIndicator.startAnimating()
                 fetchData(with: model.lat!, lon: model.lon!)
             }
-            NotificationCenter.default.post(name: NSNotification.Name("coreDataSaved"), object: nil)
         }
     }
 
