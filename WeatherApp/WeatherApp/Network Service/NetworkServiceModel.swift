@@ -10,11 +10,11 @@ import Foundation
 final class NetworkServiceModel: Codable {
      let serverTime: String
      let forecast: [ForecastNetworkModel]
-    let geoObject: GeoObject
+     let geoObject: GeoObject
 
     private enum CodingKeys: String, CodingKey {
         case serverTime = "now_dt"
-        case geoObject = "geo_object"
+        case geoObject = "info"
         case forecast = "forecasts"
     }
 

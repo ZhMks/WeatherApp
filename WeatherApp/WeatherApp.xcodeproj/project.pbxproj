@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B254DCF72C528316000E67C2 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = B254DCF62C528316000E67C2 /* DGCharts */; };
+		B254DCFA2C52831F000E67C2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B254DCF92C52831F000E67C2 /* SnapKit */; };
 		B26A56F62B75FCAB00FC7255 /* DetailTwentyFourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A56F52B75FCAB00FC7255 /* DetailTwentyFourView.swift */; };
 		B26A56F82B75FEB800FC7255 /* DetailTwentyFourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A56F72B75FEB800FC7255 /* DetailTwentyFourViewController.swift */; };
 		B26A56FA2B76144A00FC7255 /* TwentyFourHourTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A56F92B76144A00FC7255 /* TwentyFourHourTableViewCell.swift */; };
@@ -31,16 +33,12 @@
 		B2ABBBFF2BA0516E007C266A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABBBFE2BA0516E007C266A /* ContentView.swift */; };
 		B2ABBC0A2BA1C016007C266A /* TempChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABBC092BA1C016007C266A /* TempChartView.swift */; };
 		B2ABBC112BA1C7E3007C266A /* DataSourceForTwentyFourHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABBC102BA1C7E3007C266A /* DataSourceForTwentyFourHours.swift */; };
-		B2ABBC142BA1DFE5007C266A /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = B2ABBC132BA1DFE5007C266A /* DGCharts */; };
-		B2ABBC162BA1DFE5007C266A /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B2ABBC152BA1DFE5007C266A /* DGChartsDynamic */; };
 		B2ABBC1A2BA1EC7F007C266A /* HumidityCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABBC192BA1EC7F007C266A /* HumidityCollectionCell.swift */; };
 		B2AF387E2B72266600D1ECD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387D2B72266600D1ECD5 /* AppDelegate.swift */; };
 		B2AF38802B72266600D1ECD5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF387F2B72266600D1ECD5 /* SceneDelegate.swift */; };
 		B2AF38822B72266600D1ECD5 /* OnBoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF38812B72266600D1ECD5 /* OnBoardingVC.swift */; };
 		B2AF388A2B72266A00D1ECD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2AF38892B72266A00D1ECD5 /* Assets.xcassets */; };
 		B2AF388D2B72266A00D1ECD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2AF388B2B72266A00D1ECD5 /* LaunchScreen.storyboard */; };
-		B2AF38962B722EDA00D1ECD5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2AF38952B722EDA00D1ECD5 /* SnapKit */; };
-		B2AF38982B722EDA00D1ECD5 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B2AF38972B722EDA00D1ECD5 /* SnapKit-Dynamic */; };
 		B2AF389B2B722EF500D1ECD5 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF389A2B722EF500D1ECD5 /* OnBoardingView.swift */; };
 		B2AF389F2B7236BF00D1ECD5 /* Rubik-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2AF389C2B7236BF00D1ECD5 /* Rubik-Black.ttf */; };
 		B2AF38A02B7236BF00D1ECD5 /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2AF389D2B7236BF00D1ECD5 /* Rubik-Bold.ttf */; };
@@ -123,10 +121,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2ABBC162BA1DFE5007C266A /* DGChartsDynamic in Frameworks */,
-				B2AF38962B722EDA00D1ECD5 /* SnapKit in Frameworks */,
-				B2ABBC142BA1DFE5007C266A /* DGCharts in Frameworks */,
-				B2AF38982B722EDA00D1ECD5 /* SnapKit-Dynamic in Frameworks */,
+				B254DCF72C528316000E67C2 /* DGCharts in Frameworks */,
+				B254DCFA2C52831F000E67C2 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,10 +356,8 @@
 			);
 			name = WeatherApp;
 			packageProductDependencies = (
-				B2AF38952B722EDA00D1ECD5 /* SnapKit */,
-				B2AF38972B722EDA00D1ECD5 /* SnapKit-Dynamic */,
-				B2ABBC132BA1DFE5007C266A /* DGCharts */,
-				B2ABBC152BA1DFE5007C266A /* DGChartsDynamic */,
+				B254DCF62C528316000E67C2 /* DGCharts */,
+				B254DCF92C52831F000E67C2 /* SnapKit */,
 			);
 			productName = WeatherApp;
 			productReference = B2AF387A2B72266600D1ECD5 /* WeatherApp.app */;
@@ -394,8 +388,8 @@
 			);
 			mainGroup = B2AF38712B72266600D1ECD5;
 			packageReferences = (
-				B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				B2ABBC122BA1DFE5007C266A /* XCRemoteSwiftPackageReference "Charts" */,
+				B254DCF52C528316000E67C2 /* XCRemoteSwiftPackageReference "Charts" */,
+				B254DCF82C52831F000E67C2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = B2AF387B2B72266600D1ECD5 /* Products */;
 			projectDirPath = "";
@@ -697,7 +691,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B2ABBC122BA1DFE5007C266A /* XCRemoteSwiftPackageReference "Charts" */ = {
+		B254DCF52C528316000E67C2 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts.git";
 			requirement = {
@@ -705,36 +699,26 @@
 				minimumVersion = 5.1.0;
 			};
 		};
-		B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		B254DCF82C52831F000E67C2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.0;
+				minimumVersion = 5.7.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B2ABBC132BA1DFE5007C266A /* DGCharts */ = {
+		B254DCF62C528316000E67C2 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B2ABBC122BA1DFE5007C266A /* XCRemoteSwiftPackageReference "Charts" */;
+			package = B254DCF52C528316000E67C2 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
 		};
-		B2ABBC152BA1DFE5007C266A /* DGChartsDynamic */ = {
+		B254DCF92C52831F000E67C2 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B2ABBC122BA1DFE5007C266A /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGChartsDynamic;
-		};
-		B2AF38952B722EDA00D1ECD5 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = B254DCF82C52831F000E67C2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		B2AF38972B722EDA00D1ECD5 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B2AF38942B722EDA00D1ECD5 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 
